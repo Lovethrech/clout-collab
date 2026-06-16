@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       name: 'Clout Collabs',
       short_name: 'CloutCollabs',
       theme_color: '#6D28D9',
-      background_color: '#0F172A',
+      background_color: '#0F172A',git
       icons: []
     }
   }
