@@ -11,7 +11,7 @@ useHead({
   }
 })
 
-const title = 'Clout Collabs'
+const title = 'RGSM Dashboard'
 const description = ''
 
 useSeoMeta({
