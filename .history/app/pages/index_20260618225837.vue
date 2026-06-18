@@ -6,6 +6,3 @@
 
 <style scoped>
 .app{
-    margin: 2vh;
-}
-</style>

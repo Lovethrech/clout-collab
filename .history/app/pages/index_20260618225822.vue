@@ -4,8 +4,4 @@
     </main>
 </template>
 
-<style scoped>
-.app{
-    margin: 2vh;
-}
-</style>
+<style lang="css"
