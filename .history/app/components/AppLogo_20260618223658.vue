@@ -30,7 +30,7 @@
     height:16px; 
 }
 .lockup .word{ 
-    font-family:var(--display-font); 
+    font-family:var(--display); 
     font-weight:700; 
     font-size:15px; 
 }
