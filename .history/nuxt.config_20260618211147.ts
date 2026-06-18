@@ -7,8 +7,8 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase'
   ],
   supabase:{
-    redirect: false
-  },
+    redirect
+  }
   pwa: {
     manifest: {
       name: 'Clout Collabs',
