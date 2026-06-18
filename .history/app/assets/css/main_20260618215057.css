@@ -1,0 +1,53 @@
+:root{
+/* ---- Core brand colors (from brief) ---- */
+        --purple:#6D28D9;
+        --blue:#3B82F6;
+        --pink:#EC4899;
+        --dark:#0F172A;
+
+        /* ---- Extended ramps ---- */
+        --purple-300:#C4B5FD;
+        --purple-500:#8B5CF6;
+        --purple-700:#6D28D9;
+        --purple-900:#4C1D95;
+
+        --blue-300:#93C5FD;
+        --blue-500:#3B82F6;
+        --blue-700:#1D4ED8;
+        --blue-900:#1E3A8A;
+
+        --pink-300:#F9A8D4;
+        --pink-500:#EC4899;
+        --pink-700:#BE185D;
+        --pink-900:#831843;
+
+        --slate-50:#F8FAFC;
+        --slate-200:#E2E8F0;
+        --slate-400:#94A3B8;
+        --slate-600:#475569;
+        --slate-800:#1E293B;
+        --slate-900:#0F172A;
+
+        --success:#22C55E;
+        --warning:#F59E0B;
+        --error:#EF4444;
+
+        --grad-signature: linear-gradient(135deg, var(--purple) 0%, var(--blue) 52%, var(--pink) 100%);
+
+        --display-font: 'Unbounded', sans-serif;
+        --body-font: 'Plus Jakarta Sans', sans-serif;
+        --mono-font: 'JetBrains Mono', monospace;}
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #0a0a0a;
+    color: #e5e5e5;
+    font-family: system-ui, -apple-system, sans-serif;
+}

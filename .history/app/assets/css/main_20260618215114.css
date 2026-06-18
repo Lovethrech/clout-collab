@@ -36,8 +36,7 @@
 
     --display-font: 'Unbounded', sans-serif;
     --body-font: 'Plus Jakarta Sans', sans-serif;
-    --mono-font: 'JetBrains Mono', monospace;
-}
+    --mono-font: 'JetBrains Mono', monospace;}
 
 * {
     margin: 0;
