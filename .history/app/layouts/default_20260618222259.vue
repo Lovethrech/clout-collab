@@ -12,7 +12,7 @@ async function handleLogout() {
 <template>
     <div>
         <nav>
-            <AppLogo/>
+            <AppLogo
             <NuxtLink to="/">Home</NuxtLink>
                 <button v-if="user" @click="handleLogout">Log out</button>
             <NuxtLink v-else to="/login">Log in</NuxtLink>
