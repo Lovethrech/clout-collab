@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clout Collabs — Design Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+      :root{
+        --purple:#6D28D9; --blue:#3B82F6; --pink:#EC4899;
+        --pink-300:#F9A8D4; --slate-50:#F8FAFC; --slate-400:#94A3B8;
+        --slate-800:#1E293B; --slate-900:#0F172A;
+        --success:#22C55E;
+        --grad: linear-gradient(135deg, var(--purple), var(--blue) 52%, var(--pink));
+        --display:'Unbounded',sans-serif; --body:'Plus Jakarta Sans',sans-serif; --mono:'JetBrains Mono',monospace;
+      }
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{ background:var(--slate-900); color:var(--slate-50); font-family:var(--body); -webkit-font-smoothing:antialiased; }
+      .wrap{ max-width:740px; margin:0 auto; padding:60px 26px 80px; }
+
+      .lockup{ display:flex; align-items:center; gap:10px; margin-bottom:34px; }
+      .lockup .mark{ width:32px;height:32px;border-radius:9px;background:var(--grad); display:flex;align-items:center;justify-content:center; flex-shrink:0; }
+      .lockup .mark svg{ width:16px;height:16px; }
+      .lockup .word{ font-family:var(--display); font-weight:700; font-size:15px; }
+
+      h1{ font-family:var(--display); font-weight:800; font-size:32px; line-height:1.18; margin-bottom:12px; }
+      .sub{ color:var(--slate-400); font-size:14.5px; line-height:1.6; max-width:480px; margin-bottom:28px; }
+
+      .progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:42px; }
+      .progress-track{ flex:1; height:6px; background:var(--slate-800); border-radius:4px; overflow:hidden; }
+      .progress-fill{ height:100%; width:16.6%; background:var(--grad); border-radius:4px; }
+      .progress-label{ font-family:var(--mono); font-size:11px; color:var(--slate-400); white-space:nowrap; }
+
+      .day-list{ display:flex; flex-direction:column; gap:9px; }
+      .day{ display:grid; grid-template-columns:48px 1fr auto; align-items:center; gap:14px; padding:15px 17px; border-radius:13px; border:1px solid var(--slate-800); background:var(--slate-800); text-decoration:none; color:inherit; transition:transform .15s ease, border-color .15s ease; }
+      a.day:hover{ transform:translateX(3px); border-color:#3B4A6B; }
+      .day.upcoming{ background:transparent; opacity:0.5; }
+      .day-num{ font-family:var(--mono); font-size:11.5px; color:var(--slate-400); }
+      .day.done .day-num{ color:var(--pink-300); }
+      .day-info{ min-width:0; }
+      .day-title{ font-family:var(--display); font-weight:700; font-size:14px; margin-bottom:3px; }
+      .day-desc{ font-size:12px; color:var(--slate-400); line-height:1.4; }
+      .day-status{ font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; white-space:nowrap; }
+      .day.done .day-status{ color:var(--success); }
+      .day.upcoming .day-status{ color:var(--slate-400); }
+
+      footer{ margin-top:46px; font-size:12px; color:var(--slate-400); border-top:1px solid var(--slate-800); padding-top:22px; }
+      footer a{ color:var(--pink-300); text-decoration:none; }
+
+      @media (max-width:540px){
+        h1{ font-size:25px; }
+        .day{ grid-template-columns:38px 1fr; row-gap:6px; }
+        .day-status{ grid-column:2; }
+      }
+    </style>
+  </head>
+<body>
+<div class="wrap">
+  <div class="lockup">
+    <div class="mark"><svg viewBox="0 0 200 200"><polygon points="120,38 76,108 99,108 87,164 142,94 113,94" fill="#fff"/></svg></div>
+    <div class="word">Clout Collabs</div>
+  </div>
+
+  <h1>Design Hub</h1>
+  <p class="sub">Live reference for every screen and system as it ships — built so the whole team can follow along, no Figma account or repo access required.</p>
+
+  <div class="progress-row">
+    <div class="progress-track"><div class="progress-fill"></div></div>
+    <div class="progress-label">2 OF 12 DAYS SHIPPED</div>
+  </div>
+
+  <div class="day-list">
+    <a class="day done" href="clout-collabs-brand-day1.html" target="_blank">
+      <div class="day-num">DAY 01</div>
+      <div class="day-info"><div class="day-title">Brand Identity</div><div class="day-desc">Logo concepts, color system, typography</div></div>
+      <div class="day-status">View →</div>
+    </a>
+    <a class="day done" href="clout-collabs-onboarding-day2.html" target="_blank">
+      <div class="day-num">DAY 02</div>
+      <div class="day-info"><div class="day-title">Onboarding UI</div><div class="day-desc">Sign up, log in, role selection</div></div>
+      <div class="day-status">View →</div>
+    </a>
+    <div class="day upcoming">
+      <div class="day-num">DAY 03</div>
+      <div class="day-info"><div class="day-title">Profile Design</div><div class="day-desc">Creator profile layout, portfolio-style cards</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 04</div>
+      <div class="day-info"><div class="day-title">Directory UI</div><div class="day-desc">Creator discovery layout, card-based system</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 05</div>
+      <div class="day-info"><div class="day-title">Collab Post UI</div><div class="day-desc">Post creation UI, feed layout</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 06</div>
+      <div class="day-info"><div class="day-title">Hiring UI</div><div class="day-desc">Brand job listing UI, application cards</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 07</div>
+      <div class="day-info"><div class="day-title">Chat UI</div><div class="day-desc">Minimal, WhatsApp-style messenger interface</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 08</div>
+      <div class="day-info"><div class="day-title">Search UI</div><div class="day-desc">Filter chips, search result layout</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 09</div>
+      <div class="day-info"><div class="day-title">Notification UI</div><div class="day-desc">Notification dropdown, badge indicators</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 10</div>
+      <div class="day-info"><div class="day-title">Admin Dashboard UI</div><div class="day-desc">Analytics cards, tables design</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 11</div>
+      <div class="day-info"><div class="day-title">UI Polish</div><div class="day-desc">Spacing consistency, mobile responsiveness</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+    <div class="day upcoming">
+      <div class="day-num">DAY 12</div>
+      <div class="day-info"><div class="day-title">Final Brand System</div><div class="day-desc">Exported design system, developer handoff kit</div></div>
+      <div class="day-status">Coming soon</div>
+    </div>
+  </div>
+
+  <footer>
+    Clout Collabs &middot; design reference, updated daily &middot; <a href="https://github.com/Lovethrech/clout-collab" target="_blank">source on GitHub</a>
+  </footer>
+</div>
+</body>
+</html>
