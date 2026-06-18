@@ -1,0 +1,3 @@
+<template>
+    main.a
+</template>

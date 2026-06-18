@@ -25,13 +25,6 @@
     justify-content:center; 
     flex-shrink:0; 
 }
-.lockup .mark svg{ 
-    width:16px;
-    height:16px; 
-}
-.lockup .word{ 
-    font-family:var(--display); 
-    font-weight:700; 
-    font-size:15px; 
-}
+.lockup .mark svg{ width:16px;height:16px; }
+.lockup .word{ font-family:var(--display); font-weight:700; font-size:15px; }
 </style>

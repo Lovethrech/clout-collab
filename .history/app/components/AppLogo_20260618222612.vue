@@ -13,25 +13,8 @@
     display:flex; 
     align-items:center; 
     gap:10px; 
-    margin-bottom:34px; 
-}
-.lockup .mark{ 
-    width:32px;
-    height:32px;
-    border-radius:9px;
-    background:var(--grad); 
-    display:flex;
-    align-items:center;
-    justify-content:center; 
-    flex-shrink:0; 
-}
-.lockup .mark svg{ 
-    width:16px;
-    height:16px; 
-}
-.lockup .word{ 
-    font-family:var(--display); 
-    font-weight:700; 
-    font-size:15px; 
-}
+    margin-bottom:34px; }
+.lockup .mark{ width:32px;height:32px;border-radius:9px;background:var(--grad); display:flex;align-items:center;justify-content:center; flex-shrink:0; }
+.lockup .mark svg{ width:16px;height:16px; }
+.lockup .word{ font-family:var(--display); font-weight:700; font-size:15px; }
 </style>

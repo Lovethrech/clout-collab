@@ -32,6 +32,5 @@
 .lockup .word{ 
     font-family:var(--display); 
     font-weight:700; 
-    font-size:15px; 
-}
+    font-size:15px; }
 </style>
