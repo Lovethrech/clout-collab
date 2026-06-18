@@ -458,7 +458,6 @@
         flex-shrink:0;
       }
       .next-pill{
-        text-decoration:none;
         font-family: var(--mono-font);
         font-size: 12.5px;
         color: var(--slate-50);
@@ -466,13 +465,8 @@
         border:1px solid #2A3B55;
         padding: 9px 16px;
         border-radius: 20px;
-        transition:transform .15s ease, border-color .15s ease; 
       }
-      .next-pill:hover{
-        cursor: pointer;
-        transform:translateX(3px); 
-        border-color:#3B4A6B;
-      }
+      .next-pill{}
 
       @media (max-width: 860px){
         .logo-grid{ grid-template-columns: 1fr; }
@@ -740,7 +734,7 @@
           <div class="check-item"><span class="tick">✓</span>Color system</div>
           <div class="check-item"><span class="tick">✓</span>Typography system</div>
         </div>
-        <a class="next-pill" href="clout-collabs-onboarding-day2.html">Next → Day 02: Onboarding UI</a>
+        <div class="next-pill" href="clout-collabs-onboarding-day2.html">Next → Day 02: Onboarding UI</div>
       </footer>
     </div>
   </body>
