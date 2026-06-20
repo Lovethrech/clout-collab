@@ -11,12 +11,10 @@ useSeoMeta({
     twitterCard: 'summary_large_image'
 })
 const authTitle=ref("Welcome back");
-const authDesc=ref("Log in to keep the conversation going.")
 </script>
 
 <template>
     <div class="auth-login-page">
         <AuthTitle :authTitle="authTitle"/>
-        <AuthDesc :authDesc="authDesc"/>
     </div>
 </template>

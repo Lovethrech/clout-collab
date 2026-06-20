@@ -27,12 +27,6 @@ const logoWordSize=ref("2vh");
 }
 .layout-default-mini-ctn{
     padding: 2vh;
-    width: 40%;
-}
-
-@media screen and (max-width:950px) {
-    .layout-default-mini-ctn{
-        width: 100%;
-    }
+    width:
 }
 </style>

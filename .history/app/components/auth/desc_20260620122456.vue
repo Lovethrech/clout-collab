@@ -9,7 +9,7 @@ const {authDesc}=defineProps(["authDesc"]);
 </template>
 
 <style scoped>
-#auth-desc{
+#-desc{
     font-size:2vh; 
     color:var(--slate-400); 
     line-height:1.55; 

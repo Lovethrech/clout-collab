@@ -17,6 +17,6 @@ const authDesc=ref("Log in to keep the conversation going.")
 <template>
     <div class="auth-login-page">
         <AuthTitle :authTitle="authTitle"/>
-        <AuthDesc :authDesc="authDesc"/>
+        <AuthDesc :authDesc/>
     </div>
 </template>

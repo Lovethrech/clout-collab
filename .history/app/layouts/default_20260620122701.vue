@@ -32,7 +32,7 @@ const logoWordSize=ref("2vh");
 
 @media screen and (max-width:950px) {
     .layout-default-mini-ctn{
-        width: 100%;
+        width: 100
     }
 }
 </style>
