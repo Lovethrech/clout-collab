@@ -3,21 +3,12 @@ const {authQ, authQLink, authQLinkDesc}=defineProps(['authQ', 'authQLink', 'auth
 </script>
 
 <template>
-    <div class="auth-question-ctn">
-        <span class="auth-question">
-            {{ authQ }}
-        </span>
-        <NuxtLink :to='authQLink'> 
-            <span class='auth-question-link'>
-                {{ authQLinkDesc }}
-            </span>
-        </NuxtLink>
-    </div>
-    
+    <span class="auth-question" v-html="authQ"></span>
+    <NuxtLink :to='authQLink'><span class='auth-question-link' v-html="authQLink"></span></NuxtLink>
 </template>
 
 <style scoped>
-.auth-question-ctn{
+.auth-question{
     text-align:center; 
     font-size:1em; 
     color:var(--slate-400); 

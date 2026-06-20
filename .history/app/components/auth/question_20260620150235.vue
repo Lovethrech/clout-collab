@@ -17,7 +17,7 @@ const {authQ, authQLink, authQLinkDesc}=defineProps(['authQ', 'authQLink', 'auth
 </template>
 
 <style scoped>
-.auth-question-ctn{
+.auth-question{
     text-align:center; 
     font-size:1em; 
     color:var(--slate-400); 

@@ -30,7 +30,6 @@ const authQLink=ref("/signup");
             <AuthFormEmailAndPassword/>
             <BtnMainAuth :btnText="btnText"/> 
         </form>
-        <br/>
         <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>
         <div class="fine-print">
             By continuing, you agree to the Terms<br>and Privacy Policy.

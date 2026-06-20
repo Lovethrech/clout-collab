@@ -14,8 +14,7 @@ const authTitle=ref("Welcome back");
 const authDesc=ref("Log in to keep the conversation going.");
 const btnText=ref("Login");
 const authQ=ref("New to Clout Collabs?");
-const authQLinkDesc=ref("Create an account");
-const authQLink=ref("/signup");
+const authQLinkDesc=ref("Create an account")
 </script>
 
 <template>
@@ -30,11 +29,7 @@ const authQLink=ref("/signup");
             <AuthFormEmailAndPassword/>
             <BtnMainAuth :btnText="btnText"/> 
         </form>
-        <br/>
-        <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>
-        <div class="fine-print">
-            By continuing, you agree to the Terms<br>and Privacy Policy.
-        </div>
+        <AuthQuestion :authQ="authQ" :authQLink="authQLink"/>
     </div>
 </template>
 
@@ -56,11 +51,5 @@ const authQLink=ref("/signup");
 .divider span{ 
     font-size:1.4vh; 
     color:var(--slate-400); 
-}
-.fine-print{
-    text-align:center; 
-    font-size:1.8vh; 
-    color:var(--slate-600); 
-    line-height:1.5;
 }
 </style>
