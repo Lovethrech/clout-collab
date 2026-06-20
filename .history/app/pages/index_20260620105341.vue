@@ -24,5 +24,6 @@
     font-size:2vh; 
     color:var(--slate-400); 
     line-height:1.55; 
+    max-width:230px;
 }
 </style>

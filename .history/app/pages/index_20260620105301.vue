@@ -21,8 +21,6 @@
     margin-bottom:2vh ;
 }
 #index-app-desc{
-    font-size:2vh; 
-    color:var(--slate-400); 
-    line-height:1.55; 
+    
 }
 </style>

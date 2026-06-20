@@ -20,9 +20,5 @@
     line-height:1.25;
     margin-bottom:2vh ;
 }
-#index-app-desc{
-    font-size:2vh; 
-    color:var(--slate-400); 
-    line-height:1.55; 
-}
+#index
 </style>
