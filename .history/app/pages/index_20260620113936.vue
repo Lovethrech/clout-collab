@@ -34,11 +34,11 @@ import { AuthBtnCreateAcctBtn, AuthBtnLoginBtn } from '../../.nuxt/components';
     line-height:1.55; 
 }
 .index-app-auth-option{
-    margin-top: 9vh;
+    margin-top: 3vh;
 }
 .fine-print{
     text-align:center; 
-    font-size:1.8vh; 
+    font-size:1.2vh; 
     color:var(--slate-600); 
     line-height:1.5;
 }

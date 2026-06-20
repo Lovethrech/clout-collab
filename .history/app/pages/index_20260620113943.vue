@@ -38,7 +38,7 @@ import { AuthBtnCreateAcctBtn, AuthBtnLoginBtn } from '../../.nuxt/components';
 }
 .fine-print{
     text-align:center; 
-    font-size:1.8vh; 
+    font-size:1.2vh; 
     color:var(--slate-600); 
     line-height:1.5;
 }
