@@ -43,7 +43,7 @@ const authDesc=ref("Log in to keep the conversation going.")
     background:var(--slate-700); 
 }
 .divider span{ 
-    font-size:1.4vh; 
+    font-size:11px; 
     color:var(--slate-400); 
 }
 </style>

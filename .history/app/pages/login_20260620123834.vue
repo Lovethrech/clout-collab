@@ -34,16 +34,8 @@ const authDesc=ref("Log in to keep the conversation going.")
 .divider{ 
     display:flex; 
     align-items:center; 
-    gap:2vh; 
-    margin-bottom:2vh; 
-}
-.divider .line{ 
-    flex:1; 
-    height:0.1vh; 
-    background:var(--slate-700); 
-}
-.divider span{ 
-    font-size:1.4vh; 
-    color:var(--slate-400); 
-}
+    gap:10px; 
+    margin-bottom:18px; }
+.divider .line{ flex:1; height:1px; background:var(--slate-700); }
+.divider span{ font-size:11px; color:var(--slate-400); }
 </style>

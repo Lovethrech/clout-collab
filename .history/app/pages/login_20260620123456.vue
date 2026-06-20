@@ -20,30 +20,12 @@ const authDesc=ref("Log in to keep the conversation going.")
         <AuthDesc :authDesc="authDesc"/>
         <form class="auth-login-page-form">
             <AuthBtnGoogle/>
-            <div class="divider">
-                <span class="line"></span><span>or log in with email</span><span class="line"></span>
-            </div>
         </form>
     </div>
 </template>
 
 <style scoped>
 .auth-login-page-form{
-    margin-top: 4vh;
-}
-.divider{ 
-    display:flex; 
-    align-items:center; 
-    gap:2vh; 
-    margin-bottom:2vh; 
-}
-.divider .line{ 
-    flex:1; 
-    height:0.1vh; 
-    background:var(--slate-700); 
-}
-.divider span{ 
-    font-size:1.4vh; 
-    color:var(--slate-400); 
+    margin-top: 
 }
 </style>

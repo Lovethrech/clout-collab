@@ -31,19 +31,4 @@ const authDesc=ref("Log in to keep the conversation going.")
 .auth-login-page-form{
     margin-top: 4vh;
 }
-.divider{ 
-    display:flex; 
-    align-items:center; 
-    gap:2vh; 
-    margin-bottom:2vh; 
-}
-.divider .line{ 
-    flex:1; 
-    height:0.1vh; 
-    background:var(--slate-700); 
-}
-.divider span{ 
-    font-size:1.4vh; 
-    color:var(--slate-400); 
-}
 </style>
