@@ -6,13 +6,7 @@
         <p id="index-app-desc">
             Creators, musicians, and brands building together — locally and globally.
         </p>
-        <div class="index-app-auth-option">
-            <BtnPry/>
-            <BtnSec/>
-            <div class="fine-print">
-                By continuing, you agree to the Terms<br>and Privacy Policy.
-            </div>
-        </div>
+        .index-app
     </main>
 </template>
 
@@ -31,11 +25,5 @@
     font-size:2vh; 
     color:var(--slate-400); 
     line-height:1.55; 
-}
-.fine-print{
-    text-align:center; 
-    font-size:10.5px; 
-    color:var(--slate-600); 
-    line-height:1.5;
 }
 </style>

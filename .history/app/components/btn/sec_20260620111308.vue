@@ -1,7 +1,7 @@
 <template>
     <div class="btn-sec">
         <p class="btn-sec-text">
-            Login
+            Loin
         </p>
     </div>
 </template>

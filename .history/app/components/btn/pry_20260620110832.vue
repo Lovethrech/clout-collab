@@ -1,16 +1,13 @@
 <template>
     <div class="btn-pry">
-        <p class="btn-pry-text">
-            Create accot
-        </p>
+
     </div>
 </template>
 
 <style scoped>
 .btn-pry{
     background:var(--grad-signature); 
-    color:var(--slate-50); 
-    text-align:center; 
+    color:var(--slate-50); text-align:center; 
     font-weight:700; 
     font-size:14.5px; 
     border-radius:14px; 

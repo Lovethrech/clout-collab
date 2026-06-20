@@ -35,7 +35,6 @@
 .fine-print{
     text-align:center; 
     font-size:10.5px; 
-    color:var(--slate-600); 
-    line-height:1.5;
+    color:var(--slate-600); line-height:1.5;
 }
 </style>

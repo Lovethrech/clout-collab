@@ -1,8 +1,6 @@
 <template>
     <div class="btn-pry">
-        <p class="btn-pry-text">
-            Create accot
-        </p>
+        .btn-
     </div>
 </template>
 

@@ -1,13 +1,13 @@
 <template>
     <div class="btn-sec">
         <p class="btn-sec-text">
-            Login
+            Loin
         </p>
     </div>
 </template>
 
 <style scoped>
-.btn-sec{
+.btn-pry{
     background:transparent; 
     color:var(--slate-50); 
     text-align:center; 
