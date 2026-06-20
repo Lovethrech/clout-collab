@@ -30,11 +30,8 @@ const logoWordSize=ref("2vh");
     width: 40%;
 }
 
-@media screen and (max-width:1050px) and (min-width:951px) {
-    .layout-default-mini-ctn{
-        width: 60%;
-    }
-}
+
+
 
 @media screen and (max-width:950px) {
     .layout-default-mini-ctn{
