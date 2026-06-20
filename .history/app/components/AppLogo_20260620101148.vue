@@ -4,12 +4,12 @@ const {logoMarkWidth, logoMarkHeight, logoSvgWidth, logoSvgHeight, logoWordSize}
 
 <template>
     <div class="lockup">
-        <div class="mark" :style="{width:logoMarkWidth, height:logoMarkHeight}">
-            <svg viewBox="0 0 200 200" :style="{width:logoSvgWidth, height:logoSvgHeight}">
+        <div class="mark" :style="{}">
+            <svg viewBox="0 0 200 200">
                 <polygon points="120,38 76,108 99,108 87,164 142,94 113,94" fill="#fff"/>
             </svg>
         </div>
-        <div class="word" :style="{fontSize:logoWordSize}">Clout Collabs</div>
+        <div class="word">Clout Collabs</div>
     </div>
 </template>
 <style>

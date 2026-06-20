@@ -9,11 +9,6 @@ const logoWordSize=ref("4vh");
 <template>
     <div class="layout-default display-flex-justify-center-place-center">
         <AppLogo
-            :logoMarkWidth="logoMarkWidth"
-            :logoMarkHeight="logoMarkHeight"
-            :logoSvgWidth="logoSvgWidth"
-            :logoSvgHeight="logoSvgHeight"
-            :logoWordSize="logoWordSize"
         />
     </div>
 </template>

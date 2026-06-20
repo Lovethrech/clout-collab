@@ -11,9 +11,6 @@ const logoWordSize=ref("4vh");
         <AppLogo
             :logoMarkWidth="logoMarkWidth"
             :logoMarkHeight="logoMarkHeight"
-            :logoSvgWidth="logoSvgWidth"
-            :logoSvgHeight="logoSvgHeight"
-            :logoWordSize="logoWordSize"
         />
     </div>
 </template>

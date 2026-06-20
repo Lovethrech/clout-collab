@@ -9,7 +9,7 @@ const {logoMarkWidth, logoMarkHeight, logoSvgWidth, logoSvgHeight, logoWordSize}
                 <polygon points="120,38 76,108 99,108 87,164 142,94 113,94" fill="#fff"/>
             </svg>
         </div>
-        <div class="word" :style="{fontSize:logoWordSize}">Clout Collabs</div>
+        <div class="word" :style="{}">Clout Collabs</div>
     </div>
 </template>
 <style>

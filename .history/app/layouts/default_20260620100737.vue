@@ -12,8 +12,7 @@ const logoWordSize=ref("4vh");
             :logoMarkWidth="logoMarkWidth"
             :logoMarkHeight="logoMarkHeight"
             :logoSvgWidth="logoSvgWidth"
-            :logoSvgHeight="logoSvgHeight"
-            :logoWordSize="logoWordSize"
+            
         />
     </div>
 </template>
