@@ -1,10 +1,10 @@
 <script setup>
-const {authQ, authQLink}=defineProps(['authQ', 'authQLink']);
+const {authQ}=defineProps(['authQ']);
 </script>
 
 <template>
     <span class="auth-question" v-html="authQ"></span>
-    <NuxtLink to=''><span class='auth-question-link' v-html="authQLink"></span></NuxtLink>
+    <NuxtLink to=''><span class='auth-question-link'>Create an account</span></NuxtLink>
 </template>
 
 <style scoped>

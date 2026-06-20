@@ -29,7 +29,7 @@ const authQLink=ref("Create an account")
             <AuthFormEmailAndPassword/>
             <BtnMainAuth :btnText="btnText"/> 
         </form>
-        <AuthQuestion :authQ="authQ" :authQLink="authQLink"/>
+        <AuthQuestion :authQ="authQ" :authQLink=""/>
     </div>
 </template>
 

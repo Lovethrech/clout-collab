@@ -14,7 +14,7 @@ const authTitle=ref("Welcome back");
 const authDesc=ref("Log in to keep the conversation going.");
 const btnText=ref("Login");
 const authQ=ref("New to Clout Collabs?");
-const authQLink=ref("Create an account")
+const authQLink=ref("")
 </script>
 
 <template>
@@ -29,7 +29,7 @@ const authQLink=ref("Create an account")
             <AuthFormEmailAndPassword/>
             <BtnMainAuth :btnText="btnText"/> 
         </form>
-        <AuthQuestion :authQ="authQ" :authQLink="authQLink"/>
+        <AuthQuestion :authQ="authQ"/>
     </div>
 </template>
 

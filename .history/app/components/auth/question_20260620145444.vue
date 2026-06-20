@@ -1,10 +1,10 @@
 <script setup>
-const {authQ, authQLink}=defineProps(['authQ', 'authQLink']);
+const {authQ}=defineProps(['authQ']);
 </script>
 
 <template>
-    <span class="auth-question" v-html="authQ"></span>
-    <NuxtLink to=''><span class='auth-question-link' v-html="authQLink"></span></NuxtLink>
+    <div class="auth-question" v-html="authQ"></div>
+    
 </template>
 
 <style scoped>
@@ -14,7 +14,7 @@ const {authQ, authQLink}=defineProps(['authQ', 'authQLink']);
     color:var(--slate-400); 
     margin-top:auto;
 }
-.auth-question-link{
+.auth-question .auth-question-link{
     color:var(--pink-300); 
     font-weight:600;
 }
