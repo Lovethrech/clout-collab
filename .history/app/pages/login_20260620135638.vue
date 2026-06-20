@@ -11,27 +11,25 @@ useSeoMeta({
     twitterCard: 'summary_large_image'
 })
 const authTitle=ref("Welcome back");
-const authDesc=ref("Log in to keep the conversation going.");
-const btnText=ref("Login");
+const authDesc=ref("Log in to keep the conversation going.")
 </script>
 
 <template>
-    <div class="auth-page">
+    <div class="auth-login-page">
         <AuthTitle :authTitle="authTitle"/>
         <AuthDesc :authDesc="authDesc"/>
-        <form class="auth-page-form">
+        <form class="auth-login-page-form">
             <AuthBtnGoogle/>
             <div class="divider">
                 <span class="line"></span><span>or log in with email</span><span class="line"></span>
             </div>
             <AuthFormEmailAndPassword/>
-            <BtnMainAuth :btnText="btnText"/> 
         </form>
     </div>
 </template>
 
 <style scoped>
-.auth-page-form{
+.auth-login-page-form{
     margin-top: 4vh;
 }
 .divider{ 

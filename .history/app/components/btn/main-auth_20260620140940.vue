@@ -18,9 +18,8 @@ const {btnText}=defineProps(["btnText"]);
     font-weight:700; 
     font-size:1.8vh; 
     border-radius:14px; 
-    padding:1.6vh 0; 
-    margin-bottom:2vh;
-    transition: all 0.2s ease-in-out;
+    padding:2vh 0; 
+    margin-bottom:20px;
 }
 .btn-main-auth:hover{
     cursor: pointer;

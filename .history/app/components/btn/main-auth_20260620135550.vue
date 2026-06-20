@@ -16,11 +16,10 @@ const {btnText}=defineProps(["btnText"]);
     color:var(--slate-50); 
     text-align:center; 
     font-weight:700; 
-    font-size:1.8vh; 
+    font-size:14px; 
     border-radius:14px; 
-    padding:1.6vh 0; 
-    margin-bottom:2vh;
-    transition: all 0.2s ease-in-out;
+    padding:15px 0; 
+    margin-bottom:20px;
 }
 .btn-main-auth:hover{
     cursor: pointer;

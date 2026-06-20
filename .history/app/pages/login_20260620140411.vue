@@ -12,7 +12,7 @@ useSeoMeta({
 })
 const authTitle=ref("Welcome back");
 const authDesc=ref("Log in to keep the conversation going.");
-const btnText=ref("Login");
+const btnText=ref("Log In");
 </script>
 
 <template>
@@ -25,7 +25,7 @@ const btnText=ref("Login");
                 <span class="line"></span><span>or log in with email</span><span class="line"></span>
             </div>
             <AuthFormEmailAndPassword/>
-            <BtnMainAuth :btnText="btnText"/> 
+            <AuthBtnMainAuth :btnText="btnText"/> 
         </form>
     </div>
 </template>

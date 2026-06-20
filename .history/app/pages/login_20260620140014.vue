@@ -11,8 +11,7 @@ useSeoMeta({
     twitterCard: 'summary_large_image'
 })
 const authTitle=ref("Welcome back");
-const authDesc=ref("Log in to keep the conversation going.");
-const btnText=ref("Login");
+const authDesc=ref("Log in to keep the conversation going.")
 </script>
 
 <template>
@@ -25,7 +24,7 @@ const btnText=ref("Login");
                 <span class="line"></span><span>or log in with email</span><span class="line"></span>
             </div>
             <AuthFormEmailAndPassword/>
-            <BtnMainAuth :btnText="btnText"/> 
+            <
         </form>
     </div>
 </template>

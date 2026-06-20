@@ -12,7 +12,7 @@ useSeoMeta({
 })
 const authTitle=ref("Welcome back");
 const authDesc=ref("Log in to keep the conversation going.");
-const btnText=ref("Login");
+const btnText=ref("Log In");
 </script>
 
 <template>
