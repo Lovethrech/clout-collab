@@ -21,6 +21,7 @@ const logoWordSize=ref("4vh");
 
 <style scoped>
 .layout-default{
+    background-color: red;
     height: 100vh;
 }
 </style>

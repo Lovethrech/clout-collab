@@ -58,12 +58,9 @@ html, body {
     height: 100%;
 }
 
-.dsp-flex-jstf-center-plc-center{
+.display-flex-justify-center-place-center{
     display: flex;
     place-items: center;
     justify-content: center;
 }
-.dsp-flex-flxd-column{
-    display: flex;
-    flex-direction: column;
-}
+.dsp-flex-flxd-

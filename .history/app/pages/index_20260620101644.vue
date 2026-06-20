@@ -6,7 +6,7 @@
 
 <style scoped>
 .index-app{
-    background-color: orange;
+    background-color: ;
     margin: 2vh;
 
 }

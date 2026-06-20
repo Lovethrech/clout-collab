@@ -7,7 +7,7 @@ const logoWordSize=ref("4vh");
 </script>
 
 <template>
-    <div class="layout-default dsp-flex-jstf-center-plc-center dsp-flex-flxd-column">
+    <div class="layout-default display-flex-justify-center-place-center">
         <AppLogo
             :logoMarkWidth="logoMarkWidth"
             :logoMarkHeight="logoMarkHeight"
@@ -17,10 +17,12 @@ const logoWordSize=ref("4vh");
         />
         <slot></slot>
     </div>
+    
 </template>
 
 <style scoped>
 .layout-default{
-    height: 100vh;
+    background-color: red;
+
 }
 </style>

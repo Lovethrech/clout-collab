@@ -58,12 +58,12 @@ html, body {
     height: 100%;
 }
 
-.dsp-flex-jstf-center-plc-center{
+.dsp-flex-jstf-center-place-center{
     display: flex;
     place-items: center;
     justify-content: center;
 }
-.dsp-flex-flxd-column{
+.dsp-flex-flxd-row{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
