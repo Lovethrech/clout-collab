@@ -15,7 +15,7 @@ const authDesc=ref("Join creators, musicians, and brands building together.");
 const btnText=ref("Create account");
 const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
-const authQLink=ref("/login");
+const authQLink=ref("/signup");
 </script>
 
 <template>

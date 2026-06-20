@@ -12,10 +12,10 @@ useSeoMeta({
 })
 const authTitle=ref("Create your account");
 const authDesc=ref("Join creators, musicians, and brands building together.");
-const btnText=ref("Create account");
-const authQ=ref("Already have an account?");
-const authQLinkDesc=ref("Log in");
-const authQLink=ref("/login");
+const btnText=ref("Login");
+const authQ=ref("New to Clout Collabs?");
+const authQLinkDesc=ref("Create an account");
+const authQLink=ref("/signup");
 </script>
 
 <template>
