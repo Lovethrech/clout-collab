@@ -23,6 +23,7 @@ const authDesc=ref("Log in to keep the conversation going.")
             <div class="divider">
                 <span class="line"></span><span>or log in with email</span><span class="line"></span>
             </div>
+            
             <AuthBtnFormEmailAndPassword/>
         </form>
     </div>

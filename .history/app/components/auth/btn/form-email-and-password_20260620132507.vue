@@ -1,0 +1,15 @@
+<template>
+    <div class="form-email-and-password-ctn">
+        <input class="form-email-and-password" id="form-email" type="text" placeholder="Email address" >
+        <div class="field">Email address</div>
+        <div class="field">Password</div>
+    </div>
+</template>
+
+<style scoped>
+.form-email-and-password{ 
+    background:var(--slate-800); 
+    border:1px solid var(--slate-700); border-radius:14px; padding:14px 16px; font-size:13px; color:var(--slate-400); margin-bottom:12px; }
+
+}
+</style>
