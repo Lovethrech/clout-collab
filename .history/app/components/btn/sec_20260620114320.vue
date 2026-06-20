@@ -2,28 +2,29 @@
 const {btnText}=defineProps(["btnText"]);
 </script>
 
+
 <template>
-    <div class="btn-pry">
-        <p class="btn-pry-text">
+    <div class="btn-sec">
+        <p class="btn-sec-text">
             {{btnText}}
         </p>
     </div>
 </template>
 
 <style scoped>
-.btn-pry{
-    background:var(--grad-signature); 
+.btn-sec{
+    background:transparent; 
     color:var(--slate-50); 
     text-align:center; 
-    font-weight:700; 
+    font-weight:600; 
     font-size:1.6vh; 
-    border-radius: 14px; 
+    border-radius:14px; 
     padding:2vh 0; 
-    margin-bottom:2vh; 
-    box-shadow:0 14px 28px -14px rgba(109,40,217,0.6);
+    border:0.2vh solid var(--slate-700); 
+    margin-bottom:2vh;
     transition: transform .4s;
 }
-.btn-pry:hover{
+.sec-pry:hover{
     cursor: pointer;
     transform: scale(0.98);
 }

@@ -21,7 +21,7 @@ const {btnText}=defineProps(["btnText"]);
     padding:2vh 0; 
     margin-bottom:2vh; 
     box-shadow:0 14px 28px -14px rgba(109,40,217,0.6);
-    transition: transform .4s;
+    transition: transform 
 }
 .btn-pry:hover{
     cursor: pointer;
