@@ -13,7 +13,7 @@ useSeoMeta({
 const authTitle=ref("Welcome back");
 const authDesc=ref("Log in to keep the conversation going.");
 const btnText=ref("Login");
-const authQ=ref("New to Clout Collabs?<NuxtLink to'><span class='auth-question-link'>Create an account</span></NuxtLink>");
+const authQ=ref("Already jkj?<NuxtLink to'><span class='auth-question-link'>Login</span></NuxtLink>");
 </script>
 
 <template>

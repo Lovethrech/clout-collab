@@ -15,8 +15,6 @@
     border-radius:14px; 
     padding:1.6vh 0; 
     margin-bottom: 2vh; 
-    transition: all .2s ease-in-out;
-
 }
 .btn-google .g{ 
     width:20px; 
@@ -30,8 +28,6 @@
     color:var(--blue); 
 }
 .btn-google:hover{
-    cursor: pointer;
-    background-color: #000000;
-    color: var(--blue-300);
+    cursor: poter
 }
 </style>

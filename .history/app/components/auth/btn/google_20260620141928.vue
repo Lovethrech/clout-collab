@@ -15,8 +15,6 @@
     border-radius:14px; 
     padding:1.6vh 0; 
     margin-bottom: 2vh; 
-    transition: all .2s ease-in-out;
-
 }
 .btn-google .g{ 
     width:20px; 
@@ -28,6 +26,7 @@
     font-size:1.2vh; 
     font-weight:700; 
     color:var(--blue); 
+    transition: all .2s 
 }
 .btn-google:hover{
     cursor: pointer;
