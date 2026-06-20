@@ -12,5 +12,6 @@ async function handleLogout() {
 <template>
     <div>
         <AppLogo/>
+        <slot />
     </div>
 </template>
