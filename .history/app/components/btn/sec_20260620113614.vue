@@ -1,12 +1,9 @@
-<script setup>
-const {btnText}=defineProps(["btnText"]);
-</script>
 
 
 <template>
     <div class="btn-sec">
         <p class="btn-sec-text">
-            {{btnText}}
+            Login
         </p>
     </div>
 </template>

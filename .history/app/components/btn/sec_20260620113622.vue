@@ -1,12 +1,12 @@
 <script setup>
-const {btnText}=defineProps(["btnText"]);
+const {btnText}=defineProps(["bt"]);
 </script>
 
 
 <template>
     <div class="btn-sec">
         <p class="btn-sec-text">
-            {{btnText}}
+            Login
         </p>
     </div>
 </template>

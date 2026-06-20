@@ -1,4 +1,3 @@
-import { AuthBtnCreateAcctBtn, AuthBtnLoginBtn } from '../../.nuxt/components';
 <template>
     <main class="index-app">
         <h1 id="index-app-title">
@@ -8,8 +7,8 @@ import { AuthBtnCreateAcctBtn, AuthBtnLoginBtn } from '../../.nuxt/components';
             Creators, musicians, and brands building together — locally and globally.
         </p>
         <div class="index-app-auth-option">
-            <AuthBtnCreateAcctBtn/>
-            <AuthBtnLoginBtn/>
+            
+            <BtnSec/>
             <div class="fine-print">
                 By continuing, you agree to the Terms<br>and Privacy Policy.
             </div>

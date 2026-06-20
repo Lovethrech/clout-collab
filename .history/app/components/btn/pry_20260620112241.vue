@@ -1,11 +1,7 @@
-<script setup>
-const {btnText}=defineProps(["btnText"]);
-</script>
-
 <template>
     <div class="btn-pry">
         <p class="btn-pry-text">
-            {{btnText}}
+            Create accot
         </p>
     </div>
 </template>
@@ -17,9 +13,9 @@ const {btnText}=defineProps(["btnText"]);
     text-align:center; 
     font-weight:700; 
     font-size:1.6vh; 
-    border-radius: 14px; 
-    padding:2vh 0; 
-    margin-bottom:2vh; 
+    border-radius:14px; 
+    padding:15px 0; 
+    margin-bottom:12px; 
     box-shadow:0 14px 28px -14px rgba(109,40,217,0.6);
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-const {btnText}=defineProps(["btnText"]);
+const btnText=defineProps(["btnText"]);
 </script>
 
 <template>

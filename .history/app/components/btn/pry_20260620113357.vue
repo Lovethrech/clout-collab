@@ -1,11 +1,11 @@
 <script setup>
-const {btnText}=defineProps(["btnText"]);
+const btnText=defineProps(["btnText"]);
 </script>
 
 <template>
     <div class="btn-pry">
         <p class="btn-pry-text">
-            {{btnText}}
+            {{Create accot}}
         </p>
     </div>
 </template>

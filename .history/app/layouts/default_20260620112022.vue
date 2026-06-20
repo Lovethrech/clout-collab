@@ -1,9 +1,9 @@
 <script setup>
-const logoMarkWidth=ref("4vh");
-const logoMarkHeight=ref("4vh");
-const logoSvgWidth=ref("8vh");
-const logoSvgHeight=ref("8vh");
-const logoWordSize=ref("2vh");
+const logoMarkWidth=ref("5vh");
+const logoMarkHeight=ref("5vh");
+const logoSvgWidth=ref("9vh");
+const logoSvgHeight=ref("9vh");
+const logoWordSize=ref("4vh");
 </script>
 
 <template>
@@ -26,6 +26,6 @@ const logoWordSize=ref("2vh");
     min-height: 100vh;
 }
 .layout-default-mini-ctn{
-    padding: 2vh;
+    background-color: ora;
 }
 </style>

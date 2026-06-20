@@ -6,7 +6,7 @@ const {btnText}=defineProps(["btnText"]);
 <template>
     <div class="btn-sec">
         <p class="btn-sec-text">
-            {{btnText}}
+            Login
         </p>
     </div>
 </template>

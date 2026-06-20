@@ -9,7 +9,7 @@ import { AuthBtnCreateAcctBtn, AuthBtnLoginBtn } from '../../.nuxt/components';
         </p>
         <div class="index-app-auth-option">
             <AuthBtnCreateAcctBtn/>
-            <AuthBtnLoginBtn/>
+            <AuthBtnLoginBtn
             <div class="fine-print">
                 By continuing, you agree to the Terms<br>and Privacy Policy.
             </div>

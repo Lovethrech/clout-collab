@@ -26,6 +26,7 @@ const logoWordSize=ref("2vh");
     min-height: 100vh;
 }
 .layout-default-mini-ctn{
+    background-color: orange;
     padding: 2vh;
 }
 </style>

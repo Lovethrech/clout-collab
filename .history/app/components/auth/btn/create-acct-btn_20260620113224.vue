@@ -1,0 +1,5 @@
+<scriptr
+
+<template>
+    <BtnPry/>
+</template>

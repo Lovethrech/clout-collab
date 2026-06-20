@@ -1,12 +1,7 @@
-<script setup>
-const {btnText}=defineProps(["btnText"]);
-</script>
-
-
 <template>
     <div class="btn-sec">
         <p class="btn-sec-text">
-            {{btnText}}
+            Login
         </p>
     </div>
 </template>
@@ -20,7 +15,7 @@ const {btnText}=defineProps(["btnText"]);
     font-size:1.6vh; 
     border-radius:14px; 
     padding:2vh 0; 
-    border:0.2vh solid var(--slate-700); 
+    border:1.5px solid var(--slate-700); 
     margin-bottom:2vh;
 }
 </style>

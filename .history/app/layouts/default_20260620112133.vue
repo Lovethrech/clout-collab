@@ -2,8 +2,8 @@
 const logoMarkWidth=ref("4vh");
 const logoMarkHeight=ref("4vh");
 const logoSvgWidth=ref("8vh");
-const logoSvgHeight=ref("8vh");
-const logoWordSize=ref("2vh");
+const logoSvgHeight=ref("9vh");
+const logoWordSize=ref("4vh");
 </script>
 
 <template>
@@ -26,6 +26,7 @@ const logoWordSize=ref("2vh");
     min-height: 100vh;
 }
 .layout-default-mini-ctn{
+    background-color: orange;
     padding: 2vh;
 }
 </style>
