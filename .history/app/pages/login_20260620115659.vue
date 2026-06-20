@@ -1,5 +1,11 @@
 <script setup>
-const title = 'Clout Collabs | Authentication'
+useHead({
+    htmlAttrs: {
+        lang: 'en'
+    }
+})
+
+const title = 'Clout Collabs'
 const description = ''
 
 useSeoMeta({
@@ -10,11 +16,8 @@ useSeoMeta({
     ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
     twitterCard: 'summary_large_image'
 })
-const authTitle=ref("Welcome back")
 </script>
 
 <template>
-    <div class="auth-login-page">
-        <AuthTitle :authTitle="authTitle"/>
-    </div>
+    login
 </template>

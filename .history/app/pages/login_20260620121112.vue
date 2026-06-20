@@ -15,6 +15,6 @@ const authTitle=ref("Welcome back")
 
 <template>
     <div class="auth-login-page">
-        <AuthTitle :authTitle="authTitle"/>
+        <AuthTitle :authTitle=""/>
     </div>
 </template>

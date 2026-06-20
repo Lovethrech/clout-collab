@@ -1,3 +1,4 @@
+import { AuthTitle } from '../../.nuxt/components';
 <script setup>
 const title = 'Clout Collabs | Authentication'
 const description = ''
@@ -15,6 +16,6 @@ const authTitle=ref("Welcome back")
 
 <template>
     <div class="auth-login-page">
-        <AuthTitle :authTitle="authTitle"/>
+        <AuthTitle :AuthTitle/>
     </div>
 </template>

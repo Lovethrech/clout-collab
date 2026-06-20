@@ -10,11 +10,9 @@ useSeoMeta({
     ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
     twitterCard: 'summary_large_image'
 })
-const authTitle=ref("Welcome back")
 </script>
 
 <template>
-    <div class="auth-login-page">
-        <AuthTitle :authTitle="authTitle"/>
-    </div>
+    .auth-login-page
+    
 </template>
