@@ -3,7 +3,6 @@ const btnText=ref("Create Account")
 </script>
 
 <template>
-    <NuxtLink to="/signup">
-        <BtnPry :btnText="btnText"/>
-    </NuxtLink>
+    <NuxtLink
+    <BtnPry :btnText="btnText"/>
 </template>

@@ -6,4 +6,5 @@ const btnText=ref("Login")
     <NuxtLink to="/login">
         <BtnSec :btnText="btnText"/>
     </NuxtLink>
+    
 </template>

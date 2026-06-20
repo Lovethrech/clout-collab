@@ -3,7 +3,8 @@ const btnText=ref("Login")
 </script>
 
 <template>
-    <NuxtLink to="/login">
-        <BtnSec :btnText="btnText"/>
+    <NuxtLink>
+        
     </NuxtLink>
+    <BtnSec :btnText="btnText"/>
 </template>
