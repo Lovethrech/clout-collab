@@ -58,8 +58,3 @@ html, body {
     height: 100%;
 }
 
-.display-flex-justify-center-place-center{
-    display: flex;
-    place-items: center;
-    justify-content: center;
-}
