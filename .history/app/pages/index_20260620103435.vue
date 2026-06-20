@@ -18,6 +18,7 @@
     font-weight:700; 
     font-size:4vh; 
     line-height:1.25;
-    margin-bottom:2vh ;
+    margin-bottom:12px; 
+    max-width:24vh;
 }
 </style>

@@ -15,9 +15,6 @@
 }
 #index-app-title{
     font-family:var(--display-font); 
-    font-weight:700; 
-    font-size:4vh; 
-    line-height:1.25;
-    margin-bottom:2vh ;
+    font-weight:700; font-size:24px; line-height:1.25; margin-bottom:12px; max-width:240px;
 }
 </style>
