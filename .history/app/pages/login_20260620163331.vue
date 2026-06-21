@@ -1,4 +1,6 @@
-<script setup>const title = 'Clout Collabs | Authentication'
+<script setup>
+const supabase=useSupabase
+const title = 'Clout Collabs | Authentication'
 const description = ''
 
 useSeoMeta({
@@ -9,8 +11,6 @@ useSeoMeta({
     ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
     twitterCard: 'summary_large_image'
 })
-const supabase=useSupabaseClient();
-const router=useRouter()
 const authTitle=ref("Welcome back");
 const authDesc=ref("Log in to keep the conversation going.");
 const btnText=ref("Login");

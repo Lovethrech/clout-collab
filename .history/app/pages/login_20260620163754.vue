@@ -1,4 +1,5 @@
-<script setup>const title = 'Clout Collabs | Authentication'
+<script setup>
+const title = 'Clout Collabs | Authentication'
 const description = ''
 
 useSeoMeta({
