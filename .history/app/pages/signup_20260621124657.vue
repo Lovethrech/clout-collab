@@ -1,7 +1,5 @@
-<script setup>
-definePageMeta({
-    
-})
+<script setup>[]
+definePageMeta()
 const title = 'Clout Collabs | Authentication'
 const description = ''
 

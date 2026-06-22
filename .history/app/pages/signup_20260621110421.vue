@@ -1,7 +1,4 @@
 <script setup>
-definePageMeta({
-    
-})
 const title = 'Clout Collabs | Authentication'
 const description = ''
 
@@ -19,29 +16,26 @@ const btnText=ref("Create account");
 const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
-const showMainSignUp=ref("none");
 </script>
 
 <template>
     <div class="auth-page">
-        <div class="auth-page-main-ctn" :style="{display: showMainSignUp}">
-            <AuthTitle :authTitle="authTitle"/>
-            <AuthDesc :authDesc="authDesc"/>
-            <form class="auth-page-form">
-                <AuthBtnGoogle/>
-                <div class="divider">
-                    <span class="line"></span><span>or log in with email</span><span class="line"></span>
-                </div>
-                <AuthFormEmailAndPassword/>
-                <BtnMainAuth :btnText="btnText"/> 
-            </form>
-            <br/>
-            <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>
-            <div class="fine-print">
-                By continuing, you agree to the Terms<br>and Privacy Policy.
+        .auth-page-mini-ctn
+        <AuthTitle :authTitle="authTitle"/>
+        <AuthDesc :authDesc="authDesc"/>
+        <form class="auth-page-form">
+            <AuthBtnGoogle/>
+            <div class="divider">
+                <span class="line"></span><span>or log in with email</span><span class="line"></span>
             </div>
+            <AuthFormEmailAndPassword/>
+            <BtnMainAuth :btnText="btnText"/> 
+        </form>
+        <br/>
+        <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>
+        <div class="fine-print">
+            By continuing, you agree to the Terms<br>and Privacy Policy.
         </div>
-        <AuthRole/>
     </div>
 </template>
 

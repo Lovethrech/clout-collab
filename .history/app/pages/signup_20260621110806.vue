@@ -1,7 +1,4 @@
 <script setup>
-definePageMeta({
-    
-})
 const title = 'Clout Collabs | Authentication'
 const description = ''
 
@@ -19,7 +16,7 @@ const btnText=ref("Create account");
 const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
-const showMainSignUp=ref("none");
+const showMainSignUp=ref("none")
 </script>
 
 <template>

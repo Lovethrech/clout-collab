@@ -1,7 +1,7 @@
 <template>
-    <div class="auth-role dsp-flex-jstf-center-plc-center">
+    <div class="auth-role">
         <div class="auth-role-main-ctn">
-            <div class="topnav">
+                        <div class="topnav">
                 <div class="back dsp-flex-jstf-center-plc-center">‹</div>
                 <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
                 <div style="width:30px;"></div>
@@ -9,6 +9,8 @@
 
             <div class="scr-h1" >What brings you here?</div>
             <div class="scr-sub">Pick what fits best, you can add more later.</div>
+
+
         </div>
     </div>
 </template>

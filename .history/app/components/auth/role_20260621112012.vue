@@ -1,6 +1,6 @@
 <template>
-    <div class="auth-role dsp-flex-jstf-center-plc-center">
-        <div class="auth-role-main-ctn">
+    <div class="auth-role">
+        <div class="auth-role-header">
             <div class="topnav">
                 <div class="back dsp-flex-jstf-center-plc-center">‹</div>
                 <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
@@ -10,18 +10,13 @@
             <div class="scr-h1" >What brings you here?</div>
             <div class="scr-sub">Pick what fits best, you can add more later.</div>
         </div>
+        
+
     </div>
 </template>
 
 <style scoped>
-.auth-role{
-    width: 100%;
-    height: 100vh;
-    background: var(--slate-900); 
-    position: absolute;
-    top: 0;
-    left:0;
-}
+.auth
 .topnav{ 
     display:flex; 
     align-items:center; 
@@ -38,5 +33,5 @@
 }
 
 .scr-h1{ font-family:var(--display-font); font-weight:700; font-size:22px; line-height:1.2; margin-bottom:8px; }
-.scr-sub{ font-size:13px; color:var(--slate-400); line-height:1.5; margin-bottom:24px; }
+      .scr-sub{ font-size:13px; color:var(--slate-400); line-height:1.5; margin-bottom:24px; }
 </style>

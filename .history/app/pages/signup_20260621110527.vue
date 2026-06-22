@@ -1,7 +1,4 @@
 <script setup>
-definePageMeta({
-    
-})
 const title = 'Clout Collabs | Authentication'
 const description = ''
 
@@ -19,12 +16,12 @@ const btnText=ref("Create account");
 const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
-const showMainSignUp=ref("none");
+
 </script>
 
 <template>
     <div class="auth-page">
-        <div class="auth-page-main-ctn" :style="{display: showMainSignUp}">
+        <div class="auth-page-main-ctn">
             <AuthTitle :authTitle="authTitle"/>
             <AuthDesc :authDesc="authDesc"/>
             <form class="auth-page-form">
@@ -41,7 +38,7 @@ const showMainSignUp=ref("none");
                 By continuing, you agree to the Terms<br>and Privacy Policy.
             </div>
         </div>
-        <AuthRole/>
+        
     </div>
 </template>
 

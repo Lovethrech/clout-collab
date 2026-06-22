@@ -1,5 +1,5 @@
 <template>
-    <div class="auth-role dsp-flex-jstf-center-plc-center">
+    <div class="auth-role">
         <div class="auth-role-main-ctn">
             <div class="topnav">
                 <div class="back dsp-flex-jstf-center-plc-center">‹</div>
