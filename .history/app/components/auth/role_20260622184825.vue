@@ -6,7 +6,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
             <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
-                <div class="back dsp-flex-jstf-center-plc-center" @click="showRoleBox">‹</div>
+                <div class="back dsp-flex-jstf-center-plc-center" :onClick="showRoleBox">‹</div>
                 <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
                 <div style="width:30px;"></div>
             </div>
@@ -16,17 +16,17 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 
             <div class="role-list">
                 <div class="role-card selected">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><rect x="4" y="14" width="40" height="26" rx="7" fill="none" stroke="#fff" stroke-width="3"/> <circle cx="24" cy="27" r="8" fill="none" stroke="#fff" stroke-width="3"/> <rect x="16" y="8" width="10" height="7" rx="2" fill="#fff"/></svg></div>
+                    <div class="role-icon"><svg viewBox="0 0 48 48"><rect x="4" y="14" width="40" height="26" rx="7" fill="none" stroke="#fff" stroke-width="3"/> <circle cx="24" cy="27" r="8" fill="none" stroke="#fff" stroke-width="3"/> <rect x="16" y="8" width="10" height="7" rx="2" fill="#fff"/></svg></div>
                     <div class="role-text"><div class="t">Creator</div><div class="d">Content, video, photo & more</div></div>
-                    <div class="role-check dsp-flex-jstf-center-plc-center">✓</div>
+                    <div class="role-check">✓</div>
                 </div>
                 <div class="role-card">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="7" fill="none" stroke="#94A3B8" stroke-width="3"/><rect x="20" y="9" width="3" height="26" fill="#94A3B8"/><polygon points="23,9 23,19 33,14" fill="#94A3B8"/></svg></div>
+                    <div class="role-icon"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="7" fill="none" stroke="#94A3B8" stroke-width="3"/><rect x="20" y="9" width="3" height="26" fill="#94A3B8"/><polygon points="23,9 23,19 33,14" fill="#94A3B8"/></svg></div>
                     <div class="role-text"><div class="t">Musician</div><div class="d">Singers, producers, DJs & more</div></div>
-                    <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
+                    <div class="role-check empty"></div>
                 </div>
                 <div class="role-card">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center">
+                    <div class="role-icon ">
                         <svg viewBox="0 0 48 48">
                             <rect x="6" y="18" width="36" height="22" rx="4" fill="none" stroke="#94A3B8" stroke-width="3"/>
                             <rect x="18" y="10" width="12" height="9" rx="3" fill="none" stroke="#94A3B8" stroke-width="3"/>
@@ -34,7 +34,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
                         </svg>
                     </div>
                     <div class="role-text"><div class="t">Brand</div><div class="d">Hiring creators for campaigns</div></div>
-                    <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
+                    <div class="role-check empty"></div>
                 </div>
                 <div class="role-card">
                     <div class="role-icon dsp-flex-jstf-center-plc-center">
@@ -45,7 +45,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
                         </svg>
                     </div>
                     <div class="role-text"><div class="t">Creative Pro</div><div class="d">Editors, designers, animators</div></div>
-                    <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
+                    <div class="role-check empty"></div>
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .role-list{ 
     display:flex; 
     flex-direction:column; 
-    gap: 3vh; 
+    gap:11px; 
     margin-bottom:18px; 
 }
 .role-card{ 
@@ -130,36 +130,12 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     background:var(--slate-700); 
     flex-shrink:0; 
 }
-.role-card.selected .role-icon{ 
-    background:var(--grad-signature); 
-}
-.role-icon svg{ 
-    width:20px; 
-    height:20px; 
-}
-.role-text .t{ 
-    font-weight:700; 
-    font-size: 2vh; 
-    margin-bottom:2px; 
-}
-.role-text .d{ 
-    font-size: 1.4vh; 
-    color:var(--slate-400); 
-    line-height:1.3; 
-}
-.role-check{ 
-    margin-left:auto; 
-    width:20px; 
-    height:20px; 
-    border-radius:50%; 
-    background:var(--grad-signature); 
-    color:#fff; 
-    font-size:11px; 
-    flex-shrink:0; }
-.role-check.empty{ 
-    background:transparent; 
-    border:1.5px solid var(--slate-600); 
-}
+.role-card.selected .role-icon{ background:var(--grad-signature); }
+.role-icon svg{ width:20px; height:20px; }
+.role-text .t{ font-weight:700; font-size:13.5px; margin-bottom:2px; }
+.role-text .d{ font-size:11px; color:var(--slate-400); line-height:1.3; }
+.role-check{ margin-left:auto; width:20px; height:20px; border-radius:50%; background:var(--grad-signature); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; flex-shrink:0; }
+.role-check.empty{ background:transparent; border:1.5px solid var(--slate-600); }
 
 @media screen and (max-width:1050px) and (min-width:951px) {
     .auth-role-main-ctn{

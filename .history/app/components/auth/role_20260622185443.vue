@@ -6,7 +6,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
             <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
-                <div class="back dsp-flex-jstf-center-plc-center" @click="showRoleBox">‹</div>
+                <div class="back dsp-flex-jstf-center-plc-center" :onClick="showRoleBox">‹</div>
                 <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
                 <div style="width:30px;"></div>
             </div>
@@ -156,10 +156,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     color:#fff; 
     font-size:11px; 
     flex-shrink:0; }
-.role-check.empty{ 
-    background:transparent; 
-    border:1.5px solid var(--slate-600); 
-}
+.role-check.empty{ background:transparent; border:1.5px solid var(--slate-600); }
 
 @media screen and (max-width:1050px) and (min-width:951px) {
     .auth-role-main-ctn{

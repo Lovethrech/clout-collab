@@ -6,7 +6,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
             <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
-                <div class="back dsp-flex-jstf-center-plc-center" @click="showRoleBox">‹</div>
+                <div class="back dsp-flex-jstf-center-plc-center" :onClick="showRoleBox">‹</div>
                 <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
                 <div style="width:30px;"></div>
             </div>
