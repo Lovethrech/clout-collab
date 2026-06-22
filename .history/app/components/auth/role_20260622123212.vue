@@ -37,9 +37,10 @@
     font-size:14px; 
     color:var(--slate-400); 
 }
-.steps{ display:flex; gap:6px; }
-.steps .dot{ width:18px; height:5px; border-radius:3px; background:var(--slate-700); }
-.steps .dot.active{ background:var(--grad-signature); }
+.back{ width:30px; height:30px; border-radius:50%; background:var(--slate-800); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--slate-400); }
+      .steps{ display:flex; gap:6px; }
+      .steps .dot{ width:18px; height:5px; border-radius:3px; background:var(--slate-700); }
+      .steps .dot.active{ background:var(--grad-signature); }
 .scr-h1{ font-family:var(--display-font); font-weight:700; font-size:22px; line-height:1.2; margin-bottom:8px; }
 .scr-sub{ font-size:13px; color:var(--slate-400); line-height:1.5; margin-bottom:24px; }
 

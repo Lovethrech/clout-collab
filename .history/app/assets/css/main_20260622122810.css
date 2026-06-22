@@ -66,8 +66,7 @@ html, body {
 }
 .dsp-flex-jstf-center-plc-spcbtw{
     display: flex;
-    place-items: center;
-    justify-content: space-between;
+    
 }
 .dsp-flex-flxd-column{
     display: flex;
