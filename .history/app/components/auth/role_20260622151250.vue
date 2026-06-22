@@ -64,6 +64,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .topnav{ 
     padding:0 0 1vh; 
 }
+
 .steps{ 
     display:flex; 
     gap: 1.2em; 

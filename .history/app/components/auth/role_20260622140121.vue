@@ -5,7 +5,11 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 <template>
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
-            <AuthRoleBackButton/>
+            <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
+                <div class="back dsp-flex-jstf-center-plc-center" :onClick="showRoleBox">‹</div>
+                <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
+                <div style="width:30px;"></div>
+            </div>
 
             <div class="scr-h1" >What brings you here?</div>
             <div class="scr-sub">Pick what fits best, you can add more later.</div>
@@ -62,7 +66,15 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     width: 40%;
 }
 .topnav{ 
-    padding:0 0 1vh; 
+    padding:2vh 0 1vh; 
+}
+.back{ 
+    width:3vh; 
+    height:3vh; 
+    border-radius:50%; 
+    background:var(--slate-800); 
+    font-size:3vh; 
+    color:var(--slate-400); 
 }
 .steps{ 
     display:flex; 
@@ -93,8 +105,8 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .role-list{ 
     display:flex; 
     flex-direction:column; 
-    gap:3vh; 
-    margin-bottom:2vh; 
+    gap:11px; 
+    margin-bottom:18px; 
 }
 .role-card{ 
     display:flex; 
@@ -110,8 +122,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .role-icon svg{ width:20px; height:20px; }
 .role-text .t{ 
     font-weight:700; 
-    font-size:2vh; 
-    margin-bottom:2px; }
+    font-size:13.5px; margin-bottom:2px; }
 .role-text .d{ font-size:11px; color:var(--slate-400); line-height:1.3; }
 .role-check{ margin-left:auto; width:20px; height:20px; border-radius:50%; background:var(--grad-signature); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; flex-shrink:0; }
 .role-check.empty{ background:transparent; border:1.5px solid var(--slate-600); }

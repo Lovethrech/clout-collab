@@ -5,7 +5,11 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 <template>
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
-            <AuthRoleBackButton/>
+            <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
+                <div class="back dsp-flex-jstf-center-plc-center" :onClick="showRoleBox">‹</div>
+                <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
+                <div style="width:30px;"></div>
+            </div>
 
             <div class="scr-h1" >What brings you here?</div>
             <div class="scr-sub">Pick what fits best, you can add more later.</div>
@@ -62,7 +66,15 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     width: 40%;
 }
 .topnav{ 
-    padding:0 0 1vh; 
+    padding:2vh 0 1vh; 
+}
+.back{ 
+    width:3vh; 
+    height:3vh; 
+    border-radius:50%; 
+    background:var(--slate-800); 
+    font-size:3vh; 
+    color:var(--slate-400); 
 }
 .steps{ 
     display:flex; 
@@ -93,7 +105,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .role-list{ 
     display:flex; 
     flex-direction:column; 
-    gap:3vh; 
+    gap:11px; 
     margin-bottom:2vh; 
 }
 .role-card{ 

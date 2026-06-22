@@ -5,7 +5,11 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 <template>
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
-            <AuthRoleBackButton/>
+            <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
+                <div class="back dsp-flex-jstf-center-plc-center" :onClick="showRoleBox">‹</div>
+                <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
+                <div style="width:30px;"></div>
+            </div>
 
             <div class="scr-h1" >What brings you here?</div>
             <div class="scr-sub">Pick what fits best, you can add more later.</div>
@@ -17,7 +21,11 @@ const {showRoleBox}=defineProps(['showRoleBox']);
                     <div class="role-check">✓</div>
                 </div>
                 <div class="role-card">
-                    <div class="role-icon"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="7" fill="none" stroke="#94A3B8" stroke-width="3"/><rect x="20" y="9" width="3" height="26" fill="#94A3B8"/><polygon points="23,9 23,19 33,14" fill="#94A3B8"/></svg></div>
+                    <div class="role-icon"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="7" fill="none" stroke="#94A3B8" stroke-width="3"/>
+                            <rect x="20" y="9" width="3" height="26" fill="#94A3B8"/>
+                            <polygon points="23,9 23,19 33,14" fill="#94A3B8"/>
+                        </svg>
+                    </div>
                     <div class="role-text"><div class="t">Musician</div><div class="d">Singers, producers, DJs & more</div></div>
                     <div class="role-check empty"></div>
                 </div>
@@ -62,7 +70,15 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     width: 40%;
 }
 .topnav{ 
-    padding:0 0 1vh; 
+    padding:2vh 0 1vh; 
+}
+.back{ 
+    width:30px; 
+    height:30px; 
+    border-radius:50%; 
+    background:var(--slate-800); 
+    font-size:2vh; 
+    color:var(--slate-400); 
 }
 .steps{ 
     display:flex; 
@@ -80,38 +96,23 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .scr-h1{ 
     font-family:var(--display-font); 
     font-weight:700; 
-    font-size: 3.6vh; 
+    font-size:22px; 
     line-height:1.2; 
-    margin-bottom:1vh; 
+    margin-bottom:8px; 
 }
 .scr-sub{ 
-    font-size:2vh; 
+    font-size:13px; 
     color:var(--slate-400); 
     line-height:1.5; 
     margin-bottom:24px; 
 }
-.role-list{ 
-    display:flex; 
-    flex-direction:column; 
-    gap:3vh; 
-    margin-bottom:2vh; 
-}
-.role-card{ 
-    display:flex; 
-    align-items:center; 
-    gap:13px; 
-    border:1.5px solid var(--slate-700); 
-    border-radius:16px; padding:13px 14px; 
-    background:var(--slate-800); 
-}
+.role-list{ display:flex; flex-direction:column; gap:11px; margin-bottom:18px; }
+.role-card{ display:flex; align-items:center; gap:13px; border:1.5px solid var(--slate-700); border-radius:16px; padding:13px 14px; background:var(--slate-800); }
 .role-card.selected{ border-color:var(--purple-500); background:rgba(109,40,217,0.14); box-shadow:0 0 0 3px rgba(139,92,246,0.18); }
 .role-icon{ width:38px; height:38px; border-radius:11px; background:var(--slate-700); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .role-card.selected .role-icon{ background:var(--grad-signature); }
 .role-icon svg{ width:20px; height:20px; }
-.role-text .t{ 
-    font-weight:700; 
-    font-size:2vh; 
-    margin-bottom:2px; }
+.role-text .t{ font-weight:700; font-size:13.5px; margin-bottom:2px; }
 .role-text .d{ font-size:11px; color:var(--slate-400); line-height:1.3; }
 .role-check{ margin-left:auto; width:20px; height:20px; border-radius:50%; background:var(--grad-signature); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; flex-shrink:0; }
 .role-check.empty{ background:transparent; border:1.5px solid var(--slate-600); }
