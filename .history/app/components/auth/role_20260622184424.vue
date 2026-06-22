@@ -75,7 +75,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     background:var(--slate-800); 
     font-size:3vh; 
     color:var(--slate-400); 
-    cursor: pointer;
+    cursor: pointer'
 }
 .steps{ 
     display:flex; 

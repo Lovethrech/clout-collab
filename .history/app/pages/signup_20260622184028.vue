@@ -20,16 +20,14 @@ const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
 const showMainSignUp=ref("block");
-const showRole=ref("none");
+conts 
 
 const showRoleBox=()=>{
     if (showMainSignUp.value==="block"){
-        showMainSignUp.value="none";
-        showRole.value="block";
+
     }
     else{
-        showMainSignUp.value="block";
-        showRole.value="none";
+
     }
 }
 </script>
@@ -45,7 +43,7 @@ const showRoleBox=()=>{
                     <span class="line"></span><span>or log in with email</span><span class="line"></span>
                 </div>
                 <AuthFormEmailAndPassword/>
-                <BtnMainAuth :btnText="btnText" @click="showRoleBox"/> 
+                <BtnMainAuth :btnText="btnText"/> 
             </form>
             <br/>
             <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>
@@ -53,7 +51,7 @@ const showRoleBox=()=>{
                 By continuing, you agree to the Terms<br>and Privacy Policy.
             </div>
         </div>
-        <AuthRole :style="{display:showRole}" :showRoleBox="showRoleBox"/>
+        <AuthRole/>
     </div>
 </template>
 
