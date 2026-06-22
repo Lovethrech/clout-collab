@@ -5,11 +5,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 <template>
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
-            <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
-                <div class="back dsp-flex-jstf-center-plc-center" :onClick="showRoleBox">‹</div>
-                <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
-                <div style="width:30px;"></div>
-            </div>
+            <AuthRoleBackButton/>
 
             <div class="scr-h1" >What brings you here?</div>
             <div class="scr-sub">Pick what fits best, you can add more later.</div>
@@ -19,7 +15,6 @@ const {showRoleBox}=defineProps(['showRoleBox']);
                     <div class="role-icon"><svg viewBox="0 0 48 48"><rect x="4" y="14" width="40" height="26" rx="7" fill="none" stroke="#fff" stroke-width="3"/> <circle cx="24" cy="27" r="8" fill="none" stroke="#fff" stroke-width="3"/> <rect x="16" y="8" width="10" height="7" rx="2" fill="#fff"/></svg></div>
                     <div class="role-text"><div class="t">Creator</div><div class="d">Content, video, photo & more</div></div>
                     <div class="role-check">✓</div>
-                </div>
                 <div class="role-card">
                     <div class="role-icon"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="7" fill="none" stroke="#94A3B8" stroke-width="3"/><rect x="20" y="9" width="3" height="26" fill="#94A3B8"/><polygon points="23,9 23,19 33,14" fill="#94A3B8"/></svg></div>
                     <div class="role-text"><div class="t">Musician</div><div class="d">Singers, producers, DJs & more</div></div>
@@ -67,14 +62,6 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 }
 .topnav{ 
     padding:0 0 1vh; 
-}
-.back{ 
-    width:3vh; 
-    height:3vh; 
-    border-radius:50%; 
-    background:var(--slate-800); 
-    font-size:3vh; 
-    color:var(--slate-400); 
 }
 .steps{ 
     display:flex; 
