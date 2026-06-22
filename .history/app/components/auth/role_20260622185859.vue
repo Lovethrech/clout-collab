@@ -64,7 +64,6 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .auth-role-main-ctn{
     padding: 2vh;
     width: 40%;
-    margin-top: 14vh;
 }
 .topnav{ 
     padding:2vh 0 1vh; 
@@ -135,8 +134,8 @@ const {showRoleBox}=defineProps(['showRoleBox']);
     background:var(--grad-signature); 
 }
 .role-icon svg{ 
-    width:20px; 
-    height:20px; 
+    width:30px; 
+    height:30px; 
 }
 .role-text .t{ 
     font-weight:700; 

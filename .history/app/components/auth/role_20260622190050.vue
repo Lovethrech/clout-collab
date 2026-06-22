@@ -64,7 +64,8 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 .auth-role-main-ctn{
     padding: 2vh;
     width: 40%;
-    margin-top: 14vh;
+    background-color: red;
+    margin-top: 10vh;
 }
 .topnav{ 
     padding:2vh 0 1vh; 
