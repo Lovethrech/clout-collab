@@ -1,37 +1,40 @@
 <script setup>
+import RoleIcon from '~/components/atoms/RoleIcon.vue'
+import RoleCheck from '~/components/atoms/RoleCheck.vue'
+
 defineProps({
-    role: {
-        type: Object,
-        required: true
-    },
-    selected: {
-        type: Boolean,
-        default: false
-    }
+  role: {
+    type: Object,
+    required: true
+  },
+  selected: {
+    type: Boolean,
+    default: false
+  }
 })
 
 defineEmits(['select'])
 </script>
 
 <template>
-    <button
-        type="button"
-        class="role-card"
-        :class="{ selected }"
-        @click="$emit('select', role)"
-    >
-        <RoleIcon
-        :type="role.icon"
-        :selected="selected"
-        />
+  <button
+    type="button"
+    class="role-card"
+    :class="{ selected }"
+    @click="$emit('select', role)"
+  >
+    <RoleIcon
+      :type="role.icon"
+      :selected="selected"
+    />
 
-        <div class="role-text">
-        <div class="t">{{ role.title }}</div>
-        <div class="d">{{ role.description }}</div>
-        </div>
+    <div class="role-text">
+      <div class="t">{{ role.title }}</div>
+      <div class="d">{{ role.description }}</div>
+    </div>
 
-        <RoleCheck :selected="selected" />
-    </button>
+    <RoleCheck :selected="selected" />
+  </button>
 </template>
 
 <style scoped>

@@ -1,13 +1,16 @@
 <script setup>
+import RoleIcon from '~/components/atoms/RoleIcon.vue'
+import RoleCheck from '~/components/atoms/RoleCheck.vue'
+
 defineProps({
-    role: {
-        type: Object,
-        required: true
-    },
-    selected: {
-        type: Boolean,
-        default: false
-    }
+  role: {
+    type: Object,
+    required: true
+  },
+  selected: {
+    type: Boolean,
+    default: false
+  }
 })
 
 defineEmits(['select'])

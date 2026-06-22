@@ -1,4 +1,7 @@
 <script setup>
+import RoleIcon from '~/components/atoms/RoleIcon.vue'
+import RoleCheck from '~/components/atoms/RoleCheck.vue'
+
 defineProps({
     role: {
         type: Object,
