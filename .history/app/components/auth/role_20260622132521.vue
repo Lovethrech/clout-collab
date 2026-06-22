@@ -1,5 +1,5 @@
 <script setup>
-const {showRoleBox}=defineProps(['showRoleBox']);
+const {showRoleBox}=defineProps(['showRole'])
 </script>
 
 <template>

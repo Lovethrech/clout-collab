@@ -24,12 +24,7 @@ const showRole=ref("none");
 
 const showRoleBox=()=>{
     if (showMainSignUp.value==="block"){
-        showMainSignUp.value="none";
-        showRole.value="flex";
-    }
-    else{
-        showMainSignUp.value="block";
-        showRole.value="none";
+
     }
 }
 </script>
@@ -53,7 +48,7 @@ const showRoleBox=()=>{
                 By continuing, you agree to the Terms<br>and Privacy Policy.
             </div>
         </div>
-        <AuthRole :style="{display:showRole}" :showRoleBox="showRoleBox"/>
+        <AuthRole :style="{display:showRole}"/>
     </div>
 </template>
 

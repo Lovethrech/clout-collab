@@ -29,7 +29,7 @@ const showRoleBox=()=>{
     }
     else{
         showMainSignUp.value="block";
-        showRole.value="none";
+        showRole.value="flex";
     }
 }
 </script>
@@ -53,7 +53,7 @@ const showRoleBox=()=>{
                 By continuing, you agree to the Terms<br>and Privacy Policy.
             </div>
         </div>
-        <AuthRole :style="{display:showRole}" :showRoleBox="showRoleBox"/>
+        <AuthRole :style="{display:showRole}"/>
     </div>
 </template>
 

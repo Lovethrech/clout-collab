@@ -1,6 +1,4 @@
-<script setup>
-const {showRoleBox}=defineProps(['showRoleBox']);
-</script>
+
 
 <template>
     <div class="auth-role dsp-flex-jstf-center-plc-center">
