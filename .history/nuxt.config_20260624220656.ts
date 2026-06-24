@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: [
     '@vite-pwa/nuxt',
     '@nuxtjs/supabase',
-    '@pinia/nuxt'
+    '@pinia'
   ],
   supabase:{
     redirect: false
