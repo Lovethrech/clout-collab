@@ -1,17 +1,7 @@
 <script setup>
 const {showRoleBox}=defineProps(['showRoleBox']);
 
-const selectedCardTheme=ref({
-    borderCollor: "var(--purple-500)",
-    iconColor: "",
-    iconBg: "var(--grad-signature)",
-    listBg: "background:rgba(109,40,217,0.14)",
-    listBoxShadow: "box-shadow:0 0 0 3px rgba(139,92,246,0.18)"
-})
-
-const creatorSelectTheme=ref({
-    
-})
+const creatorSelect
 </script>
 
 <template>
