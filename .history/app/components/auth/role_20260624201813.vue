@@ -26,12 +26,24 @@ const {showRoleBox}=defineProps(['showRoleBox']);
                     <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
                 </div>
                 <div class="role-card">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="36" height="22" rx="4" fill="none" stroke="#94A3B8" stroke-width="3"/><rect x="18" y="10" width="12" height="9" rx="3" fill="none" stroke="#94A3B8" stroke-width="3"/><line x1="6" y1="28" x2="42" y2="28" stroke="#94A3B8" stroke-width="2.5"/></svg></div>
+                    <div class="role-icon dsp-flex-jstf-center-plc-center">
+                        <svg viewBox="0 0 48 48">
+                            <rect x="6" y="18" width="36" height="22" rx="4" fill="none" stroke="#94A3B8" stroke-width="3"/>
+                            <rect x="18" y="10" width="12" height="9" rx="3" fill="none" stroke="#94A3B8" stroke-width="3"/>
+                            <line x1="6" y1="28" x2="42" y2="28" stroke="#94A3B8" stroke-width="2.5"/>
+                        </svg>
+                    </div>
                     <div class="role-text"><div class="t">Brand</div><div class="d">Hiring creators for campaigns</div></div>
                     <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
                 </div>
                 <div class="role-card">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><rect x="11" y="6" width="24" height="15" rx="4" fill="#94A3B8" opacity="0.45"/><rect x="8" y="14" width="26" height="15" rx="4" fill="#94A3B8" opacity="0.7"/><rect x="6" y="22" width="28" height="15" rx="4" fill="#94A3B8"/></svg></div>
+                    <div class="role-icon dsp-flex-jstf-center-plc-center">
+                        <svg viewBox="0 0 48 48">
+                            <rect x="11" y="6" width="24" height="15" rx="4" fill="#94A3B8" opacity="0.45"/>
+                            <rect x="8" y="14" width="26" height="15" rx="4" fill="#94A3B8" opacity="0.7"/>
+                            <rect x="6" y="22" width="28" height="15" rx="4" fill="#94A3B8"/>
+                        </svg>
+                    </div>
                     <div class="role-text"><div class="t">Creative Pro</div><div class="d">Editors, designers, animators</div></div>
                     <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
                 </div>

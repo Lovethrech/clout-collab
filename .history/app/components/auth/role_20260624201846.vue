@@ -31,7 +31,13 @@ const {showRoleBox}=defineProps(['showRoleBox']);
                     <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
                 </div>
                 <div class="role-card">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><rect x="11" y="6" width="24" height="15" rx="4" fill="#94A3B8" opacity="0.45"/><rect x="8" y="14" width="26" height="15" rx="4" fill="#94A3B8" opacity="0.7"/><rect x="6" y="22" width="28" height="15" rx="4" fill="#94A3B8"/></svg></div>
+                    <div class="role-icon dsp-flex-jstf-center-plc-center">
+                        <svg viewBox="0 0 48 48">
+                            <rect x="11" y="6" width="24" height="15" rx="4" fill="#94A3B8" opacity="0.45"/>
+                            <rect x="8" y="14" width="26" height="15" rx="4" fill="#94A3B8" opacity="0.7"/>
+                            <rect x="6" y="22" width="28" height="15" rx="4" fill="#94A3B8"/>
+                        </svg>
+                    </div>
                     <div class="role-text"><div class="t">Creative Pro</div><div class="d">Editors, designers, animators</div></div>
                     <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
                 </div>
