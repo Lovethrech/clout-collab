@@ -46,7 +46,7 @@ const showRoleBox=()=>{
                     <span class="line"></span><span>or sign up with email</span><span class="line"></span>
                 </div>
                 <AuthFormEmailAndPassword/>
-                <BtnMainAuth :btnText="btnText" :loading="loading" @click="showRoleBox"/> 
+                <BtnMainAuth :btnText="btnText" :loading="" @click="showRoleBox"/> 
             </form>
             <br/>
             <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>

@@ -15,7 +15,7 @@ useSeoMeta({
 })
 const authTitle=ref("Create your account");
 const authDesc=ref("Join creators, musicians, and brands building together.");
-const loading=ref(false);
+const loading
 const btnText=ref("Create account");
 const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
@@ -46,7 +46,7 @@ const showRoleBox=()=>{
                     <span class="line"></span><span>or sign up with email</span><span class="line"></span>
                 </div>
                 <AuthFormEmailAndPassword/>
-                <BtnMainAuth :btnText="btnText" :loading="loading" @click="showRoleBox"/> 
+                <BtnMainAuth :btnText="btnText" @click="showRoleBox"/> 
             </form>
             <br/>
             <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>

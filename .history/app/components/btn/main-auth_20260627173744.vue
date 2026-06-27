@@ -3,9 +3,9 @@ const {btnText}=defineProps(["btnText"]);
 </script>
 
 <template>
-    <div class="btn-main-auth" type="submit" :disabled="loading">
+    <div class="btn-main-auth" type="submit">
         <p class="btn-main-auth-text">
-            {{ loading ? "Processing..." : btnText }}
+            {{btnText}}
         </p>
     </div>
 </template>

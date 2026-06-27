@@ -5,7 +5,8 @@ const {btnText}=defineProps(["btnText"]);
 <template>
     <div class="btn-main-auth" type="submit" :disabled="loading">
         <p class="btn-main-auth-text">
-            {{ loading ? "Processing..." : btnText }}
+            {{ loading ? "Loading..." : btnText }}
+
         </p>
     </div>
 </template>
