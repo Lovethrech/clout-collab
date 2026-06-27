@@ -11,7 +11,8 @@ const roles = [
     { value: 'musician', emoji: '🎤', label: 'Musician', desc: 'Artists, producers, DJs' },
     { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
     { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
-];
+]
+
 const complete = () => {
     if (selectedRole.value) {
         emit('complete', selectedRole.value)
@@ -43,13 +44,6 @@ const complete = () => {
                     </div>
                 </div>
             </div>
-            <button
-                @click="complete"
-                :disabled="!selectedRole"
-                class=""
-            >
-                Continue
-            </button>
         </div>
     </div>
 </template>

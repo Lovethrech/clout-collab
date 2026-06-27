@@ -44,12 +44,12 @@ const complete = () => {
                 </div>
             </div>
             <button
-                @click="complete"
-                :disabled="!selectedRole"
-                class=""
-            >
-                Continue
-            </button>
+        @click="complete"
+        :disabled="!selectedRole"
+        class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-4 rounded-2xl disabled:opacity-50"
+      >
+        Continue
+      </button>
         </div>
     </div>
 </template>

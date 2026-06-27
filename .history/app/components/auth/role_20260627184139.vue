@@ -43,13 +43,7 @@ const complete = () => {
                     </div>
                 </div>
             </div>
-            <button
-                @click="complete"
-                :disabled="!selectedRole"
-                class=""
-            >
-                Continue
-            </button>
+            
         </div>
     </div>
 </template>
