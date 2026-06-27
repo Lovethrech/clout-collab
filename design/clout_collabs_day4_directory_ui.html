@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Clout Collabs | Creator Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── Reset ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Design Tokens ─────────────────────────── */
+:root {
+  --bg:         #0F172A;
+  --card:       #1E293B;
+  --card-hover: #243350;
+  --layer:      #0D1525;
+  --border:     rgba(255,255,255,0.07);
+  --border-hi:  rgba(255,255,255,0.12);
+
+  /* Brand palette */
+  --purple:     #6D28D9;
+  --purple-md:  #7C3AED;
+  --purple-lt:  #A78BFA;
+  --blue:       #3B82F6;
+  --blue-lt:    #93C5FD;
+  --pink:       #EC4899;
+  --pink-lt:    #F9A8D4;
+  --green:      #10B981;
+  --green-lt:   #6EE7B7;
+
+  /* Text */
+  --tx-1: #F8FAFC;
+  --tx-2: #94A3B8;
+  --tx-3: #64748B;
+
+  /* Card category colors injected via JS */
+  --cat: var(--purple);
+  --cat-lt: var(--purple-lt);
+  --cat-soft: rgba(109,40,217,0.12);
+
+  --radius-card: 16px;
+  --radius-chip: 100px;
+  --radius-btn:  10px;
+  --font: 'Inter', -apple-system, sans-serif;
+}
+
+/* ─── Base ───────────────────────────────────── */
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--tx-1);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Top Nav ────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(15,23,42,0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nav-logo {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  background: linear-gradient(135deg, var(--purple-lt) 0%, var(--blue-lt) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--tx-2);
+  font-size: 15px;
+  transition: background 0.18s, border-color 0.18s;
+  position: relative;
+}
+.nav-btn:hover { background: var(--card-hover); border-color: var(--border-hi); }
+
+.notif-dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 2px solid var(--bg);
+}
+
+.nav-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.14);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ─── Page Header ───────────────────────────── */
+.page-head {
+  padding: 22px 20px 0;
+}
+.page-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
+  color: var(--tx-1);
+}
+.page-sub {
+  font-size: 14px;
+  color: var(--tx-2);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ─── Search ────────────────────────────────── */
+.search-wrap {
+  padding: 16px 20px 0;
+}
+.search-inner {
+  position: relative;
+}
+.search-ico {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--tx-3);
+  font-size: 15px;
+  pointer-events: none;
+  line-height: 1;
+}
+.search-inp {
+  width: 100%;
+  height: 46px;
+  padding: 0 42px 0 42px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--tx-1);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-inp::placeholder { color: var(--tx-3); }
+.search-inp:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(109,40,217,0.18);
+}
+.filter-ico-btn {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--cat-soft);
+  border: none;
+  color: var(--purple-lt);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+.filter-ico-btn:hover { background: rgba(109,40,217,0.26); }
+
+/* ─── Filter Chips ──────────────────────────── */
+.filters {
+  padding: 14px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chip-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.chip-row::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--radius-chip);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--tx-2);
+  transition: all 0.18s;
+  white-space: nowrap;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.chip:hover { border-color: var(--purple-md); color: var(--tx-1); }
+.chip.active-role { background: var(--purple); border-color: var(--purple); color: #fff; font-weight: 600; }
+.chip.active-loc  { background: var(--blue);   border-color: var(--blue);   color: #fff; font-weight: 600; }
+
+.chip-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+.chip.active-role .chip-dot { background: #fff; opacity: 1; }
+.chip.active-loc  .chip-dot { background: #fff; opacity: 1; }
+
+/* ─── Results Bar ───────────────────────────── */
+.results-bar {
+  padding: 14px 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.results-count {
+  font-size: 13px;
+  color: var(--tx-2);
+}
+.results-count strong { color: var(--tx-1); font-weight: 600; }
+.sort-btn {
+  font-size: 12px;
+  color: var(--purple-lt);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: color 0.18s;
+}
+.sort-btn:hover { color: var(--blue-lt); }
+
+/* ─── Grid ───────────────────────────────────── */
+.grid {
+  padding: 12px 20px 110px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 1100px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ─── Creator Card ───────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 18px 18px 16px 21px;
+  cursor: pointer;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s, background 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Category accent strip */
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 3px; height: 100%;
+  background: var(--cat, var(--purple));
+  border-radius: 3px 0 0 3px;
+  transition: width 0.22s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: var(--card-hover);
+  border-color: rgba(255,255,255,0.13);
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.4),
+    0 0 0 1px var(--cat, var(--purple)),
+    0 0 30px rgba(109,40,217,0.12);
+}
+.card:hover::before { width: 4px; }
+
+/* Featured glow */
+.card.is-featured {
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 0.5px var(--border-hi);
+}
+
+.feat-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: linear-gradient(135deg, var(--purple-md), var(--pink));
+  color: #fff;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 3px 9px;
+  border-radius: var(--radius-chip);
+  text-transform: uppercase;
+}
+
+/* Card header: avatar + name */
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.avatar-wrap { position: relative; flex-shrink: 0; }
+.avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: #fff;
+}
+.avatar-ring {
+  position: absolute; inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cat, var(--purple)), transparent 60%);
+  z-index: -1;
+  opacity: 0.5;
+}
+.online-dot {
+  position: absolute;
+  bottom: 1px; right: 1px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 2px solid var(--card);
+}
+
+.name-block { flex: 1; min-width: 0; }
+.creator-name {
+  font-size: 15px; font-weight: 700;
+  color: var(--tx-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+.creator-handle {
+  font-size: 12px; color: var(--tx-3);
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+/* Card meta: role badge + location */
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--radius-chip);
+  font-size: 11px; font-weight: 600;
+  background: var(--cat-soft, rgba(109,40,217,0.12));
+  color: var(--cat-lt, var(--purple-lt));
+  white-space: nowrap;
+}
+.location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--tx-3);
+  font-weight: 400;
+}
+.loc-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--tx-3);
+  flex-shrink: 0;
+}
+
+/* Bio */
+.card-bio {
+  font-size: 13px;
+  color: var(--tx-2);
+  line-height: 1.55;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: 400;
+}
+
+/* Niche tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--radius-chip);
+  font-size: 11px; font-weight: 500;
+  background: var(--cat-soft, rgba(109,40,217,0.12));
+  color: var(--cat-lt, var(--purple-lt));
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* CTA button */
+.card-cta {
+  width: 100%;
+  height: 38px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--cat, var(--purple));
+  background: var(--cat-soft, rgba(109,40,217,0.12));
+  color: var(--cat-lt, var(--purple-lt));
+  font-family: var(--font);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.card-cta:hover {
+  background: var(--cat, var(--purple));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(109,40,217,0.35);
+}
+.cta-arrow {
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+.card-cta:hover .cta-arrow { transform: translateX(3px); }
+
+/* ─── Empty State ───────────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 64px 20px;
+  text-align: center;
+}
+.empty-ico { font-size: 42px; margin-bottom: 14px; }
+.empty-title { font-size: 16px; font-weight: 700; color: var(--tx-1); margin-bottom: 6px; }
+.empty-body { font-size: 14px; color: var(--tx-2); }
+.empty-clear {
+  margin-top: 20px;
+  padding: 10px 24px;
+  border-radius: var(--radius-chip);
+  background: var(--purple);
+  border: none;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.empty-clear:hover { opacity: 0.88; }
+
+/* ─── FAB ───────────────────────────────────── */
+.fab {
+  position: fixed;
+  bottom: 86px; right: 20px;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple-md), var(--pink));
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 22px rgba(109,40,217,0.55);
+  transition: transform 0.22s, box-shadow 0.22s;
+  z-index: 150;
+}
+.fab:hover {
+  transform: scale(1.06) rotate(45deg);
+  box-shadow: 0 6px 28px rgba(109,40,217,0.7);
+}
+
+/* ─── Bottom Nav ─────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(13,21,37,0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px 4px;
+  z-index: 180;
+}
+.nav-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  cursor: pointer;
+  padding: 6px 0;
+  border-radius: 10px;
+  transition: background 0.18s;
+}
+.nav-tab:hover { background: rgba(255,255,255,0.03); }
+.nav-tab-ico {
+  font-size: 20px;
+  color: var(--tx-3);
+  transition: color 0.18s, transform 0.18s;
+}
+.nav-tab.active .nav-tab-ico { color: var(--purple-lt); }
+.nav-tab:hover .nav-tab-ico { transform: translateY(-1px); }
+.nav-tab-lbl {
+  font-size: 10px; font-weight: 500;
+  color: var(--tx-3);
+  transition: color 0.18s;
+}
+.nav-tab.active .nav-tab-lbl { color: var(--purple-lt); }
+
+/* Active indicator dot */
+.nav-tab.active .nav-tab-ico::after {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--purple-lt);
+  margin: 2px auto 0;
+}
+
+/* ─── Design Token Legend (Dev Handoff) ─────── */
+.legend {
+  display: none; /* hidden in prototype; exported separately */
+}
+</style>
+</head>
+<body>
+
+<!-- ── Top Navigation ───────────────────────── -->
+<nav class="nav">
+  <span class="nav-logo">Clout Collabs</span>
+  <div class="nav-actions">
+    <div class="nav-btn" title="Notifications">
+      🔔
+      <span class="notif-dot"></span>
+    </div>
+    <div class="nav-btn" title="Messages">💬</div>
+    <div class="nav-avatar" title="My Profile">YO</div>
+  </div>
+</nav>
+
+<!-- ── Page Header ──────────────────────────── -->
+<div class="page-head">
+  <h1 class="page-title">Discover Creators</h1>
+  <p class="page-sub">Find talent to collaborate with &amp; hire</p>
+</div>
+
+<!-- ── Search Bar ───────────────────────────── -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-ico">🔍</span>
+    <input
+      class="search-inp"
+      id="searchInput"
+      type="search"
+      placeholder="Search by name, niche, or skill…"
+      autocomplete="off"
+    />
+    <button class="filter-ico-btn" title="Advanced filters">⚙️</button>
+  </div>
+</div>
+
+<!-- ── Filter Chips ─────────────────────────── -->
+<div class="filters">
+  <div class="chip-row" id="roleChips">
+    <div class="chip active-role" data-role="All">All</div>
+    <div class="chip" data-role="Creator">
+      <span class="chip-dot" style="background:#A78BFA"></span>Creators
+    </div>
+    <div class="chip" data-role="Musician">
+      <span class="chip-dot" style="background:#F9A8D4"></span>Musicians
+    </div>
+    <div class="chip" data-role="Creative Pro">
+      <span class="chip-dot" style="background:#93C5FD"></span>Creative Pros
+    </div>
+    <div class="chip" data-role="Brand">
+      <span class="chip-dot" style="background:#6EE7B7"></span>Brands
+    </div>
+  </div>
+  <div class="chip-row" id="locChips">
+    <div class="chip active-loc" data-loc="All">🌍 All Locations</div>
+    <div class="chip" data-loc="Lagos">📍 Lagos</div>
+    <div class="chip" data-loc="Abuja">📍 Abuja</div>
+    <div class="chip" data-loc="International">✈️ International</div>
+  </div>
+</div>
+
+<!-- ── Results Bar ──────────────────────────── -->
+<div class="results-bar">
+  <p class="results-count"><strong id="countNum">8</strong> creators found</p>
+  <button class="sort-btn" id="sortBtn">Recently Active ↓</button>
+</div>
+
+<!-- ── Creator Card Grid ───────────────────── -->
+<div class="grid" id="creatorGrid"></div>
+
+<!-- ── Post Opportunity FAB ─────────────────── -->
+<button class="fab" title="Post an opportunity">+</button>
+
+<!-- ── Bottom Navigation ─────────────────────── -->
+<nav class="bottom-nav">
+  <div class="nav-tab" onclick="activateTab(this)">
+    <div class="nav-tab-ico">🏠</div>
+    <span class="nav-tab-lbl">Home</span>
+  </div>
+  <div class="nav-tab active" onclick="activateTab(this)">
+    <div class="nav-tab-ico">🔍</div>
+    <span class="nav-tab-lbl">Discover</span>
+  </div>
+  <div class="nav-tab" onclick="activateTab(this)">
+    <div class="nav-tab-ico">📝</div>
+    <span class="nav-tab-lbl">Posts</span>
+  </div>
+  <div class="nav-tab" onclick="activateTab(this)">
+    <div class="nav-tab-ico">💬</div>
+    <span class="nav-tab-lbl">Messages</span>
+  </div>
+  <div class="nav-tab" onclick="activateTab(this)">
+    <div class="nav-tab-ico">👤</div>
+    <span class="nav-tab-lbl">Profile</span>
+  </div>
+</nav>
+
+<script>
+/* ── Category design tokens ──────────────────── */
+const CAT = {
+  "Creator":      { color: "#6D28D9", lt: "#A78BFA", soft: "rgba(109,40,217,0.12)", grad: "#7C3AED" },
+  "Musician":     { color: "#EC4899", lt: "#F9A8D4", soft: "rgba(236,72,153,0.12)",  grad: "#DB2777" },
+  "Creative Pro": { color: "#3B82F6", lt: "#93C5FD", soft: "rgba(59,130,246,0.12)",  grad: "#2563EB" },
+  "Brand":        { color: "#10B981", lt: "#6EE7B7", soft: "rgba(16,185,129,0.12)",  grad: "#059669" }
+};
+
+/* ── Creator data ────────────────────────────── */
+const CREATORS = [
+  {
+    id: 1, name: "Amara Osei",    handle: "@amaracreates",
+    category: "Creator",
+    location: "Lagos, NG", locationKey: "Lagos",
+    niches: ["TikTok", "Fashion", "Lifestyle"],
+    bio: "Visual storyteller & fashion creator turning everyday moments into scroll-stopping content.",
+    featured: true, initials: "AO", online: true
+  },
+  {
+    id: 2, name: "DJ Kente",      handle: "@djkente",
+    category: "Musician",
+    location: "Accra, GH", locationKey: "International",
+    niches: ["Afrobeats", "Producer", "DJ"],
+    bio: "Afrobeats producer & touring DJ. Open to features, sync placements, and international collabs.",
+    featured: false, initials: "DK", online: false
+  },
+  {
+    id: 3, name: "Tunde Visuals", handle: "@tundevisuals",
+    category: "Creative Pro",
+    location: "Lagos, NG", locationKey: "Lagos",
+    niches: ["Videography", "Editing", "Motion"],
+    bio: "Videographer & motion designer. Available for brand campaigns, music videos, and events.",
+    featured: false, initials: "TV", online: true
+  },
+  {
+    id: 4, name: "NovaBrands",    handle: "@novabrands",
+    category: "Brand",
+    location: "Lagos, NG", locationKey: "Lagos",
+    niches: ["Fashion", "UGC", "Campaigns"],
+    bio: "Fashion startup seeking TikTok & Instagram creators for an upcoming product launch.",
+    featured: true, initials: "NB", online: false
+  },
+  {
+    id: 5, name: "Zara M.",       handle: "@zaramotions",
+    category: "Creator",
+    location: "London, UK", locationKey: "International",
+    niches: ["YouTube", "Beauty", "Vlogs"],
+    bio: "Beauty & lifestyle creator with 200K+ subscribers. Open to international brand collabs.",
+    featured: false, initials: "ZM", online: false
+  },
+  {
+    id: 6, name: "Bello Sonic",   handle: "@bellosonic",
+    category: "Musician",
+    location: "Abuja, NG", locationKey: "Abuja",
+    niches: ["Rap", "Songwriter", "Features"],
+    bio: "Independent rapper & songwriter. Looking for producers, video directors, and collaborators.",
+    featured: false, initials: "BS", online: true
+  },
+  {
+    id: 7, name: "Kemi Studio",   handle: "@kemistudio",
+    category: "Creative Pro",
+    location: "Lagos, NG", locationKey: "Lagos",
+    niches: ["Branding", "UI/UX", "Graphics"],
+    bio: "Brand identity designer specialising in digital-first visual systems and creator economy brands.",
+    featured: false, initials: "KS", online: false
+  },
+  {
+    id: 8, name: "Pulse Media",   handle: "@pulsemedia",
+    category: "Brand",
+    location: "Lagos, NG", locationKey: "Lagos",
+    niches: ["Media", "Influencer", "PR"],
+    bio: "Pan-African media company connecting top brands with vetted content creators.",
+    featured: false, initials: "PM", online: true
+  }
+];
+
+/* ── State ───────────────────────────────────── */
+let activeRole = "All";
+let activeLoc  = "All";
+let query      = "";
+
+function filtered() {
+  return CREATORS.filter(c => {
+    const roleOK = activeRole === "All" || c.category === activeRole;
+    const locOK  = activeLoc  === "All" || c.locationKey === activeLoc;
+    const q = query.toLowerCase();
+    const qOK = !q ||
+      c.name.toLowerCase().includes(q) ||
+      c.handle.toLowerCase().includes(q) ||
+      c.bio.toLowerCase().includes(q) ||
+      c.niches.some(n => n.toLowerCase().includes(q)) ||
+      c.category.toLowerCase().includes(q);
+    return roleOK && locOK && qOK;
+  });
+}
+
+/* ── Build card ──────────────────────────────── */
+function buildCard(c) {
+  const t = CAT[c.category] || CAT["Creator"];
+  const el = document.createElement("div");
+  el.className = "card" + (c.featured ? " is-featured" : "");
+  el.style.setProperty("--cat",      t.color);
+  el.style.setProperty("--cat-lt",   t.lt);
+  el.style.setProperty("--cat-soft", t.soft);
+
+  el.innerHTML = `
+    ${c.featured ? `<div class="feat-badge">⭐ Featured</div>` : ""}
+    <div class="card-head">
+      <div class="avatar-wrap">
+        <div class="avatar" style="background:linear-gradient(135deg,${t.color},${t.grad});">
+          ${c.initials}
+          <div class="avatar-ring"></div>
+        </div>
+        ${c.online ? `<div class="online-dot"></div>` : ""}
+      </div>
+      <div class="name-block">
+        <div class="creator-name">${c.name}</div>
+        <div class="creator-handle">${c.handle}</div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <span class="role-badge">${c.category}</span>
+      <span class="location-pill">
+        <span class="loc-dot"></span>${c.location}
+      </span>
+    </div>
+    <p class="card-bio">${c.bio}</p>
+    <div class="tags">
+      ${c.niches.map(n => `<span class="tag">${n}</span>`).join("")}
+    </div>
+    <button class="card-cta">
+      View Profile <span class="cta-arrow">→</span>
+    </button>
+  `;
+  return el;
+}
+
+/* ── Render ──────────────────────────────────── */
+function render() {
+  const list = filtered();
+  const grid = document.getElementById("creatorGrid");
+  document.getElementById("countNum").textContent = list.length;
+  grid.innerHTML = "";
+
+  if (list.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.innerHTML = `
+      <div class="empty-ico">🔍</div>
+      <div class="empty-title">No creators found</div>
+      <p class="empty-body">Try adjusting your filters or search terms.</p>
+      <button class="empty-clear" onclick="clearAll()">Clear filters</button>
+    `;
+    grid.appendChild(empty);
+    return;
+  }
+
+  list.forEach(c => grid.appendChild(buildCard(c)));
+}
+
+function clearAll() {
+  activeRole = "All"; activeLoc = "All"; query = "";
+  document.getElementById("searchInput").value = "";
+  document.querySelectorAll("#roleChips .chip").forEach(ch => {
+    ch.classList.toggle("active-role", ch.dataset.role === "All");
+  });
+  document.querySelectorAll("#locChips .chip").forEach(ch => {
+    ch.classList.toggle("active-loc", ch.dataset.loc === "All");
+  });
+  render();
+}
+
+/* ── Events ──────────────────────────────────── */
+document.getElementById("roleChips").addEventListener("click", e => {
+  const chip = e.target.closest("[data-role]");
+  if (!chip) return;
+  activeRole = chip.dataset.role;
+  document.querySelectorAll("#roleChips .chip").forEach(c => c.classList.remove("active-role"));
+  chip.classList.add("active-role");
+  render();
+});
+
+document.getElementById("locChips").addEventListener("click", e => {
+  const chip = e.target.closest("[data-loc]");
+  if (!chip) return;
+  activeLoc = chip.dataset.loc;
+  document.querySelectorAll("#locChips .chip").forEach(c => c.classList.remove("active-loc"));
+  chip.classList.add("active-loc");
+  render();
+});
+
+document.getElementById("searchInput").addEventListener("input", e => {
+  query = e.target.value.trim();
+  render();
+});
+
+document.getElementById("sortBtn").addEventListener("click", function() {
+  const opts = ["Recently Active ↓", "Most Relevant ↓", "Newest First ↓"];
+  const cur = opts.indexOf(this.textContent);
+  this.textContent = opts[(cur + 1) % opts.length];
+});
+
+function activateTab(el) {
+  document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
+}
+
+/* ── Init ────────────────────────────────────── */
+render();
+</script>
+</body>
+</html>
