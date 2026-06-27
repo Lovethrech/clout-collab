@@ -164,15 +164,7 @@ const complete = () => {
     border:1.5px solid var(--slate-600); 
 }
 .role-submit-btn{
-    width: 100%;
-    padding: 1.5vh;
-    background: var(--grad-signature);
-    color: #fff;
-    font-size: 2vh;
-    font-weight: 700;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    
 }
 
 @media screen and (max-width:1050px) and (min-width:951px) {
