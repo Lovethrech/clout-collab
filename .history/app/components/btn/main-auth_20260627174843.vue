@@ -26,6 +26,7 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
     cursor: pointer;
     transform: scale(0.98);
 }
+.btn-main-auth
 .btn-main-auth:disabled{
     width: 100%;
     background:var(--slate-400);

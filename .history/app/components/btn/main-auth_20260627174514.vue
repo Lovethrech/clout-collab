@@ -3,11 +3,11 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
 </script>
 
 <template>
-    <button class="btn-main-auth" type="submit" :disabled="loading">
+    <div class="btn-main-auth" type="submit" disabled=false>
         <p class="btn-main-auth-text">
             {{ loading ? "Processing..." : btnText }}
         </p>
-    </button>
+    </div>
 </template>
 
 <style scoped>
@@ -25,10 +25,5 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
 .btn-main-auth:hover{
     cursor: pointer;
     transform: scale(0.98);
-}
-.btn-main-auth:disabled{
-    width: 100%;
-    background:var(--slate-400);
-    cursor: not-allowed;
 }
 </style>

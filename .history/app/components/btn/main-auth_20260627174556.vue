@@ -3,7 +3,7 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
 </script>
 
 <template>
-    <button class="btn-main-auth" type="submit" :disabled="loading">
+    <button class="btn-main-auth" type="submit" disabled=false>
         <p class="btn-main-auth-text">
             {{ loading ? "Processing..." : btnText }}
         </p>
@@ -27,7 +27,6 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
     transform: scale(0.98);
 }
 .btn-main-auth:disabled{
-    width: 100%;
     background:var(--slate-400);
     cursor: not-allowed;
 }

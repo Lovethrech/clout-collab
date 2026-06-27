@@ -3,7 +3,7 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
 </script>
 
 <template>
-    <button class="btn-main-auth" type="submit" :disabled="loading">
+    <button class="btn-main-auth" type="submit" :disabledfalse>
         <p class="btn-main-auth-text">
             {{ loading ? "Processing..." : btnText }}
         </p>
