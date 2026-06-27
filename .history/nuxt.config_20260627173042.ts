@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt'
   ],
   supabase:{
-    redirect: false
+    redirect: false,
   },
   app:{
     head:{

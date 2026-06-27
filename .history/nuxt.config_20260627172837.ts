@@ -8,8 +8,10 @@ export default defineNuxtConfig({
     '@pinia/nuxt'
   ],
   supabase:{
-    redirect: false
-  },
+    redirect: {
+      login: '/login',
+      callback: '/confirm',
+    },
   app:{
     head:{
       link:[
