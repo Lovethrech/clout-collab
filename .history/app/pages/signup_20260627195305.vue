@@ -26,7 +26,6 @@ const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
 const showMainSignUp=ref("block");
-const showRole=ref("none");
 const showRoleSelector=ref(false);
 const pendingUserData=ref(null);
 
@@ -62,8 +61,7 @@ const showRoleBox=()=>{
             </div>
         </div>
         <AuthRole 
-            :style="{display: showRole}"
-            :showRoleBox="showRoleBox"
+            :style="{}"
             :pendingUserData="pendingUserData"
             @complete="showRoleSelector=false"
         />

@@ -10,14 +10,6 @@ useSeoMeta({
     ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
     twitterCard: 'summary_large_image'
 })
-const supabase=useSupabaseClient();
-const router=useRouter();
-
-const form=ref({
-    email: '',
-    password: ''
-});
-
 const authTitle=ref("Create your account");
 const authDesc=ref("Join creators, musicians, and brands building together.");
 const loading=ref(false);
@@ -26,9 +18,8 @@ const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
 const showMainSignUp=ref("block");
-const showRole=ref("none");
-const showRoleSelector=ref(false);
-const pendingUserData=ref(null);
+const shoewRoleSelector=ref(false);
+const peni
 
 const showRoleBox=()=>{
     if (showMainSignUp.value==="block"){
@@ -61,12 +52,7 @@ const showRoleBox=()=>{
                 By continuing, you agree to the Terms<br>and Privacy Policy.
             </div>
         </div>
-        <AuthRole 
-            :style="{display: showRole}"
-            :showRoleBox="showRoleBox"
-            :pendingUserData="pendingUserData"
-            @complete="showRoleSelector=false"
-        />
+        <AuthRole :style="{display:showRole}" :showRoleBox="showRoleBox"/>
     </div>
 </template>
 

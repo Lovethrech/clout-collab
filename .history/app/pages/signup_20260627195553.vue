@@ -63,7 +63,7 @@ const showRoleBox=()=>{
         </div>
         <AuthRole 
             :style="{display: showRole}"
-            :showRoleBox="showRoleBox"
+            :showRoleBox="show"
             :pendingUserData="pendingUserData"
             @complete="showRoleSelector=false"
         />
