@@ -8,21 +8,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt'
   ],
   supabase:{
-    url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_ANON_KEY,
-    redirect: false,
-    cookieOptions:{
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      secure: true
-    }
-  },
-  runtimeConfig:{
-    public:{
-      supabase:{
-        url: process.env.SUPABASE_URL,
-        key: process.env.SUPABASE_ANON_KEY
-      }
-    }
+    url: proce
+    redirect: false
   },
   app:{
     head:{
