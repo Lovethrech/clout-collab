@@ -111,12 +111,8 @@
       .check-list{ display:flex; gap:22px; flex-wrap:wrap; }
       .check-item{ display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--slate-400); }
       .check-item .tick{ width:18px; height:18px; border-radius:50%; background:rgba(34,197,94,0.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; }
-      .next-pill{ font-family:var(--mono-font); font-size:12.5px; color:var(--slate-50); background:var(--slate-800); border:1px solid #2A3B55; padding:9px 16px; border-radius:20px; text-decoration:none; transition:transform .15s ease, border-color .15s ease; }
-      .next-pill:hover{
-            cursor: pointer;
-            transform:translateX(3px); 
-            border-color:#3B4A6B;
-        }
+      .next-pill{ font-family:var(--mono-font); font-size:12.5px; color:var(--slate-50); background:var(--slate-800); border:1px solid #2A3B55; padding:9px 16px; border-radius:20px; text-decoration:none;
+          transition:transform .15s ease, border-color .15s ease; }
 
       @media (max-width:980px){
         .screens-row{ justify-content:center; }
@@ -277,7 +273,12 @@
           <div class="check-item"><span class="tick">✓</span>Log in screen</div>
           <div class="check-item"><span class="tick">✓</span>Role selection UI</div>
         </div>
-        <a href="clout-collabs-profile-day3.html" class="next-pill">Next → Day 03: Profile Design</a>
+        <div class="next-pill">Next → Day 03: Profile Design</div>
+        <!-- .next-pill:hover{
+            cursor: pointer;
+            transform:translateX(3px); 
+            border-color:#3B4A6B;
+        } -->
       </footer>
     </div>
   </body>
