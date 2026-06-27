@@ -4,10 +4,9 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 const emit = defineEmits(['complete', 'cancel']);
 
 const selectedRole = ref(null);
-// ✓
 
 const roles = [
-    { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content, video, photo & more' },
+    { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content creators, influencers' },
     { value: 'musician', emoji: '🎤', label: 'Musician', desc: 'Artists, producers, DJs' },
     { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
     { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
@@ -36,10 +35,23 @@ const complete = () => {
                 <div class="role-card selected">
                     <div class="role-icon dsp-flex-jstf-center-plc-center">{{roles[0].emoji}}</div>
                     <div class="role-text">
-                        <div class="t">{{roles[0].label}}</div>
-                        <div class="d">{{roles[0].desc}}</div>
-                    </div>
+                        <div class="t">{{roles[0].label}}</div><div class="d">Content, video, photo & more</div></div>
                     <div class="role-check dsp-flex-jstf-center-plc-center">✓</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="7" fill="none" stroke="#94A3B8" stroke-width="3"/><rect x="20" y="9" width="3" height="26" fill="#94A3B8"/><polygon points="23,9 23,19 33,14" fill="#94A3B8"/></svg></div>
+                    <div class="role-text"><div class="t">Musician</div><div class="d">Singers, producers, DJs & more</div></div>
+                    <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="36" height="22" rx="4" fill="none" stroke="#94A3B8" stroke-width="3"/><rect x="18" y="10" width="12" height="9" rx="3" fill="none" stroke="#94A3B8" stroke-width="3"/><line x1="6" y1="28" x2="42" y2="28" stroke="#94A3B8" stroke-width="2.5"/></svg></div>
+                    <div class="role-text"><div class="t">Brand</div><div class="d">Hiring creators for campaigns</div></div>
+                    <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon dsp-flex-jstf-center-plc-center"><svg viewBox="0 0 48 48"><rect x="11" y="6" width="24" height="15" rx="4" fill="#94A3B8" opacity="0.45"/><rect x="8" y="14" width="26" height="15" rx="4" fill="#94A3B8" opacity="0.7"/><rect x="6" y="22" width="28" height="15" rx="4" fill="#94A3B8"/></svg></div>
+                    <div class="role-text"><div class="t">Creative Pro</div><div class="d">Editors, designers, animators</div></div>
+                    <div class="role-check empty dsp-flex-jstf-center-plc-center"></div>
                 </div>
             </div>
         </div>
