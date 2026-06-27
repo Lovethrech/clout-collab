@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Clout Collabs — Hiring</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#0F172A; --bg-raise:#0B1220; --card:#1E293B; --card-hi:#243350;
+  --border:rgba(255,255,255,0.07); --border-hi:rgba(255,255,255,0.13);
+  --purple:#6D28D9; --purple-md:#7C3AED; --purple-lt:#A78BFA;
+  --blue:#3B82F6; --blue-lt:#93C5FD; --pink:#EC4899; --pink-lt:#F9A8D4;
+  --green:#10B981; --green-lt:#6EE7B7; --amber:#F59E0B; --amber-lt:#FCD34D;
+  --teal:#14B8A6; --teal-lt:#5EEAD4; --violet:#8B5CF6; --violet-lt:#C4B5FD;
+  --orange:#F97316; --orange-lt:#FDBA74;
+  --tx-1:#F8FAFC; --tx-2:#94A3B8; --tx-3:#64748B; --tx-4:#475569;
+  --r-card:16px; --r-chip:100px; --r-btn:12px; --r-inp:12px;
+  --font:'Inter',-apple-system,sans-serif;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);}
+body{font-family:var(--font);color:var(--tx-1);-webkit-font-smoothing:antialiased;}
+.app{position:fixed;inset:0;background:var(--bg);}
+
+/* NAV */
+.nav-bar{position:absolute;top:0;left:0;right:0;height:60px;z-index:300;
+  background:rgba(11,18,32,0.93);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);padding:0 18px;
+  display:flex;align-items:center;gap:10px;}
+.nav-logo{font-size:17px;font-weight:800;letter-spacing:-0.4px;
+  background:linear-gradient(135deg,var(--purple-lt),var(--blue-lt));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;flex:1;}
+.nav-actions{display:flex;align-items:center;gap:9px;}
+.nav-btn{width:34px;height:34px;border-radius:50%;background:var(--card);border:1px solid var(--border);
+  color:var(--tx-2);font-size:14px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;transition:background 0.18s;}
+.nav-btn:hover{background:var(--card-hi);}
+.nav-notif{position:absolute;top:7px;right:7px;width:6px;height:6px;border-radius:50%;
+  background:var(--pink);border:2px solid var(--bg);}
+.nav-avatar{width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid rgba(255,255,255,0.14);cursor:pointer;}
+
+/* PANE */
+.pane{position:absolute;top:60px;left:0;right:0;bottom:70px;
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
+.pane::-webkit-scrollbar{display:none;}
+
+/* PAGE HEAD */
+.page-head{padding:22px 20px 0;}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-0.6px;line-height:1.15;}
+.page-sub{font-size:14px;color:var(--tx-2);margin-top:4px;}
+
+/* TAB BAR */
+.tab-bar{position:sticky;top:0;z-index:100;
+  background:rgba(11,18,32,0.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px 0;display:flex;gap:0;margin-top:16px;}
+.tab-btn{flex:1;height:38px;background:none;border:none;
+  font-family:var(--font);font-size:14px;font-weight:500;color:var(--tx-3);cursor:pointer;
+  border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;
+  display:flex;align-items:center;justify-content:center;gap:6px;padding-bottom:2px;}
+.tab-count{display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:100px;
+  font-size:10px;font-weight:700;background:var(--card);color:var(--tx-3);transition:all 0.2s;}
+.tab-btn.act{color:var(--tx-1);font-weight:700;border-bottom-color:var(--purple-lt);}
+.tab-btn.act .tab-count{background:var(--purple);color:#fff;}
+
+/* TAB SECTIONS */
+.tab-section{transition:opacity 0.2s;}
+.tab-section.hidden{display:none;}
+
+/* FILTERS */
+.filter-row{display:flex;gap:8px;overflow-x:auto;
+  padding:14px 20px 0;scrollbar-width:none;}
+.filter-row::-webkit-scrollbar{display:none;}
+.fchip{flex-shrink:0;height:32px;padding:0 14px;border-radius:var(--r-chip);
+  font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);
+  background:var(--card);color:var(--tx-2);white-space:nowrap;user-select:none;
+  transition:all 0.18s;display:flex;align-items:center;}
+.fchip:hover{border-color:var(--purple-md);color:var(--tx-1);}
+.fchip.on{background:var(--purple);border-color:var(--purple);color:#fff;font-weight:600;}
+
+.results-bar{display:flex;align-items:center;justify-content:space-between;padding:13px 20px 0;}
+.results-count{font-size:13px;color:var(--tx-2);}
+.results-count strong{color:var(--tx-1);font-weight:600;}
+.sort-btn{font-size:12px;font-weight:500;color:var(--purple-lt);
+  background:none;border:none;cursor:pointer;font-family:var(--font);}
+
+.job-list{padding:10px 20px 16px;display:flex;flex-direction:column;gap:12px;}
+
+/* JOB CARD */
+.job-card{background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-card);overflow:hidden;cursor:pointer;
+  transition:transform 0.22s,box-shadow 0.22s,border-color 0.22s,background 0.22s;}
+.job-card:hover{transform:translateY(-2px);background:var(--card-hi);
+  border-color:var(--border-hi);box-shadow:0 10px 32px rgba(0,0,0,0.3);}
+
+/* Signature: brand identity header */
+.brand-header{padding:13px 15px 12px;display:flex;align-items:center;gap:11px;
+  border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.brand-header::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--brand-c,var(--purple)) 0%,transparent 65%);
+  opacity:0.07;pointer-events:none;}
+.brand-logo{width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;flex-shrink:0;
+  position:relative;z-index:1;letter-spacing:-0.5px;}
+.brand-info{flex:1;min-width:0;position:relative;z-index:1;}
+.brand-name{font-size:13px;font-weight:700;color:var(--tx-1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand-meta{font-size:11px;color:var(--tx-3);margin-top:2px;
+  display:flex;align-items:center;gap:4px;}
+.brand-dot{width:3px;height:3px;border-radius:50%;background:var(--tx-3);flex-shrink:0;}
+.job-type-badge{display:inline-flex;align-items:center;height:22px;padding:0 9px;
+  border-radius:var(--r-chip);font-size:10px;font-weight:700;
+  position:relative;z-index:1;flex-shrink:0;}
+
+.job-body{padding:14px 15px 15px;}
+.job-title{font-size:15px;font-weight:700;letter-spacing:-0.15px;line-height:1.38;
+  color:var(--tx-1);margin-bottom:6px;}
+.job-desc{font-size:13px;color:var(--tx-2);line-height:1.56;margin-bottom:11px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px;}
+.skill-tag{display:inline-flex;align-items:center;height:23px;padding:0 9px;
+  border-radius:var(--r-chip);font-size:11px;font-weight:500;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--tx-2);}
+.job-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px;}
+.job-meta-chip{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;
+  border-radius:var(--r-chip);font-size:11px;font-weight:500;
+  background:var(--brand-soft,rgba(109,40,217,0.1));
+  color:var(--brand-lt,var(--purple-lt));border:1px solid rgba(255,255,255,0.04);}
+.job-salary-chip{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;
+  border-radius:var(--r-chip);font-size:11px;font-weight:700;
+  background:rgba(16,185,129,0.1);color:var(--green-lt);border:1px solid rgba(255,255,255,0.04);}
+.apply-btn{width:100%;height:40px;border-radius:var(--r-btn);border:none;
+  background:var(--brand-c,var(--purple));color:#fff;font-family:var(--font);
+  font-size:13px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:opacity 0.18s,transform 0.18s;}
+.apply-btn:hover{opacity:0.88;transform:scale(0.99);}
+.apply-arr{transition:transform 0.2s;}
+.apply-btn:hover .apply-arr{transform:translateX(3px);}
+
+/* APPLICATIONS SECTION */
+.apps-head{padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between;}
+.apps-head-label{font-size:13px;color:var(--tx-2);}
+.apps-head-label strong{color:var(--tx-1);font-weight:600;}
+.app-list{padding:12px 20px 16px;display:flex;flex-direction:column;gap:12px;}
+
+/* APP CARD */
+.app-card{background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-card);overflow:hidden;
+  transition:transform 0.22s,box-shadow 0.22s;}
+.app-card:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,0,0,0.28);}
+
+.app-brand-strip{padding:11px 14px;display:flex;align-items:center;gap:9px;
+  border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);}
+.app-brand-ico{width:30px;height:30px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:#fff;flex-shrink:0;}
+.app-brand-name{font-size:12px;font-weight:700;color:var(--tx-1);}
+.app-job-title{font-size:11px;color:var(--tx-3);margin-top:1px;}
+.app-time{font-size:11px;color:var(--tx-3);margin-left:auto;flex-shrink:0;}
+
+.app-status-block{padding:14px 14px 10px;}
+.status-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.status-icon{font-size:22px;line-height:1;}
+.status-label{font-size:16px;font-weight:800;letter-spacing:-0.2px;}
+.status-msg{font-size:13px;color:var(--tx-2);line-height:1.52;margin-bottom:13px;}
+.status-shortlist .status-label{color:var(--blue-lt);}
+.status-pending   .status-label{color:var(--amber-lt);}
+.status-rejected  .status-label{color:var(--tx-3);}
+.status-hired     .status-label{color:var(--green-lt);}
+
+.app-actions{display:flex;gap:8px;}
+.app-action-primary{flex:1;height:36px;border-radius:var(--r-btn);border:none;
+  font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:opacity 0.18s;}
+.app-action-primary:hover{opacity:0.88;}
+.app-action-ghost{flex:1;height:36px;border-radius:var(--r-btn);
+  background:none;border:1px solid var(--border);color:var(--tx-2);
+  font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;
+  transition:border-color 0.18s,color 0.18s;}
+.app-action-ghost:hover{border-color:var(--border-hi);color:var(--tx-1);}
+
+/* Progress tracker */
+.app-progress{display:flex;align-items:center;gap:0;padding:12px 14px 0;}
+.prog-step{display:flex;align-items:center;flex:1;}
+.prog-dot{width:8px;height:8px;border-radius:50%;background:var(--border-hi);flex-shrink:0;}
+.prog-dot.done{background:var(--green);}
+.prog-dot.active{background:var(--blue);box-shadow:0 0 6px rgba(59,130,246,0.5);}
+.prog-dot.warn{background:var(--amber);}
+.prog-dot.fail{background:var(--tx-4);}
+.prog-line{flex:1;height:1px;background:var(--border);}
+.prog-line.done{background:linear-gradient(90deg,var(--green),rgba(16,185,129,0.2));}
+.prog-label-row{display:flex;padding:6px 14px 14px;justify-content:space-between;}
+.prog-lbl{font-size:9px;font-weight:500;color:var(--tx-4);text-align:center;flex:1;}
+.prog-lbl.act{color:var(--tx-2);}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 24px;}
+.empty-ico{font-size:38px;margin-bottom:14px;}
+.empty-title{font-size:16px;font-weight:700;margin-bottom:6px;}
+.empty-body{font-size:14px;color:var(--tx-2);line-height:1.55;}
+.empty-cta{margin-top:20px;height:40px;padding:0 24px;border-radius:var(--r-chip);
+  background:var(--purple);border:none;color:#fff;font-family:var(--font);
+  font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.18s;}
+.empty-cta:hover{opacity:0.88;}
+
+/* FAB */
+.fab{position:absolute;bottom:86px;right:20px;z-index:250;}
+.fab-btn{width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--purple-md),var(--pink));
+  border:none;color:#fff;font-size:22px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(109,40,217,0.5);cursor:pointer;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.2s;}
+.fab-btn:hover{transform:scale(1.07) rotate(90deg);box-shadow:0 6px 26px rgba(109,40,217,0.68);}
+
+/* BOTTOM NAV */
+.btm-nav{position:absolute;bottom:0;left:0;right:0;height:70px;z-index:200;
+  background:rgba(11,18,32,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-around;padding:0 6px 4px;}
+.btm-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:6px 0;border-radius:10px;cursor:pointer;transition:background 0.18s;}
+.btm-tab:hover{background:rgba(255,255,255,0.03);}
+.btm-ico{font-size:19px;color:var(--tx-3);line-height:1;transition:color 0.18s,transform 0.18s;}
+.btm-lbl{font-size:10px;font-weight:500;color:var(--tx-3);transition:color 0.18s;}
+.btm-tab.act .btm-ico,.btm-tab.act .btm-lbl{color:var(--purple-lt);}
+.btm-tab:hover .btm-ico{transform:translateY(-1px);}
+
+/* SHEET */
+.sheet-overlay{position:absolute;inset:0;z-index:400;
+  background:rgba(10,16,30,0.72);backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity 0.28s;}
+.sheet-overlay.show{opacity:1;pointer-events:all;}
+.sheet{position:absolute;bottom:0;left:0;right:0;
+  background:var(--card);border:1px solid var(--border-hi);
+  border-radius:20px 20px 0 0;padding:0 20px 32px;
+  transform:translateY(100%);transition:transform 0.32s cubic-bezier(0.32,0,0.15,1);}
+.sheet-overlay.show .sheet{transform:translateY(0);}
+.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--border-hi);margin:12px auto 20px;}
+.sheet-title{font-size:17px;font-weight:800;letter-spacing:-0.3px;margin-bottom:4px;}
+.sheet-sub{font-size:13px;color:var(--tx-2);margin-bottom:18px;}
+.sheet-brand-row{display:flex;align-items:center;gap:10px;padding:12px;
+  border-radius:12px;background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);margin-bottom:18px;}
+.sheet-brand-ico{width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;}
+.sheet-brand-name{font-size:13px;font-weight:700;color:var(--tx-1);}
+.sheet-job-title{font-size:12px;color:var(--tx-3);margin-top:1px;}
+.sheet-salary{margin-left:auto;font-size:12px;font-weight:700;color:var(--green-lt);flex-shrink:0;}
+.sheet-inp-label{font-size:12px;font-weight:600;color:var(--tx-2);margin-bottom:7px;display:block;}
+.sheet-textarea{width:100%;padding:12px 13px;background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);border-radius:var(--r-inp);color:var(--tx-1);
+  font-family:var(--font);font-size:13px;outline:none;resize:none;margin-bottom:18px;
+  transition:border-color 0.2s,box-shadow 0.2s;}
+.sheet-textarea::placeholder{color:var(--tx-3);}
+.sheet-textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,40,217,0.15);}
+.sheet-actions{display:flex;gap:10px;}
+.sheet-cancel{height:46px;padding:0 20px;border-radius:var(--r-chip);
+  background:none;border:1px solid var(--border);color:var(--tx-2);
+  font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;}
+.sheet-cancel:hover{border-color:var(--border-hi);}
+.sheet-submit{flex:1;height:46px;border-radius:var(--r-chip);border:none;color:#fff;
+  font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:opacity 0.18s;}
+.sheet-submit:hover{opacity:0.88;}
+
+/* TOAST */
+.toast{position:absolute;top:72px;left:50%;z-index:500;
+  transform:translateX(-50%) translateY(-12px);
+  background:var(--green);color:#fff;padding:10px 18px;border-radius:var(--r-chip);
+  font-size:13px;font-weight:600;box-shadow:0 4px 16px rgba(16,185,129,0.4);
+  opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<header class="nav-bar">
+  <span class="nav-logo">Clout Collabs</span>
+  <div class="nav-actions">
+    <div class="nav-btn">🔔<span class="nav-notif"></span></div>
+    <div class="nav-btn">💬</div>
+    <div class="nav-avatar">YO</div>
+  </div>
+</header>
+
+<div class="pane" id="mainPane">
+  <div class="page-head">
+    <h1 class="page-title">Hire &amp; Get Hired</h1>
+    <p class="page-sub">Paid brand opportunities for creators</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn act" id="tabJobs" onclick="switchTab('jobs')">
+      Browse Jobs <span class="tab-count" id="jobsCount">8</span>
+    </button>
+    <button class="tab-btn" id="tabApps" onclick="switchTab('apps')">
+      My Applications <span class="tab-count" id="appsCount">3</span>
+    </button>
+  </div>
+
+  <!-- JOBS SECTION -->
+  <div class="tab-section" id="sectionJobs">
+    <div class="filter-row" id="filterRow">
+      <div class="fchip on" data-f="All">All Roles</div>
+      <div class="fchip" data-f="Creative">Creative</div>
+      <div class="fchip" data-f="Music">Music</div>
+      <div class="fchip" data-f="Production">Production</div>
+      <div class="fchip" data-f="Brand">Brand</div>
+      <div class="fchip" data-f="Design">Design</div>
+    </div>
+    <div class="results-bar">
+      <p class="results-count"><strong id="jobCount">8</strong> listings</p>
+      <button class="sort-btn">Newest ↓</button>
+    </div>
+    <div class="job-list" id="jobList"></div>
+  </div>
+
+  <!-- APPLICATIONS SECTION -->
+  <div class="tab-section hidden" id="sectionApps">
+    <div class="apps-head">
+      <p class="apps-head-label"><strong id="appCountLabel">3</strong> applications submitted</p>
+    </div>
+    <div class="app-list" id="appList"></div>
+  </div>
+</div>
+
+<div class="fab">
+  <button class="fab-btn" aria-label="Post a job" title="Post a Job">+</button>
+</div>
+
+<nav class="btm-nav">
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">🏠</div><span class="btm-lbl">Home</span></div>
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">🔍</div><span class="btm-lbl">Discover</span></div>
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">📝</div><span class="btm-lbl">Posts</span></div>
+  <div class="btm-tab act" onclick="setNavTab(this)"><div class="btm-ico">💼</div><span class="btm-lbl">Hiring</span></div>
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">👤</div><span class="btm-lbl">Profile</span></div>
+</nav>
+
+<!-- Apply Sheet -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Apply for this role</div>
+    <p class="sheet-sub">Send a short note to introduce yourself.</p>
+    <div class="sheet-brand-row" id="sheetBrandRow"></div>
+    <label class="sheet-inp-label" for="coverNote">Cover note (optional)</label>
+    <textarea class="sheet-textarea" id="coverNote" rows="4"
+      placeholder="Tell them why you're a great fit. What experience or work can you share?"></textarea>
+    <div class="sheet-actions">
+      <button class="sheet-cancel" onclick="closeSheet()">Cancel</button>
+      <button class="sheet-submit" id="sheetSubmit" onclick="submitApplication()">Send Application →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const BRANDS = {
+  "NovaBrands":    {c:"#10B981",lt:"#6EE7B7",sf:"rgba(16,185,129,0.1)", grad:"#059669",cat:"Fashion Brand"},
+  "Pulse Media":   {c:"#3B82F6",lt:"#93C5FD",sf:"rgba(59,130,246,0.1)", grad:"#2563EB",cat:"Media Company"},
+  "TechFlow NG":   {c:"#6D28D9",lt:"#A78BFA",sf:"rgba(109,40,217,0.1)", grad:"#7C3AED",cat:"Tech Brand"},
+  "Afrobeat Rec.": {c:"#EC4899",lt:"#F9A8D4",sf:"rgba(236,72,153,0.1)", grad:"#DB2777",cat:"Record Label"},
+  "Kemi Studio":   {c:"#3B82F6",lt:"#93C5FD",sf:"rgba(59,130,246,0.1)", grad:"#2563EB",cat:"Creative Studio"},
+  "StyleHub":      {c:"#F59E0B",lt:"#FCD34D",sf:"rgba(245,158,11,0.1)", grad:"#D97706",cat:"Fashion E-comm"},
+  "SoundWave":     {c:"#14B8A6",lt:"#5EEAD4",sf:"rgba(20,184,166,0.1)", grad:"#0D9488",cat:"Audio Platform"},
+  "MediaHouse NG": {c:"#8B5CF6",lt:"#C4B5FD",sf:"rgba(139,92,246,0.1)", grad:"#7C3AED",cat:"Media House"},
+};
+const JTYPES = {
+  "Full-time":{bg:"rgba(16,185,129,0.12)",  color:"#6EE7B7"},
+  "Contract": {bg:"rgba(59,130,246,0.12)",  color:"#93C5FD"},
+  "Part-time":{bg:"rgba(245,158,11,0.12)",  color:"#FCD34D"},
+  "Freelance":{bg:"rgba(109,40,217,0.12)",  color:"#A78BFA"},
+  "Project":  {bg:"rgba(236,72,153,0.12)",  color:"#F9A8D4"},
+};
+const JOBS = [
+  {id:1,brand:"NovaBrands",   ini:"NB",city:"Lagos, NG",   title:"Content Creator — 3-Month Campaign",  desc:"We need a TikTok-first content creator to front our new collection launch. Must have 10K+ followers and proven fashion content experience.",  skills:["TikTok","Fashion","UGC"],           type:"Contract",  salary:"₦150k / month",   duration:"3 months",   cat:"Creative",   posted:"1d ago", applied:14},
+  {id:2,brand:"Pulse Media",  ini:"PM",city:"Lagos, NG",   title:"YouTube Channel Manager",              desc:"Seeking an experienced channel manager to grow our YouTube presence. Responsibilities include strategy, scheduling, and analytics reporting.", skills:["YouTube","SEO","Strategy"],          type:"Full-time", salary:"₦200k / month",   duration:"Ongoing",    cat:"Brand",      posted:"2d ago", applied:22},
+  {id:3,brand:"TechFlow NG",  ini:"TF",city:"Lagos + Abuja",title:"Brand Ambassador — Nationwide",       desc:"Represent TechFlow across social platforms. We need creators who are passionate about tech and can authentically speak to young Nigerians.",  skills:["Brand Rep","Social","Multi-platform"],type:"Part-time", salary:"₦80k/mo + commissions",duration:"Ongoing",  cat:"Brand",      posted:"3d ago", applied:41},
+  {id:4,brand:"Afrobeat Rec.",ini:"AR",city:"Remote / Lagos",title:"Music Sync Coordinator",             desc:"Help us license Afrobeats music for film, TV, and advertising. Ideal candidate understands the music licensing landscape and has contacts.", skills:["Music","Licensing","A&R"],          type:"Project",   salary:"₦120k / project", duration:"Per project", cat:"Music",      posted:"3d ago", applied:8},
+  {id:5,brand:"Kemi Studio",  ini:"KS",city:"Lagos, NG",   title:"Senior Videographer",                  desc:"We produce content for top brands and need a creative videographer to join on contract. Must own your own kit and have a strong portfolio.", skills:["Videography","Editing","Motion"],   type:"Contract",  salary:"₦250k / month",   duration:"6 months",   cat:"Production", posted:"4d ago", applied:11},
+  {id:6,brand:"StyleHub",     ini:"SH",city:"Remote",      title:"Social Media Creator — Part-time",     desc:"StyleHub is looking for a fashion-forward creator to produce weekly content for our Instagram and TikTok. Work remotely, flexible hours.",  skills:["Instagram","TikTok","Fashion"],     type:"Part-time", salary:"₦50k / month",    duration:"Ongoing",    cat:"Creative",   posted:"5d ago", applied:37},
+  {id:7,brand:"SoundWave",    ini:"SW",city:"Remote",      title:"Podcast Editor — Freelance",           desc:"Edit weekly podcast episodes for SoundWave's flagship show. 48-hour turnaround per episode. Experience with audio mixing and delivery essential.",skills:["Audio","Podcast","Editing"],       type:"Freelance", salary:"₦100k / episode", duration:"Ongoing",    cat:"Production", posted:"6d ago", applied:9},
+  {id:8,brand:"MediaHouse NG",ini:"MH",city:"Lagos, NG",   title:"Creative Director — Digital",          desc:"Lead the creative vision for MediaHouse's digital brands. Own the look, feel, and voice across our growing portfolio of creator-first content.", skills:["Creative Strategy","Branding","Art Direction"],type:"Full-time",salary:"₦500k / month",duration:"Permanent",  cat:"Design",     posted:"1w ago", applied:6},
+];
+const APPLICATIONS = [
+  {id:1,jobId:1,brand:"NovaBrands",   ini:"NB",jobTitle:"Content Creator — 3-Month Campaign", salary:"₦150k/mo",ago:"2 days ago",status:"shortlist",statusLabel:"Shortlisted ⭐",statusMsg:"Your profile stood out from the crowd. NovaBrands wants to learn more about you — expect a message soon.",steps:["Applied","Reviewed","Shortlisted","Hired"],stepIdx:2},
+  {id:2,jobId:2,brand:"Pulse Media",  ini:"PM",jobTitle:"YouTube Channel Manager",             salary:"₦200k/mo",ago:"4 days ago",status:"pending",  statusLabel:"Under Review ⏳",statusMsg:"Pulse Media is reviewing all applications. You'll hear back within 5 business days.",              steps:["Applied","Reviewed","Shortlisted","Hired"],stepIdx:1},
+  {id:3,jobId:3,brand:"TechFlow NG",  ini:"TF",jobTitle:"Brand Ambassador — Nationwide",       salary:"₦80k/mo +",ago:"1 week ago",status:"rejected", statusLabel:"Not Selected",   statusMsg:"TechFlow selected a different candidate this time. Keep building — your next opportunity is out there.",steps:["Applied","Reviewed","Shortlisted","Hired"],stepIdx:1},
+];
+
+let activeFilter="All", activeJob=null;
+
+function getJobs(){
+  return activeFilter==="All"?JOBS:JOBS.filter(j=>j.cat===activeFilter);
+}
+
+function makeJobCard(j){
+  const b=BRANDS[j.brand]||BRANDS["NovaBrands"];
+  const jt=JTYPES[j.type]||JTYPES["Contract"];
+  const el=document.createElement("div");
+  el.className="job-card";
+  el.style.setProperty("--brand-c",b.c);
+  el.style.setProperty("--brand-lt",b.lt);
+  el.style.setProperty("--brand-soft",b.sf);
+  el.innerHTML=`
+    <div class="brand-header">
+      <div class="brand-logo" style="background:linear-gradient(135deg,${b.c},${b.grad})">${j.ini}</div>
+      <div class="brand-info">
+        <div class="brand-name">${j.brand}</div>
+        <div class="brand-meta"><span>${b.cat}</span><span class="brand-dot"></span><span>${j.city}</span></div>
+      </div>
+      <span class="job-type-badge" style="background:${jt.bg};color:${jt.color}">${j.type}</span>
+    </div>
+    <div class="job-body">
+      <div class="job-title">${j.title}</div>
+      <p class="job-desc">${j.desc}</p>
+      <div class="skill-tags">${j.skills.map(s=>`<span class="skill-tag">${s}</span>`).join("")}</div>
+      <div class="job-meta">
+        <span class="job-salary-chip">💰 ${j.salary}</span>
+        <span class="job-meta-chip">⏰ ${j.duration}</span>
+        <span class="job-meta-chip">👥 ${j.applied} applied</span>
+        <span class="job-meta-chip">🕐 ${j.posted}</span>
+      </div>
+      <button class="apply-btn" onclick="openSheet(${j.id})">Apply Now <span class="apply-arr">→</span></button>
+    </div>`;
+  return el;
+}
+
+function renderJobs(){
+  const list=getJobs();
+  document.getElementById("jobCount").textContent=list.length;
+  document.getElementById("jobsCount").textContent=JOBS.length;
+  const c=document.getElementById("jobList");
+  c.innerHTML="";
+  if(!list.length){c.innerHTML=`<div class="empty-state"><div class="empty-ico">📭</div><div class="empty-title">No listings in this category</div><p class="empty-body">Try a different filter or check back soon.</p></div>`;return;}
+  list.forEach(j=>c.appendChild(makeJobCard(j)));
+}
+
+function makeAppCard(a){
+  const b=BRANDS[a.brand]||BRANDS["NovaBrands"];
+  const SC={
+    shortlist:{icon:"⭐",color:"var(--blue-lt)",   btnBg:b.c,        btnColor:"#fff",    btnLabel:"Message Brand"},
+    pending:  {icon:"⏳",color:"var(--amber-lt)",  btnBg:"rgba(245,158,11,0.15)",btnColor:"#FCD34D",btnLabel:"Check Status"},
+    rejected: {icon:"❌",color:"var(--tx-3)",      btnBg:"rgba(100,116,139,0.15)",btnColor:"#94A3B8",btnLabel:"View Feedback"},
+    hired:    {icon:"✅",color:"var(--green-lt)",   btnBg:"#10B981",   btnColor:"#fff",    btnLabel:"View Offer"},
+  };
+  const sc=SC[a.status]||SC.pending;
+  const steps=a.steps.map((s,i)=>{
+    let dc="prog-dot"+(i<a.stepIdx?" done":i===a.stepIdx?(a.status==="rejected"?" fail":a.status==="shortlist"?" active":" warn"):"");
+    let lc="prog-line"+(i<a.stepIdx?" done":"");
+    return {s,i,dc,lc,lblCls:"prog-lbl"+(i<=a.stepIdx?" act":"")};
+  });
+  const el=document.createElement("div");
+  el.className="app-card";
+  el.innerHTML=`
+    <div class="app-brand-strip">
+      <div class="app-brand-ico" style="background:linear-gradient(135deg,${b.c},${b.grad})">${a.ini}</div>
+      <div><div class="app-brand-name">${a.brand}</div><div class="app-job-title">${a.jobTitle}</div></div>
+      <span class="app-time">${a.ago}</span>
+    </div>
+    <div class="app-status-block status-${a.status}">
+      <div class="status-row"><span class="status-icon">${sc.icon}</span><span class="status-label">${a.statusLabel}</span></div>
+      <p class="status-msg">${a.statusMsg}</p>
+      <div class="app-actions">
+        <button class="app-action-primary" style="background:${sc.btnBg};color:${sc.btnColor}">${sc.btnLabel}</button>
+        <button class="app-action-ghost">View Listing</button>
+      </div>
+    </div>
+    <div class="app-progress">${steps.map((st,idx)=>`<div class="prog-step"><div class="${st.dc}"></div>${idx<steps.length-1?`<div class="${st.lc}"></div>`:""}</div>`).join("")}</div>
+    <div class="prog-label-row">${steps.map(st=>`<span class="${st.lblCls}">${st.s}</span>`).join("")}</div>`;
+  return el;
+}
+
+function renderApps(){
+  document.getElementById("appsCount").textContent=APPLICATIONS.length;
+  document.getElementById("appCountLabel").textContent=APPLICATIONS.length;
+  const c=document.getElementById("appList");
+  c.innerHTML="";
+  if(!APPLICATIONS.length){c.innerHTML=`<div class="empty-state"><div class="empty-ico">📋</div><div class="empty-title">No applications yet</div><p class="empty-body">Browse open roles and apply to ones that match your skills.</p><button class="empty-cta" onclick="switchTab('jobs')">Browse Jobs →</button></div>`;return;}
+  APPLICATIONS.forEach(a=>c.appendChild(makeAppCard(a)));
+}
+
+function switchTab(name){
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("act"));
+  document.querySelectorAll(".tab-section").forEach(s=>s.classList.add("hidden"));
+  if(name==="jobs"){document.getElementById("tabJobs").classList.add("act");document.getElementById("sectionJobs").classList.remove("hidden");}
+  else{document.getElementById("tabApps").classList.add("act");document.getElementById("sectionApps").classList.remove("hidden");}
+  document.getElementById("mainPane").scrollTop=0;
+}
+
+document.getElementById("filterRow").addEventListener("click",e=>{
+  const chip=e.target.closest("[data-f]");
+  if(!chip)return;
+  activeFilter=chip.dataset.f;
+  document.querySelectorAll("#filterRow .fchip").forEach(c=>c.classList.remove("on"));
+  chip.classList.add("on");
+  renderJobs();
+});
+
+function openSheet(jobId){
+  const j=JOBS.find(x=>x.id===jobId);
+  if(!j)return;
+  activeJob=j;
+  const b=BRANDS[j.brand]||BRANDS["NovaBrands"];
+  document.getElementById("sheetBrandRow").innerHTML=`
+    <div class="sheet-brand-ico" style="background:linear-gradient(135deg,${b.c},${b.grad})">${j.ini}</div>
+    <div><div class="sheet-brand-name">${j.brand}</div><div class="sheet-job-title">${j.title}</div></div>
+    <span class="sheet-salary">${j.salary}</span>`;
+  document.getElementById("sheetSubmit").style.background=`linear-gradient(135deg,${b.c},${b.grad})`;
+  document.getElementById("coverNote").value="";
+  document.getElementById("sheetOverlay").classList.add("show");
+}
+function closeSheet(e){
+  if(e&&e.target!==document.getElementById("sheetOverlay"))return;
+  document.getElementById("sheetOverlay").classList.remove("show");
+}
+function submitApplication(){
+  document.getElementById("sheetOverlay").classList.remove("show");
+  if(activeJob&&!APPLICATIONS.find(a=>a.jobId===activeJob.id)){
+    const b=BRANDS[activeJob.brand]||BRANDS["NovaBrands"];
+    APPLICATIONS.unshift({id:Date.now(),jobId:activeJob.id,brand:activeJob.brand,ini:activeJob.ini,
+      jobTitle:activeJob.title,salary:activeJob.salary,ago:"Just now",status:"pending",
+      statusLabel:"Under Review ⏳",statusMsg:`${activeJob.brand} is reviewing your application. You'll hear back soon.`,
+      steps:["Applied","Reviewed","Shortlisted","Hired"],stepIdx:0});
+    renderApps();
+  }
+  const name=activeJob?activeJob.brand:"the role";
+  showToast(`✓ Applied to ${name}!`);
+}
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+}
+function setNavTab(el){
+  document.querySelectorAll(".btm-tab").forEach(t=>t.classList.remove("act"));
+  el.classList.add("act");
+}
+
+renderJobs();
+renderApps();
+</script>
+</div>
+</body>
+</html>

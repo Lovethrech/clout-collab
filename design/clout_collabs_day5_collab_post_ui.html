@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Clout Collabs — Collab Posts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ─── Reset ───────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Design Tokens (Day 4 continuity) ────── */
+:root {
+  --bg:         #0F172A;
+  --bg-raised:  #0D1525;
+  --card:       #1E293B;
+  --card-hi:    #243350;
+  --border:     rgba(255,255,255,0.07);
+  --border-hi:  rgba(255,255,255,0.13);
+
+  --purple:     #6D28D9;
+  --purple-md:  #7C3AED;
+  --purple-lt:  #A78BFA;
+  --blue:       #3B82F6;
+  --blue-lt:    #93C5FD;
+  --pink:       #EC4899;
+  --pink-lt:    #F9A8D4;
+  --green:      #10B981;
+  --green-lt:   #6EE7B7;
+  --amber:      #F59E0B;
+  --amber-lt:   #FCD34D;
+  --cyan:       #06B6D4;
+  --cyan-lt:    #67E8F9;
+  --violet:     #8B5CF6;
+  --violet-lt:  #C4B5FD;
+  --orange:     #F97316;
+  --orange-lt:  #FDBA74;
+  --teal:       #14B8A6;
+  --teal-lt:    #5EEAD4;
+
+  --tx-1: #F8FAFC;
+  --tx-2: #94A3B8;
+  --tx-3: #64748B;
+  --tx-4: #475569;
+
+  --r-card: 16px;
+  --r-chip: 100px;
+  --r-input: 12px;
+  --r-btn: 12px;
+  --font: 'Inter', -apple-system, sans-serif;
+
+  /* per-card skill color — overridden in JS */
+  --sk:    var(--blue);
+  --sk-lt: var(--blue-lt);
+  --sk-sf: rgba(59,130,246,0.12);
+}
+
+/* ─── Viewport Shell ──────────────────────── */
+html, body { height: 100%; overflow: hidden; background: var(--bg); }
+
+body { font-family: var(--font); color: var(--tx-1); -webkit-font-smoothing: antialiased; }
+
+.app {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ─── Top Nav (absolute inside .app) ─────── */
+.nav-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 60px; z-index: 300;
+  background: rgba(13,21,37,0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 16px; gap: 10px;
+}
+.nav-back {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--tx-2); font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  transition: background 0.18s, border-color 0.18s;
+  opacity: 0; pointer-events: none;
+}
+.nav-back.show { opacity: 1; pointer-events: all; }
+.nav-back:hover { background: var(--card-hi); border-color: var(--border-hi); }
+
+.nav-logo {
+  font-size: 17px; font-weight: 800; letter-spacing: -0.4px;
+  background: linear-gradient(135deg, var(--purple-lt), var(--blue-lt));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; flex: 1;
+  transition: opacity 0.2s;
+}
+.nav-screen-title {
+  font-size: 15px; font-weight: 700; letter-spacing: -0.2px;
+  color: var(--tx-1); flex: 1; opacity: 0;
+  transition: opacity 0.2s;
+}
+.nav-actions {
+  display: flex; align-items: center; gap: 9px;
+  transition: opacity 0.2s;
+}
+.nav-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--tx-2); font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; position: relative;
+  transition: background 0.18s;
+}
+.nav-btn:hover { background: var(--card-hi); }
+.nav-notif {
+  position: absolute; top: 7px; right: 7px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pink); border: 2px solid var(--bg);
+}
+.nav-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  color: #fff; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid rgba(255,255,255,0.14); cursor: pointer;
+}
+
+/* ─── Scrollable Panes ────────────────────── */
+.pane {
+  position: absolute;
+  top: 60px; left: 0; right: 0; bottom: 70px;
+  overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  transition: transform 0.38s cubic-bezier(0.32, 0, 0.15, 1),
+              opacity 0.3s ease;
+  will-change: transform;
+}
+.pane::-webkit-scrollbar { display: none; }
+
+/* Feed: starts visible */
+#paneFeed {
+  transform: translateX(0); opacity: 1;
+}
+/* Create: starts off-screen right */
+#paneCreate {
+  transform: translateX(100%); opacity: 0;
+  pointer-events: none;
+}
+
+/* Active state transitions */
+.app.show-create #paneFeed {
+  transform: translateX(-28%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.app.show-create #paneCreate {
+  transform: translateX(0); opacity: 1;
+  pointer-events: all;
+}
+
+/* ─── Bottom Nav ──────────────────────────── */
+.btm-nav {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 70px; z-index: 200;
+  background: rgba(13,21,37,0.97);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center;
+  justify-content: space-around; padding: 0 6px 4px;
+}
+.btm-tab {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+  padding: 6px 0; border-radius: 10px; cursor: pointer;
+  transition: background 0.18s;
+}
+.btm-tab:hover { background: rgba(255,255,255,0.03); }
+.btm-ico { font-size: 19px; color: var(--tx-3); line-height: 1; transition: color 0.18s, transform 0.18s; }
+.btm-lbl { font-size: 10px; font-weight: 500; color: var(--tx-3); transition: color 0.18s; }
+.btm-tab.act .btm-ico,
+.btm-tab.act .btm-lbl { color: var(--purple-lt); }
+.btm-tab:hover .btm-ico { transform: translateY(-1px); }
+
+/* ─── FAB ─────────────────────────────────── */
+.fab {
+  position: absolute; bottom: 86px; right: 20px;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple-md), var(--pink));
+  border: none; color: #fff; font-size: 24px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 250;
+  box-shadow: 0 4px 20px rgba(109,40,217,0.52);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s, opacity 0.2s;
+}
+.fab:hover {
+  transform: scale(1.07) rotate(90deg);
+  box-shadow: 0 6px 26px rgba(109,40,217,0.7);
+}
+.app.show-create .fab {
+  transform: rotate(45deg) scale(0.9);
+  opacity: 0; pointer-events: none;
+}
+
+/* ══════════════════════════════════════════ */
+/*  PANE A — COLLAB FEED                      */
+/* ══════════════════════════════════════════ */
+
+.feed-head { padding: 22px 20px 0; }
+.feed-title {
+  font-size: 26px; font-weight: 800;
+  letter-spacing: -0.6px; line-height: 1.15;
+}
+.feed-sub { font-size: 14px; color: var(--tx-2); margin-top: 4px; }
+
+.filter-row {
+  padding: 14px 20px 0;
+  display: flex; gap: 8px; overflow-x: auto;
+  padding-bottom: 4px; /* intentional — this is inside padding-top context */
+  scrollbar-width: none;
+}
+.filter-row { padding: 14px 20px 0 20px; }
+.filter-row::-webkit-scrollbar { display: none; }
+
+.fchip {
+  flex-shrink: 0; height: 32px; padding: 0 14px;
+  border-radius: var(--r-chip); font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1px solid var(--border);
+  background: var(--card); color: var(--tx-2);
+  transition: all 0.18s; white-space: nowrap; user-select: none;
+  display: flex; align-items: center; gap: 5px;
+}
+.fchip:hover { border-color: var(--purple-md); color: var(--tx-1); }
+.fchip.on { background: var(--purple); border-color: var(--purple); color: #fff; font-weight: 600; }
+
+.results-bar {
+  padding: 13px 20px 0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.results-count { font-size: 13px; color: var(--tx-2); }
+.results-count strong { color: var(--tx-1); font-weight: 600; }
+.sort-btn {
+  font-size: 12px; font-weight: 500; color: var(--purple-lt);
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font); transition: color 0.18s;
+}
+.sort-btn:hover { color: var(--blue-lt); }
+
+.post-list {
+  padding: 10px 20px 16px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+/* ─── Post Card ───────────────────────────── */
+.post-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-card); padding: 15px 15px 14px;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: transform 0.22s, box-shadow 0.22s,
+              border-color 0.22s, background 0.22s;
+}
+
+/* Signature: top gradient glow strip — differentiates posts from Day 4 profile cards */
+.post-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--sk) 0%, var(--sk-lt) 60%, transparent 100%);
+}
+.post-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 56px;
+  background: linear-gradient(180deg, var(--sk-sf) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.post-card:hover {
+  transform: translateY(-2px); background: var(--card-hi);
+  border-color: var(--border-hi);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.32);
+}
+
+.card-header-row {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 9px;
+}
+.skill-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 23px; padding: 0 10px; border-radius: var(--r-chip);
+  font-size: 11px; font-weight: 600;
+  background: var(--sk-sf); color: var(--sk-lt);
+  position: relative; z-index: 1;
+}
+.status-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 22px; padding: 0 9px; border-radius: var(--r-chip);
+  font-size: 11px; font-weight: 600;
+}
+.status-pill.open  { background: rgba(16,185,129,0.12); color: var(--green-lt); }
+.status-pill.closed { background: rgba(100,116,139,0.14); color: var(--tx-3); }
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+.post-title {
+  font-size: 15px; font-weight: 700; color: var(--tx-1);
+  line-height: 1.38; margin-bottom: 6px; letter-spacing: -0.15px;
+  position: relative; z-index: 1;
+}
+.post-desc {
+  font-size: 13px; color: var(--tx-2); line-height: 1.56;
+  margin-bottom: 11px;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.poster-row {
+  display: flex; align-items: center; gap: 7px; margin-bottom: 11px;
+}
+.poster-ava {
+  width: 24px; height: 24px; border-radius: 50%;
+  font-size: 9px; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.poster-name { font-size: 12px; font-weight: 600; color: var(--tx-1); }
+.poster-sep  { font-size: 11px; color: var(--tx-4); }
+.post-time   { font-size: 12px; color: var(--tx-3); }
+.post-applicants {
+  font-size: 11px; color: var(--tx-3); margin-left: auto;
+  flex-shrink: 0;
+}
+
+.meta-row {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 13px;
+}
+.meta-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 25px; padding: 0 9px; border-radius: var(--r-chip);
+  font-size: 11px; font-weight: 500;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border); color: var(--tx-2);
+}
+
+.apply-btn {
+  width: 100%; height: 39px; border-radius: var(--r-btn);
+  border: none; background: var(--sk); color: #fff;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.apply-btn:hover { opacity: 0.88; transform: scale(0.99); }
+.apply-arr { transition: transform 0.2s; }
+.apply-btn:hover .apply-arr { transform: translateX(3px); }
+
+/* Empty feed */
+.feed-empty {
+  text-align: center; padding: 64px 24px;
+}
+.feed-empty-ico { font-size: 38px; margin-bottom: 14px; }
+.feed-empty-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.feed-empty-body  { font-size: 14px; color: var(--tx-2); }
+
+/* ══════════════════════════════════════════ */
+/*  PANE B — CREATE POST                      */
+/* ══════════════════════════════════════════ */
+
+.create-scroll { padding: 20px 20px 24px; }
+
+/* Section header */
+.sec-label {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--tx-3); margin-bottom: 12px;
+}
+
+/* Field groups */
+.fgroup { margin-bottom: 20px; }
+.flabel {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--tx-2); margin-bottom: 8px;
+}
+.flabel em { font-style: normal; color: var(--purple-lt); }
+
+.finput {
+  width: 100%; padding: 13px 14px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-input); color: var(--tx-1);
+  font-family: var(--font); font-size: 14px; outline: none;
+  resize: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.finput::placeholder { color: var(--tx-3); }
+.finput:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(109,40,217,0.16);
+}
+
+.textarea-wrap { position: relative; }
+.char-pill {
+  position: absolute; bottom: 10px; right: 11px;
+  font-size: 11px; font-weight: 500; color: var(--tx-4);
+  transition: color 0.2s;
+  background: var(--card); padding: 1px 5px; border-radius: 4px;
+}
+.char-pill.warn { color: var(--amber); }
+.char-pill.over { color: var(--pink); }
+
+/* Skill chip selector */
+.skill-grid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.sk-opt {
+  height: 34px; padding: 0 13px; border-radius: var(--r-chip);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: 1px solid var(--border); background: var(--card);
+  color: var(--tx-2); transition: all 0.18s; user-select: none;
+  display: flex; align-items: center; gap: 5px;
+}
+.sk-opt:hover { border-color: var(--purple-md); color: var(--tx-1); }
+.sk-opt.sel {
+  border-color: var(--sk); background: var(--sk-sf);
+  color: var(--sk-lt); font-weight: 600;
+}
+
+/* Segmented controls */
+.seg {
+  display: flex; gap: 0;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 4px;
+}
+.seg-btn {
+  flex: 1; height: 36px; border-radius: 9px;
+  border: none; background: none;
+  color: var(--tx-3); font-family: var(--font);
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  transition: all 0.2s;
+}
+.seg-btn:hover { color: var(--tx-1); }
+.seg-btn.seg-on {
+  background: var(--purple); color: #fff; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(109,40,217,0.32);
+}
+.seg-btn.seg-on.seg-blue {
+  background: var(--blue);
+  box-shadow: 0 2px 8px rgba(59,130,246,0.32);
+}
+.seg-btn.seg-on.seg-muted {
+  background: rgba(100,116,139,0.3);
+  box-shadow: none; color: var(--tx-2);
+}
+
+/* Divider */
+.divider {
+  height: 1px; background: var(--border); margin: 22px 0;
+}
+
+/* Live preview section */
+.preview-wrap { margin-bottom: 22px; }
+.preview-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 11px;
+}
+.preview-label {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--tx-3);
+}
+.live-badge {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.4px; text-transform: uppercase;
+  padding: 2px 7px; border-radius: var(--r-chip);
+  background: rgba(16,185,129,0.14); color: var(--green-lt);
+}
+
+/* Post CTA */
+.post-btn {
+  width: 100%; height: 50px; border-radius: 14px; border: none;
+  background: linear-gradient(135deg, var(--purple-md), var(--pink));
+  color: #fff; font-family: var(--font);
+  font-size: 15px; font-weight: 700; letter-spacing: -0.2px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 20px rgba(109,40,217,0.42);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+.post-btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(109,40,217,0.58);
+}
+.post-btn:disabled {
+  opacity: 0.38; cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ─── Success screen ──────────────────────── */
+.success-layer {
+  position: absolute; inset: 0; z-index: 500;
+  background: rgba(13,21,37,0.97);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 32px 24px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.success-layer.show { opacity: 1; pointer-events: all; }
+.s-icon  { font-size: 56px; margin-bottom: 20px; }
+.s-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+.s-body  { font-size: 15px; color: var(--tx-2); line-height: 1.55; margin-bottom: 28px; }
+.s-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 280px; }
+.s-primary {
+  height: 46px; border-radius: var(--r-chip);
+  background: var(--purple); border: none;
+  color: #fff; font-family: var(--font);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: opacity 0.18s;
+}
+.s-primary:hover { opacity: 0.88; }
+.s-secondary {
+  height: 46px; border-radius: var(--r-chip);
+  background: none; border: 1px solid var(--border);
+  color: var(--tx-2); font-family: var(--font);
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+.s-secondary:hover { border-color: var(--border-hi); color: var(--tx-1); }
+
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ── Top Nav ──────────────────────────── -->
+  <header class="nav-bar">
+    <button class="nav-back" id="navBack" onclick="goFeed()" aria-label="Back">←</button>
+    <span class="nav-logo" id="navLogo">Clout Collabs</span>
+    <span class="nav-screen-title" id="navTitle">New Collab Post</span>
+    <div class="nav-actions" id="navActions">
+      <div class="nav-btn">🔔<span class="nav-notif"></span></div>
+      <div class="nav-btn">💬</div>
+      <div class="nav-avatar">YO</div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════ -->
+  <!--  PANE A — COLLAB FEED                  -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="pane" id="paneFeed">
+    <div class="feed-head">
+      <h1 class="feed-title">Collab Requests</h1>
+      <p class="feed-sub">Browse open collaboration opportunities</p>
+    </div>
+
+    <div class="filter-row" id="filterRow">
+      <div class="fchip on" data-f="All">All</div>
+      <div class="fchip" data-f="Open">🟢 Open</div>
+      <div class="fchip" data-f="Paid">💰 Paid</div>
+      <div class="fchip" data-f="Unpaid">🤝 Unpaid</div>
+      <div class="fchip" data-f="Local">📍 Local</div>
+      <div class="fchip" data-f="International">✈️ International</div>
+    </div>
+
+    <div class="results-bar">
+      <p class="results-count"><strong id="postCount">0</strong> open collabs</p>
+      <button class="sort-btn" id="sortCycleBtn">Latest First ↓</button>
+    </div>
+
+    <div class="post-list" id="postList"></div>
+  </div><!-- /paneFeed -->
+
+  <!-- ══════════════════════════════════════ -->
+  <!--  PANE B — CREATE POST                  -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="pane" id="paneCreate">
+    <div class="create-scroll">
+
+      <!-- Title -->
+      <div class="fgroup">
+        <label class="flabel" for="iTitle">What are you looking for? <em>*</em></label>
+        <input class="finput" id="iTitle" type="text"
+          placeholder="e.g. Need a videographer for a fashion shoot"
+          maxlength="80" autocomplete="off" />
+      </div>
+
+      <!-- Description -->
+      <div class="fgroup">
+        <label class="flabel" for="iDesc">Describe the collaboration <em>*</em></label>
+        <div class="textarea-wrap">
+          <textarea class="finput" id="iDesc" rows="4"
+            placeholder="What are you working on? What do you need from your collaborator? Share any useful details…"
+            maxlength="280"></textarea>
+          <span class="char-pill" id="charPill">0 / 280</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Skill needed -->
+      <div class="fgroup">
+        <label class="flabel">Skill needed <em>*</em></label>
+        <div class="skill-grid" id="skillGrid">
+          <div class="sk-opt" data-sk="Videographer"  data-c="#3B82F6" data-lt="#93C5FD" data-sf="rgba(59,130,246,0.12)">🎬 Videographer</div>
+          <div class="sk-opt" data-sk="Photographer"  data-c="#8B5CF6" data-lt="#C4B5FD" data-sf="rgba(139,92,246,0.12)">📸 Photographer</div>
+          <div class="sk-opt" data-sk="Editor"        data-c="#EC4899" data-lt="#F9A8D4" data-sf="rgba(236,72,153,0.12)">✂️ Editor</div>
+          <div class="sk-opt" data-sk="Designer"      data-c="#10B981" data-lt="#6EE7B7" data-sf="rgba(16,185,129,0.12)">🎨 Designer</div>
+          <div class="sk-opt" data-sk="Producer"      data-c="#F59E0B" data-lt="#FCD34D" data-sf="rgba(245,158,11,0.12)">🎵 Producer</div>
+          <div class="sk-opt" data-sk="Writer"        data-c="#06B6D4" data-lt="#67E8F9" data-sf="rgba(6,182,212,0.12)">✍️ Writer</div>
+          <div class="sk-opt" data-sk="Musician"      data-c="#EC4899" data-lt="#F9A8D4" data-sf="rgba(236,72,153,0.12)">🎤 Musician</div>
+          <div class="sk-opt" data-sk="Creator"       data-c="#7C3AED" data-lt="#A78BFA" data-sf="rgba(124,58,237,0.12)">📱 Creator</div>
+          <div class="sk-opt" data-sk="DJ"            data-c="#F97316" data-lt="#FDBA74" data-sf="rgba(249,115,22,0.12)">🎧 DJ</div>
+          <div class="sk-opt" data-sk="Animator"      data-c="#14B8A6" data-lt="#5EEAD4" data-sf="rgba(20,184,166,0.12)">🎞️ Animator</div>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="fgroup">
+        <label class="flabel">Location preference</label>
+        <div class="seg" id="segLoc">
+          <button class="seg-btn seg-on"      data-loc="Local"         onclick="setLoc(this)">📍 Local</button>
+          <button class="seg-btn seg-blue"    data-loc="International" onclick="setLoc(this)">✈️ International</button>
+          <button class="seg-btn"             data-loc="Both"          onclick="setLoc(this)">🌍 Both</button>
+        </div>
+      </div>
+
+      <!-- Compensation -->
+      <div class="fgroup">
+        <label class="flabel">Compensation</label>
+        <div class="seg" id="segComp">
+          <button class="seg-btn seg-on"      data-comp="Paid"   onclick="setComp(this)">💰 Paid</button>
+          <button class="seg-btn seg-muted"   data-comp="Unpaid" onclick="setComp(this)">🤝 Unpaid</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Live preview -->
+      <div class="preview-wrap">
+        <div class="preview-header">
+          <span class="preview-label">Post preview</span>
+          <span class="live-badge">● Live</span>
+        </div>
+        <div id="previewSlot"></div>
+      </div>
+
+      <!-- Submit -->
+      <button class="post-btn" id="postBtn" disabled onclick="submitPost()">
+        Post Collab ✦
+      </button>
+
+    </div>
+  </div><!-- /paneCreate -->
+
+  <!-- FAB -->
+  <button class="fab" id="fab" onclick="goCreate()" aria-label="Create collab post">+</button>
+
+  <!-- Bottom Nav -->
+  <nav class="btm-nav">
+    <div class="btm-tab" onclick="setTab(this)">
+      <div class="btm-ico">🏠</div><span class="btm-lbl">Home</span>
+    </div>
+    <div class="btm-tab" onclick="setTab(this)">
+      <div class="btm-ico">🔍</div><span class="btm-lbl">Discover</span>
+    </div>
+    <div class="btm-tab act" onclick="setTab(this)">
+      <div class="btm-ico">📝</div><span class="btm-lbl">Posts</span>
+    </div>
+    <div class="btm-tab" onclick="setTab(this)">
+      <div class="btm-ico">💬</div><span class="btm-lbl">Messages</span>
+    </div>
+    <div class="btm-tab" onclick="setTab(this)">
+      <div class="btm-ico">👤</div><span class="btm-lbl">Profile</span>
+    </div>
+  </nav>
+
+  <!-- Success layer -->
+  <div class="success-layer" id="successLayer">
+    <div class="s-icon">🎉</div>
+    <div class="s-title">Collab posted!</div>
+    <p class="s-body">Your request is live. Collaborators<br>can start applying right away.</p>
+    <div class="s-actions">
+      <button class="s-primary" onclick="afterSuccess()">See it in the feed →</button>
+      <button class="s-secondary" onclick="afterSuccess()">Post another</button>
+    </div>
+  </div>
+
+</div><!-- /.app -->
+
+<script>
+/* ── Skill tokens ─────────────────────────── */
+const SK = {
+  "Videographer": { c:"#3B82F6", lt:"#93C5FD", sf:"rgba(59,130,246,0.12)",  catC:"#2563EB" },
+  "Photographer": { c:"#8B5CF6", lt:"#C4B5FD", sf:"rgba(139,92,246,0.12)",  catC:"#7C3AED" },
+  "Editor":       { c:"#EC4899", lt:"#F9A8D4", sf:"rgba(236,72,153,0.12)",  catC:"#DB2777" },
+  "Designer":     { c:"#10B981", lt:"#6EE7B7", sf:"rgba(16,185,129,0.12)",  catC:"#059669" },
+  "Producer":     { c:"#F59E0B", lt:"#FCD34D", sf:"rgba(245,158,11,0.12)",  catC:"#D97706" },
+  "Writer":       { c:"#06B6D4", lt:"#67E8F9", sf:"rgba(6,182,212,0.12)",   catC:"#0891B2" },
+  "Musician":     { c:"#EC4899", lt:"#F9A8D4", sf:"rgba(236,72,153,0.12)",  catC:"#DB2777" },
+  "Creator":      { c:"#7C3AED", lt:"#A78BFA", sf:"rgba(124,58,237,0.12)",  catC:"#6D28D9" },
+  "DJ":           { c:"#F97316", lt:"#FDBA74", sf:"rgba(249,115,22,0.12)",  catC:"#EA580C" },
+  "Animator":     { c:"#14B8A6", lt:"#5EEAD4", sf:"rgba(20,184,166,0.12)",  catC:"#0D9488" },
+};
+
+const POSTER_GRAD = {
+  "Creator":      ["#6D28D9","#7C3AED"],
+  "Musician":     ["#EC4899","#DB2777"],
+  "Creative Pro": ["#3B82F6","#2563EB"],
+  "Brand":        ["#10B981","#059669"],
+};
+
+/* ── Post data ────────────────────────────── */
+const POSTS = [
+  {
+    id:1, title:"Need a Videographer for a Fashion Shoot",
+    desc:"Looking for a skilled videographer to film and edit a 60-second fashion lookbook. Must be based in Lagos and available next weekend.",
+    skill:"Videographer", status:"Open", paid:"Paid", location:"Local", city:"Lagos",
+    poster:{ name:"Amara Osei", handle:"@amaracreates", initials:"AO", cat:"Creator" },
+    applied:4, time:"2h ago"
+  },
+  {
+    id:2, title:"Seeking a Music Producer for an Afropop EP",
+    desc:"Working on a 5-track Afropop EP and need a producer who understands the sound. Open to remote collaboration. Budget available.",
+    skill:"Producer", status:"Open", paid:"Paid", location:"International", city:"Remote",
+    poster:{ name:"Bello Sonic", handle:"@bellosonic", initials:"BS", cat:"Musician" },
+    applied:7, time:"5h ago"
+  },
+  {
+    id:3, title:"Photographer Needed for Brand Campaign",
+    desc:"NovaBrands is launching a new collection and needs a Lagos-based photographer for a 1-day product and lifestyle shoot.",
+    skill:"Photographer", status:"Open", paid:"Paid", location:"Local", city:"Lagos",
+    poster:{ name:"NovaBrands", handle:"@novabrands", initials:"NB", cat:"Brand" },
+    applied:11, time:"8h ago"
+  },
+  {
+    id:4, title:"Video Editor Wanted — Weekly YouTube Vlogs",
+    desc:"I upload weekly vlogs and need a consistent editor who can match my upbeat style. Turnaround: 3 days per video. Fully remote.",
+    skill:"Editor", status:"Open", paid:"Paid", location:"International", city:"Remote",
+    poster:{ name:"Zara M.", handle:"@zaramotions", initials:"ZM", cat:"Creator" },
+    applied:9, time:"Yesterday"
+  },
+  {
+    id:5, title:"DJ Needed for a Creator Economy Event",
+    desc:"Pulse Media is hosting a creator economy event in Lagos. Looking for a DJ who can set an Afrobeats / Amapiano vibe for 300+ guests.",
+    skill:"DJ", status:"Open", paid:"Paid", location:"Local", city:"Lagos",
+    poster:{ name:"Pulse Media", handle:"@pulsemedia", initials:"PM", cat:"Brand" },
+    applied:3, time:"Yesterday"
+  },
+  {
+    id:6, title:"Co-writer Wanted for R&B Single",
+    desc:"Vocalist looking for a co-writer for an original R&B track. Unpaid creative collab with potential revenue share if released commercially.",
+    skill:"Musician", status:"Open", paid:"Unpaid", location:"International", city:"Remote",
+    poster:{ name:"DJ Kente", handle:"@djkente", initials:"DK", cat:"Musician" },
+    applied:5, time:"2 days ago"
+  },
+];
+
+/* ── State ────────────────────────────────── */
+let feedFilter = "All";
+let form = { title:"", desc:"", skill:"", skillTk:null, loc:"Local", comp:"Paid" };
+
+/* ── Filter helper ────────────────────────── */
+function getFiltered() {
+  return POSTS.filter(p => {
+    if (feedFilter === "All")           return true;
+    if (feedFilter === "Open")          return p.status === "Open";
+    if (feedFilter === "Paid")          return p.paid === "Paid";
+    if (feedFilter === "Unpaid")        return p.paid === "Unpaid";
+    if (feedFilter === "Local")         return p.location === "Local";
+    if (feedFilter === "International") return p.location === "International";
+    return true;
+  });
+}
+
+/* ── Build post card DOM ──────────────────── */
+function makeCard(p, isPreview) {
+  const sk = SK[p.skill] || SK["Creator"];
+  const pg = POSTER_GRAD[p.poster.cat] || POSTER_GRAD["Creator"];
+  const el = document.createElement("div");
+  el.className = "post-card";
+  el.style.setProperty("--sk",    sk.c);
+  el.style.setProperty("--sk-lt", sk.lt);
+  el.style.setProperty("--sk-sf", sk.sf);
+  if (isPreview) el.style.cursor = "default";
+
+  const locLabel  = p.location === "International" ? "✈️ Remote / International"
+                  : p.location === "Both"           ? "🌍 Local & International"
+                  :                                   `📍 ${p.city || "Local"}`;
+  const compLabel = p.paid === "Paid" ? "💰 Paid" : "🤝 Unpaid";
+
+  el.innerHTML = `
+    <div class="card-header-row">
+      <span class="skill-badge">${p.skill || "Skill"}</span>
+      <span class="status-pill open"><span class="status-dot"></span>Open</span>
+    </div>
+    <div class="post-title">${p.title || "Your post title will appear here"}</div>
+    <p class="post-desc">${p.desc || "Your description will appear here — tell people what you're working on and what you need…"}</p>
+    <div class="poster-row">
+      <div class="poster-ava" style="background:linear-gradient(135deg,${pg[0]},${pg[1]})">${p.poster.initials}</div>
+      <span class="poster-name">${p.poster.name}</span>
+      <span class="poster-sep">·</span>
+      <span class="post-time">${p.time || "Just now"}</span>
+      ${!isPreview && p.applied > 0 ? `<span class="post-applicants">${p.applied} applied</span>` : ""}
+    </div>
+    <div class="meta-row">
+      <span class="meta-chip">${locLabel}</span>
+      <span class="meta-chip">${compLabel}</span>
+    </div>
+    <button class="apply-btn" ${isPreview ? 'style="opacity:.45;pointer-events:none"' : ''}>
+      ${isPreview ? "Apply Now" : "Apply Now"} <span class="apply-arr">→</span>
+    </button>
+  `;
+  return el;
+}
+
+/* ── Render feed ──────────────────────────── */
+function renderFeed() {
+  const list = getFiltered();
+  document.getElementById("postCount").textContent = list.length;
+  const container = document.getElementById("postList");
+  container.innerHTML = "";
+  if (list.length === 0) {
+    container.innerHTML = `<div class="feed-empty">
+      <div class="feed-empty-ico">📭</div>
+      <div class="feed-empty-title">No collabs match this filter</div>
+      <p class="feed-empty-body">Try a different filter or check back later</p>
+    </div>`;
+    return;
+  }
+  list.forEach(p => container.appendChild(makeCard(p, false)));
+}
+
+/* ── Feed filter events ───────────────────── */
+document.getElementById("filterRow").addEventListener("click", e => {
+  const chip = e.target.closest("[data-f]");
+  if (!chip) return;
+  feedFilter = chip.dataset.f;
+  document.querySelectorAll("#filterRow .fchip").forEach(c => c.classList.remove("on"));
+  chip.classList.add("on");
+  renderFeed();
+});
+
+/* Sort button cycles */
+const sortLabels = ["Latest First ↓", "Most Applied ↓", "Paid Only ↓"];
+let sortIdx = 0;
+document.getElementById("sortCycleBtn").addEventListener("click", function () {
+  sortIdx = (sortIdx + 1) % sortLabels.length;
+  this.textContent = sortLabels[sortIdx];
+});
+
+/* ── Create form events ───────────────────── */
+document.getElementById("iTitle").addEventListener("input", function () {
+  form.title = this.value;
+  validate(); updatePreview();
+});
+
+document.getElementById("iDesc").addEventListener("input", function () {
+  form.desc = this.value;
+  const n = this.value.length;
+  const pill = document.getElementById("charPill");
+  pill.textContent = `${n} / 280`;
+  pill.className = "char-pill" + (n >= 260 ? " over" : n >= 220 ? " warn" : "");
+  validate(); updatePreview();
+});
+
+document.getElementById("skillGrid").addEventListener("click", e => {
+  const opt = e.target.closest(".sk-opt");
+  if (!opt) return;
+  const sk = SK[opt.dataset.sk] || SK["Creator"];
+  document.querySelectorAll(".sk-opt").forEach(o => {
+    o.classList.remove("sel");
+    o.style.removeProperty("--sk"); o.style.removeProperty("--sk-lt"); o.style.removeProperty("--sk-sf");
+  });
+  opt.classList.add("sel");
+  opt.style.setProperty("--sk",    sk.c);
+  opt.style.setProperty("--sk-lt", sk.lt);
+  opt.style.setProperty("--sk-sf", sk.sf);
+  form.skill  = opt.dataset.sk;
+  form.skillTk = sk;
+  validate(); updatePreview();
+});
+
+function setLoc(btn) {
+  document.querySelectorAll("#segLoc .seg-btn").forEach(b => b.classList.remove("seg-on"));
+  btn.classList.add("seg-on");
+  form.loc = btn.dataset.loc;
+  updatePreview();
+}
+function setComp(btn) {
+  document.querySelectorAll("#segComp .seg-btn").forEach(b => b.classList.remove("seg-on"));
+  btn.classList.add("seg-on");
+  form.comp = btn.dataset.comp;
+  updatePreview();
+}
+
+function validate() {
+  const ok = form.title.trim().length >= 4 &&
+             form.desc.trim().length  >= 10 &&
+             form.skill !== "";
+  document.getElementById("postBtn").disabled = !ok;
+}
+
+function updatePreview() {
+  const slot = document.getElementById("previewSlot");
+  slot.innerHTML = "";
+  const mock = {
+    title: form.title, desc: form.desc,
+    skill: form.skill || "Skill needed",
+    status: "Open", paid: form.comp,
+    location: form.loc,
+    city: form.loc === "Local" ? "Lagos" : "Remote",
+    poster: { name:"You", handle:"@you", initials:"YO", cat:"Creator" },
+    applied: 0, time: "Just now"
+  };
+  if (form.skillTk) {
+    // SK lookup happens inside makeCard via mock.skill
+  }
+  slot.appendChild(makeCard(mock, true));
+}
+
+/* ── Submit ───────────────────────────────── */
+function submitPost() {
+  document.getElementById("successLayer").classList.add("show");
+}
+
+function afterSuccess() {
+  document.getElementById("successLayer").classList.remove("show");
+  // Push new post into feed data
+  POSTS.unshift({
+    id: Date.now(),
+    title: form.title, desc: form.desc,
+    skill: form.skill, status:"Open",
+    paid: form.comp, location: form.loc,
+    city: form.loc === "Local" ? "Lagos" : "Remote",
+    poster:{ name:"You", handle:"@you", initials:"YO", cat:"Creator" },
+    applied:0, time:"Just now"
+  });
+  // Reset form
+  form = { title:"", desc:"", skill:"", skillTk:null, loc:"Local", comp:"Paid" };
+  document.getElementById("iTitle").value = "";
+  document.getElementById("iDesc").value  = "";
+  document.getElementById("charPill").textContent = "0 / 280";
+  document.querySelectorAll(".sk-opt").forEach(o => { o.classList.remove("sel"); o.style.cssText = ""; });
+  document.querySelectorAll("#segLoc  .seg-btn").forEach((b,i) => { b.classList.toggle("seg-on", i===0); });
+  document.querySelectorAll("#segComp .seg-btn").forEach((b,i) => { b.classList.toggle("seg-on", i===0); });
+  document.getElementById("postBtn").disabled = true;
+  updatePreview();
+  // Back to feed with filter reset
+  feedFilter = "All";
+  document.querySelectorAll("#filterRow .fchip").forEach(c => c.classList.toggle("on", c.dataset.f === "All"));
+  renderFeed();
+  goFeed();
+}
+
+/* ── Screen navigation ───────────────────── */
+function goCreate() {
+  document.getElementById("app").classList.add("show-create");
+  document.getElementById("navBack").classList.add("show");
+  document.getElementById("navLogo").style.opacity = "0";
+  document.getElementById("navTitle").style.opacity = "1";
+  document.getElementById("navActions").style.opacity = "0";
+  document.getElementById("navActions").style.pointerEvents = "none";
+  updatePreview();
+  document.getElementById("paneCreate").scrollTop = 0;
+}
+
+function goFeed() {
+  document.getElementById("app").classList.remove("show-create");
+  document.getElementById("navBack").classList.remove("show");
+  document.getElementById("navLogo").style.opacity = "1";
+  document.getElementById("navTitle").style.opacity = "0";
+  document.getElementById("navActions").style.opacity = "1";
+  document.getElementById("navActions").style.pointerEvents = "";
+}
+
+function setTab(el) {
+  document.querySelectorAll(".btm-tab").forEach(t => t.classList.remove("act"));
+  el.classList.add("act");
+}
+
+/* ── Init ─────────────────────────────────── */
+renderFeed();
+updatePreview();
+</script>
+</body>
+</html>
