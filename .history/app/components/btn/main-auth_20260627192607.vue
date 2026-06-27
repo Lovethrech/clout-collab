@@ -5,11 +5,11 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
 
 
 <template>
-    <div class="btn-main-auth" :disabled="loading">
+    <button class="btn-main-auth"  :disabled="loading">
         <p class="btn-main-auth-text">
             {{ loading ? "Processing..." : btnText }}
         </p>
-    </div>
+    </button>
 </template>
 
 <style scoped>

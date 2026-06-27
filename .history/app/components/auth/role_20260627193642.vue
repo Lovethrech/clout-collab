@@ -20,7 +20,7 @@ const complete = () => {
 </script>
 
 <template>
-    <div class="auth-role dsp-flex-jstf-center-plc-center">
+    <div class="auth-role">
         <div class="auth-role-main-ctn">
             <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
                 <div class="back dsp-flex-jstf-center-plc-center" @click="showRoleBox">‹</div>
@@ -62,12 +62,13 @@ const complete = () => {
     width: 100%;
     min-height: 100vh;
     background: var(--slate-900); 
+    
 }
 .auth-role-main-ctn{
     padding: 2vh;
     width: 40%;
     height: 100%;
-    margin-top: 10vh;
+    background-color: orange;
 }
 .topnav{ 
     padding:2vh 0 1vh; 

@@ -67,7 +67,7 @@ const complete = () => {
     padding: 2vh;
     width: 40%;
     height: 100%;
-    margin-top: 10vh;
+    background-color: orange;
 }
 .topnav{ 
     padding:2vh 0 1vh; 
