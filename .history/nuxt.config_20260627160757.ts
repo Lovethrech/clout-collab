@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     redirect: {
       login: '/login',
       callback: '/confirm',
-
+    }
   },
   app:{
     head:{

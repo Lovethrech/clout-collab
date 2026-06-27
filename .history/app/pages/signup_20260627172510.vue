@@ -42,7 +42,7 @@ const showRoleBox=()=>{
             <form class="auth-page-form">
                 <AuthBtnGoogle/>
                 <div class="divider">
-                    <span class="line"></span><span>or sign up with email</span><span class="line"></span>
+                    <span class="line"></span><span>or log with email</span><span class="line"></span>
                 </div>
                 <AuthFormEmailAndPassword/>
                 <BtnMainAuth :btnText="btnText" @click="showRoleBox"/> 
