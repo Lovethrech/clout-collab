@@ -1,72 +1,54 @@
 <script setup>
-const props = defineProps({
-    pendingUserData: Object
-})
+const {showRoleBox}=defineProps(['showRoleBox']);
 
-const emit = defineEmits(['complete', 'cancel'])
+const emit = defineEmits(['complete', 'cancel']);
 
-const selectedRole = ref(null)
+const selectedRole = ref(null);
 
 const roles = [
     { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content, video, photo & more' },
     { value: 'musician', emoji: '🎤', label: 'Musician', desc: 'Artists, producers, DJs' },
     { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
     { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
-]
-
+];
 const complete = () => {
     if (selectedRole.value) {
         emit('complete', selectedRole.value)
     }
-}
-
-const cancel = () => {
-    emit('cancel')
 }
 </script>
 
 <template>
     <div class="auth-role dsp-flex-jstf-center-plc-center">
         <div class="auth-role-main-ctn">
-        <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
-            <div class="back dsp-flex-jstf-center-plc-center" @click="cancel">‹</div>
-            <div class="steps">
-            <div class="dot"></div>
-            <div class="dot active"></div>
+            <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
+                <div class="back dsp-flex-jstf-center-plc-center" @click="cancel">‹</div>
+                <div class="steps"><div class="dot"></div><div class="dot active"></div></div>
+                <div style="width:30px;"></div>
             </div>
-            <div style="width:30px;"></div>
-        </div>
 
-        <div class="scr-h1">What brings you here?</div>
-        <div class="scr-sub">Pick what fits best, you can add more later.</div>
+            <div class="scr-h1" >What brings you here?</div>
+            <div class="scr-sub">Pick what fits best, you can add more later.</div>
 
-        <div class="role-list">
-            <div 
-            v-for="role in roles" 
-            :key="role.value" 
-            class="role-card-wrapper"
-            @click="selectedRole = role.value"
+            <div class="role-list" v-for="role in roles" :key="role.value" @click="selectedRole = role.value">
+                <div class="role-card" :class="[selectedRole === role.value ? 'role-card-selected' : 'role-card']">
+                    <div class="role-icon dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-card-icon-selected' : 'role-icon']">{{role.emoji}}</div>
+                    <div class="role-text">
+                        <div class="t">{{role.label}}</div>
+                        <div class="d">{{role.desc}}</div>
+                    </div>
+                    <div class="role-check dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-check' : 'role-check-empty']">
+                        {{selectedRole === role.value ? '✓' : ''}}
+                    </div>
+                </div>
+            </div>
+            <button
+                class="role-submit-btn"
+                @click="complete"
+                :disabled="!selectedRole"
             >
-            <div class="role-card" :class="{ 'role-card-selected': selectedRole === role.value }">
-                <div class="role-icon dsp-flex-jstf-center-plc-center" 
-                    :class="{ 'role-card-icon-selected': selectedRole === role.value }">
-                {{ role.emoji }}
-                </div>
-                <div class="role-text">
-                <div class="t">{{ role.label }}</div>
-                <div class="d">{{ role.desc }}</div>
-                </div>
-                <div class="role-check dsp-flex-jstf-center-plc-center" 
-                    :class="{ 'role-check': selectedRole === role.value, 'role-check-empty': selectedRole !== role.value }">
-                {{ selectedRole === role.value ? '✓' : '' }}
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <button class="role-submit-btn" @click="complete" :disabled="!selectedRole">
-            Continue
-        </button>
+                Continue
+            </button>
         </div>
     </div>
 </template>

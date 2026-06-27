@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-    pendingUserData: Object
+  pendingUserData: Object
 })
 
 const emit = defineEmits(['complete', 'cancel'])
@@ -8,10 +8,10 @@ const emit = defineEmits(['complete', 'cancel'])
 const selectedRole = ref(null)
 
 const roles = [
-    { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content, video, photo & more' },
-    { value: 'musician', emoji: '🎤', label: 'Musician', desc: 'Artists, producers, DJs' },
-    { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
-    { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
+  { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content, video, photo & more' },
+  { value: 'musician', emoji: '🎤', label: 'Musician', desc: 'Artists, producers, DJs' },
+  { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
+  { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
 ]
 
 const complete = () => {

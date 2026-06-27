@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-    pendingUserData: Object
+  pendingUserData: Object
 })
 
 const emit = defineEmits(['complete', 'cancel'])

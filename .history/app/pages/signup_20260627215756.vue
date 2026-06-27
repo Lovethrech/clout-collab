@@ -102,8 +102,7 @@ const finalizeSignUp=async(selectedRole)=>{
             v-if="showRoleSelector"
             :step="step"
             :pendingUserData="pendingUserData"
-            @complete="finalizeSignUp"
-            :showRoleSelector="showRoleSelector"
+            @complete="finalize"
         />
     </div>
 </template>

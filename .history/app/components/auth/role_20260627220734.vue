@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-    pendingUserData: Object
+  pendingUserData: Object
 })
 
 const emit = defineEmits(['complete', 'cancel'])
@@ -8,67 +8,67 @@ const emit = defineEmits(['complete', 'cancel'])
 const selectedRole = ref(null)
 
 const roles = [
-    { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content, video, photo & more' },
-    { value: 'musician', emoji: '🎤', label: 'Musician', desc: 'Artists, producers, DJs' },
-    { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
-    { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
+  { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content, video, photo & more' },
+  { value: 'musician', emoji: '🎤', label: 'Musician', desc: 'Artists, producers, DJs' },
+  { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
+  { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
 ]
 
 const complete = () => {
-    if (selectedRole.value) {
-        emit('complete', selectedRole.value)
-    }
+  if (selectedRole.value) {
+    emit('complete', selectedRole.value)
+  }
 }
 
 const cancel = () => {
-    emit('cancel')
+  emit('cancel')
 }
 </script>
 
 <template>
-    <div class="auth-role dsp-flex-jstf-center-plc-center">
-        <div class="auth-role-main-ctn">
-        <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
-            <div class="back dsp-flex-jstf-center-plc-center" @click="cancel">‹</div>
-            <div class="steps">
-            <div class="dot"></div>
-            <div class="dot active"></div>
-            </div>
-            <div style="width:30px;"></div>
+  <div class="auth-role dsp-flex-jstf-center-plc-center">
+    <div class="auth-role-main-ctn">
+      <div class="topnav dsp-flex-jstf-center-plc-spcbtw">
+        <div class="back dsp-flex-jstf-center-plc-center" @click="cancel">‹</div>
+        <div class="steps">
+          <div class="dot"></div>
+          <div class="dot active"></div>
         </div>
+        <div style="width:30px;"></div>
+      </div>
 
-        <div class="scr-h1">What brings you here?</div>
-        <div class="scr-sub">Pick what fits best, you can add more later.</div>
+      <div class="scr-h1">What brings you here?</div>
+      <div class="scr-sub">Pick what fits best, you can add more later.</div>
 
-        <div class="role-list">
-            <div 
-            v-for="role in roles" 
-            :key="role.value" 
-            class="role-card-wrapper"
-            @click="selectedRole = role.value"
-            >
-            <div class="role-card" :class="{ 'role-card-selected': selectedRole === role.value }">
-                <div class="role-icon dsp-flex-jstf-center-plc-center" 
-                    :class="{ 'role-card-icon-selected': selectedRole === role.value }">
-                {{ role.emoji }}
-                </div>
-                <div class="role-text">
-                <div class="t">{{ role.label }}</div>
-                <div class="d">{{ role.desc }}</div>
-                </div>
-                <div class="role-check dsp-flex-jstf-center-plc-center" 
-                    :class="{ 'role-check': selectedRole === role.value, 'role-check-empty': selectedRole !== role.value }">
-                {{ selectedRole === role.value ? '✓' : '' }}
-                </div>
+      <div class="role-list">
+        <div 
+          v-for="role in roles" 
+          :key="role.value" 
+          class="role-card-wrapper"
+          @click="selectedRole = role.value"
+        >
+          <div class="role-card" :class="{ 'role-card-selected': selectedRole === role.value }">
+            <div class="role-icon dsp-flex-jstf-center-plc-center" 
+                 :class="{ 'role-card-icon-selected': selectedRole === role.value }">
+              {{ role.emoji }}
             </div>
+            <div class="role-text">
+              <div class="t">{{ role.label }}</div>
+              <div class="d">{{ role.desc }}</div>
             </div>
+            <div class="role-check dsp-flex-jstf-center-plc-center" 
+                 :class="{ 'role-check': selectedRole === role.value, 'role-check-empty': selectedRole !== role.value }">
+              {{ selectedRole === role.value ? '✓' : '' }}
+            </div>
+          </div>
         </div>
+      </div>
 
-        <button class="role-submit-btn" @click="complete" :disabled="!selectedRole">
-            Continue
-        </button>
-        </div>
+      <button class="role-submit-btn" @click="complete" :disabled="!selectedRole">
+        Continue
+      </button>
     </div>
+  </div>
 </template>
 
 <style scoped>

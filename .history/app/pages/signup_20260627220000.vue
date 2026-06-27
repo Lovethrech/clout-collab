@@ -103,7 +103,7 @@ const finalizeSignUp=async(selectedRole)=>{
             :step="step"
             :pendingUserData="pendingUserData"
             @complete="finalizeSignUp"
-            :showRoleSelector="showRoleSelector"
+           
         />
     </div>
 </template>
