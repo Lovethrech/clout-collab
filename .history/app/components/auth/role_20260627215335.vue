@@ -1,5 +1,4 @@
 <script setup>
-const {showRoleBox}=defineProps(['showRoleBox']);
 
 const emit = defineEmits(['complete', 'cancel']);
 

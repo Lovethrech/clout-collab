@@ -100,7 +100,7 @@ const finalizeSignUp=async(selectedRole)=>{
         </div>
         <AuthRole 
             v-if="showRoleSelector"
-            :step="step"
+            :step
             :pendingUserData="pendingUserData"
             @complete="showRoleSelector=false"
         />
