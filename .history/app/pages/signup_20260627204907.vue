@@ -52,10 +52,7 @@ const showRoleBox=()=>{
                 <div class="divider">
                     <span class="line"></span><span>or sign up with email</span><span class="line"></span>
                 </div>
-                <div class="form-email-and-password-ctn">
-                    <input class="form-email-and-password" id="form-email" type="text" placeholder="Email address"/>
-                    <input class="form-email-and-password" id="form-password" type="password" placeholder="Password"/>
-                </div>
+                <AuthFormEmailAndPassword/>
                 <BtnMainAuth :btnText="btnText" :loading="loading" @click="showRoleBox"/> 
             </form>
             <br/>

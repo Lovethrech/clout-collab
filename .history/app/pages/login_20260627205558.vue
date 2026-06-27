@@ -30,9 +30,9 @@ const authQLink=ref("/signup");
                 <span class="line"></span><span>or log in with email</span><span class="line"></span>
             </div>
             <div class="form-email-and-password-ctn">
-                <input class="form-email-and-password" id="form-email" type="text" placeholder="Email address"/>
-                <input class="form-email-and-password" id="form-password" type="password" placeholder="Password"/>
-            </div>
+                    <input class="form-email-and-password" id="form-email" type="text" placeholder="Email address"/>
+                    <input class="form-email-and-password" id="form-password" type="password" placeholder="Password"/>
+                </div>
             <BtnMainAuth :btnText="btnText" :loading="loading" type="submit"> </BtnMainAuth>
         </form>
         <br/>

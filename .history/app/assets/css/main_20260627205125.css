@@ -75,13 +75,4 @@ html, body {
 }
 
 /* AUTH FORM INPUT FIELD */
-.form-email-and-password{ 
-    width: 100%;
-    background:var(--slate-800); 
-    border:0.1vh solid var(--slate-700); 
-    border-radius:14px; 
-    padding:1.6vh;
-    font-size:2vh;
-    color:var(--slate-400); 
-    margin-bottom:2vh;
-}
+
