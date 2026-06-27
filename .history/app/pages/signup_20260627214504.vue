@@ -41,40 +41,13 @@ const handleNextStep=async()=>{
     finally{
         loading.value=false;
     }
-}
-
-const finalizeSignUp=async(selectedRole)=>{
-    loading.value=true;
-    try{
-        const {data, error}=await supabase.auth.signUp({
-            email: pendingUserData.value.email,
-            password: pendingUserData.value.password,
-            options:{
-                data:{
-                    role: selectedRole
-                }
-            }
-        });
-        if(error){
-            throw error;
-        }
-        alert("Sign up successful! Please check your email to confirm your account.");
-        router.push("/login");
-    }
-    catch(error){
-        console.error("Error during finalizing signup:", error);
-        alert("An error occurred during finalizing signup. Please try again.");
-    }
-    finally{
-        loading.value=false;
-        showRoleSelector.value = false;
-    }
+    
 }
 </script>
 
 <template>
     <div class="auth-page">
-        <div class="auth-page-main-ctn" v-if="step === 'signup'">
+        <div class="auth-page-main-ctn" :style="{display: showMainSignUp}">
             <AuthTitle :authTitle="'Create your account'"/>
             <AuthDesc :authDesc=" 'Join creators, musicians, and brands building together.'"/>
             <form @submit.prevent="handleNextStep" class="auth-page-form">
@@ -99,7 +72,8 @@ const finalizeSignUp=async(selectedRole)=>{
             </div>
         </div>
         <AuthRole 
-            v-if="showRoleSelector"
+            :style="{display: showRole}"
+            :showRoleBox="showRoleBox"
             :pendingUserData="pendingUserData"
             @complete="showRoleSelector=false"
         />

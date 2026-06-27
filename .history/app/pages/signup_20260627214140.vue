@@ -22,59 +22,34 @@ const loading=ref(false);
 const showRoleSelector=ref(false);
 const pendingUserData=ref(null);
 const step=ref("signup");
-
+// const showMainSignUp=ref("block");
+// const showRole=ref("none");
 const handleNextStep=async()=>{
     loading.value=true;
-    try{
-        if(!form.value.email || !form.value.password){
-            alert("Email and password are required");
-            return;
-        }
-        pendingUserData.value= {...form.value};
-        showRoleSelector.value=true;
-        step.value="role";
-    }
-    catch(error){
-        console.error("Error during signup:", error);
-        alert("An error occurred during signup. Please try again.");
-    }
-    finally{
-        loading.value=false;
-    }
+    try
+    pendingUserData.value=data.user;
+    showRoleBox();
+    loading.value=false;
 }
 
-const finalizeSignUp=async(selectedRole)=>{
-    loading.value=true;
-    try{
-        const {data, error}=await supabase.auth.signUp({
-            email: pendingUserData.value.email,
-            password: pendingUserData.value.password,
-            options:{
-                data:{
-                    role: selectedRole
-                }
-            }
-        });
-        if(error){
-            throw error;
-        }
-        alert("Sign up successful! Please check your email to confirm your account.");
-        router.push("/login");
-    }
-    catch(error){
-        console.error("Error during finalizing signup:", error);
-        alert("An error occurred during finalizing signup. Please try again.");
-    }
-    finally{
-        loading.value=false;
-        showRoleSelector.value = false;
-    }
-}
+
+// const showRoleBox=()=>{
+//     if (showMainSignUp.value==="block"){
+//         showMainSignUp.value="none";
+//         showRole.value="block";
+//     }
+//     else{
+//         showMainSignUp.value="block";
+//         showRole.value="none";
+//     }
+// }
+
+
 </script>
 
 <template>
     <div class="auth-page">
-        <div class="auth-page-main-ctn" v-if="step === 'signup'">
+        <div class="auth-page-main-ctn" :style="{display: showMainSignUp}">
             <AuthTitle :authTitle="'Create your account'"/>
             <AuthDesc :authDesc=" 'Join creators, musicians, and brands building together.'"/>
             <form @submit.prevent="handleNextStep" class="auth-page-form">
@@ -99,7 +74,8 @@ const finalizeSignUp=async(selectedRole)=>{
             </div>
         </div>
         <AuthRole 
-            v-if="showRoleSelector"
+            :style="{display: showRole}"
+            :showRoleBox="showRoleBox"
             :pendingUserData="pendingUserData"
             @complete="showRoleSelector=false"
         />

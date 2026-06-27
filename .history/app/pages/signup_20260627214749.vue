@@ -74,7 +74,7 @@ const finalizeSignUp=async(selectedRole)=>{
 
 <template>
     <div class="auth-page">
-        <div class="auth-page-main-ctn" v-if="step === 'signup'">
+        <div class="auth-page-main-ctn" :style="{display: showMainSignUp}">
             <AuthTitle :authTitle="'Create your account'"/>
             <AuthDesc :authDesc=" 'Join creators, musicians, and brands building together.'"/>
             <form @submit.prevent="handleNextStep" class="auth-page-form">
@@ -99,7 +99,8 @@ const finalizeSignUp=async(selectedRole)=>{
             </div>
         </div>
         <AuthRole 
-            v-if="showRoleSelector"
+            :style="{display: showRole}"
+            :showRoleBox="showRoleBox"
             :pendingUserData="pendingUserData"
             @complete="showRoleSelector=false"
         />
