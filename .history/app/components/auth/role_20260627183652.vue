@@ -41,9 +41,7 @@ const complete = () => {
                         <div class="t">{{role.label}}</div>
                         <div class="d">{{role.desc}}</div>
                     </div>
-                    <div class="role-check dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-check' : 'role-check-empty']">
-                        {{selectedRole === role.value ? '✓' : ''}}
-                    </div>
+                    <div class="role-check dsp-flex-jstf-center-plc-center">✓</div>
                 </div>
             </div>
         </div>
@@ -155,7 +153,7 @@ const complete = () => {
     color:#fff; 
     font-size:11px; 
     flex-shrink:0; }
-.role-check-empty{ 
+.role-check.empty{ 
     background:transparent; 
     border:1.5px solid var(--slate-600); 
 }

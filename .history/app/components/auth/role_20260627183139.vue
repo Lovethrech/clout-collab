@@ -36,14 +36,12 @@ const complete = () => {
 
             <div class="role-list" v-for="role in roles" :key="role.value" @click="selectedRole = role.value">
                 <div class="role-card" :class="[selectedRole === role.value ? 'role-card-selected' : 'role-card']">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-card-icon-selected' : 'role-icon']">{{role.emoji}}</div>
+                    <div class="role-icon dsp-flex-jstf-center-plc-center">{{role.emoji}}</div>
                     <div class="role-text">
                         <div class="t">{{role.label}}</div>
                         <div class="d">{{role.desc}}</div>
                     </div>
-                    <div class="role-check dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-check' : 'role-check-empty']">
-                        {{selectedRole === role.value ? '✓' : ''}}
-                    </div>
+                    <div class="role-check dsp-flex-jstf-center-plc-center">✓</div>
                 </div>
             </div>
         </div>
@@ -129,7 +127,7 @@ const complete = () => {
     background:var(--slate-700); 
     flex-shrink:0; 
 }
-.role-card-icon-selected{ 
+.role-card-selectrole-icon{ 
     background:var(--grad-signature); 
 }
 .role-icon svg{ 
@@ -155,7 +153,7 @@ const complete = () => {
     color:#fff; 
     font-size:11px; 
     flex-shrink:0; }
-.role-check-empty{ 
+.role-check.empty{ 
     background:transparent; 
     border:1.5px solid var(--slate-600); 
 }

@@ -12,9 +12,7 @@ const roles = [
     { value: 'brand', emoji: '🏢', label: 'Brand', desc: 'Companies & campaigns' },
     { value: 'creative_professional', emoji: '🎨', label: 'Creative Professional', desc: 'Editors, designers, etc.' }
 ]
-const selectCard=()=>{
 
-}
 const complete = () => {
     if (selectedRole.value) {
         emit('complete', selectedRole.value)
@@ -35,15 +33,13 @@ const complete = () => {
             <div class="scr-sub">Pick what fits best, you can add more later.</div>
 
             <div class="role-list" v-for="role in roles" :key="role.value" @click="selectedRole = role.value">
-                <div class="role-card" :class="[selectedRole === role.value ? 'role-card-selected' : 'role-card']">
-                    <div class="role-icon dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-card-icon-selected' : 'role-icon']">{{role.emoji}}</div>
+                <div class="role-card" :class="[selectedRole === role.value ? 'role-card' : 'border-white/10 hover:border-white/30']">
+                    <div class="role-icon dsp-flex-jstf-center-plc-center">{{role.emoji}}</div>
                     <div class="role-text">
                         <div class="t">{{role.label}}</div>
                         <div class="d">{{role.desc}}</div>
                     </div>
-                    <div class="role-check dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-check' : 'role-check-empty']">
-                        {{selectedRole === role.value ? '✓' : ''}}
-                    </div>
+                    <div class="role-check dsp-flex-jstf-center-plc-center">✓</div>
                 </div>
             </div>
         </div>
@@ -117,7 +113,7 @@ const complete = () => {
     padding:13px 14px; 
     background:var(--slate-800); 
 }
-.role-card-selected{ 
+.role-card.selected{ 
     border-color:var(--purple-500); 
     background:rgba(109,40,217,0.14); 
     box-shadow:0 0 0 3px rgba(139,92,246,0.18); 
@@ -129,7 +125,7 @@ const complete = () => {
     background:var(--slate-700); 
     flex-shrink:0; 
 }
-.role-card-icon-selected{ 
+.role-card.selected .role-icon{ 
     background:var(--grad-signature); 
 }
 .role-icon svg{ 
@@ -155,7 +151,7 @@ const complete = () => {
     color:#fff; 
     font-size:11px; 
     flex-shrink:0; }
-.role-check-empty{ 
+.role-check.empty{ 
     background:transparent; 
     border:1.5px solid var(--slate-600); 
 }

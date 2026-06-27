@@ -42,7 +42,7 @@ const complete = () => {
                         <div class="d">{{role.desc}}</div>
                     </div>
                     <div class="role-check dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-check' : 'role-check-empty']">
-                        {{selectedRole === role.value ? '✓' : ''}}
+                        {{selectedRole === role.value ? 'role-card-selected' : 'role-card'}}
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ const {showRoleBox}=defineProps(['showRoleBox']);
 const emit = defineEmits(['complete', 'cancel']);
 
 const selectedRole = ref(null);
-// ✓
+✓
 
 const roles = [
     { value: 'creator', emoji: '🎥', label: 'Creator', desc: 'Content, video, photo & more' },
@@ -42,7 +42,7 @@ const complete = () => {
                         <div class="d">{{role.desc}}</div>
                     </div>
                     <div class="role-check dsp-flex-jstf-center-plc-center" :class="[selectedRole === role.value ? 'role-check' : 'role-check-empty']">
-                        {{selectedRole === role.value ? '✓' : ''}}
+                        {{selectedRole === role.value ? '' : 'role-card'}}
                     </div>
                 </div>
             </div>
