@@ -57,7 +57,7 @@ const complete = () => {
 <style scoped>
 .auth-role{
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background: var(--slate-900); 
     position: absolute;
     top: 0;
@@ -66,7 +66,7 @@ const complete = () => {
 .auth-role-main-ctn{
     padding: 2vh;
     width: 40%;
-    background-color: orange;
+    bg-col
 }
 .topnav{ 
     padding:2vh 0 1vh; 
