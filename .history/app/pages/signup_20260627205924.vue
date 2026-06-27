@@ -21,6 +21,7 @@ const form=ref({
 const authTitle=ref("Create your account");
 const authDesc=ref("Join creators, musicians, and brands building together.");
 const loading=ref(false);
+const btnText=ref("Create account");
 const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
@@ -39,22 +40,6 @@ const showRoleBox=()=>{
         showRole.value="none";
     }
 }
-
-const handleNextStep=async()=>{
-    loading.value=true;
-    const {data, error}=await supabase.auth.signUp({
-        email: form.value.email,
-        password: form.value.password
-    });
-    if (error){
-        console.error(error);
-        loading.value=false;
-        return;
-    }
-    pendingUserData.value=data.user;
-    showRoleBox();
-    loading.value=false;
-}
 </script>
 
 <template>
@@ -62,20 +47,16 @@ const handleNextStep=async()=>{
         <div class="auth-page-main-ctn" :style="{display: showMainSignUp}">
             <AuthTitle :authTitle="authTitle"/>
             <AuthDesc :authDesc="authDesc"/>
-            <form @submit.prevent="handleNextStep" class="auth-page-form">
+            <form class="auth-page-form">
                 <AuthBtnGoogle/>
                 <div class="divider">
                     <span class="line"></span><span>or sign up with email</span><span class="line"></span>
                 </div>
                 <div class="form-email-and-password-ctn">
-                    <input v-model="email" class="form-email-and-password" id="form-email" type="text" placeholder="Email address" required/>
-                    <input v-model="password" class="form-email-and-password" id="form-password" type="password" placeholder="Password" required/>
+                    <input v-model="email" class="form-email-and-password" id="form-email" type="text" placeholder="Email address"/>
+                    <input v-model="password" class="form-email-and-password" id="form-password" type="password" placeholder="Password"/>
                 </div>
-                <button class="btn-main-auth" :disabled="loading" @click="handleNextStep">
-                    <p class="btn-main-auth-text">
-                        {{ loading ? "Processing..." : "Create Account" }}
-                    </p>
-                </button>
+                <BtnMainAuth :btnText="btnText" :loading="loading" @click="showRoleBox"/> 
             </form>
             <br/>
             <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>

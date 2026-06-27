@@ -73,7 +73,7 @@ const handleNextStep=async()=>{
                 </div>
                 <button class="btn-main-auth" :disabled="loading" @click="handleNextStep">
                     <p class="btn-main-auth-text">
-                        {{ loading ? "Processing..." : "Create Account" }}
+                        {{ loading ? "Processing..." : "Processing..." }}
                     </p>
                 </button>
             </form>

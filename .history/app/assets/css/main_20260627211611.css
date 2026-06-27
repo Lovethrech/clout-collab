@@ -86,7 +86,6 @@ html, body {
     margin-bottom:2vh;
 }
 .btn-main-auth{
-    border:0;
     width: 100%;
     background:var(--purple); 
     color:var(--slate-50); 

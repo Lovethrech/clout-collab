@@ -71,11 +71,12 @@ const handleNextStep=async()=>{
                     <input v-model="email" class="form-email-and-password" id="form-email" type="text" placeholder="Email address" required/>
                     <input v-model="password" class="form-email-and-password" id="form-password" type="password" placeholder="Password" required/>
                 </div>
-                <button class="btn-main-auth" :disabled="loading" @click="handleNextStep">
+                <button class="btn-main-auth" :disabled="loading">
                     <p class="btn-main-auth-text">
-                        {{ loading ? "Processing..." : "Create Account" }}
+                        {{ loading ? "Processing..." : "Processing..." }}
                     </p>
                 </button>
+                <!-- <BtnMainAuth :btnText="btnText" :loading="loading" @click="showRoleBox"/>  -->
             </form>
             <br/>
             <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>

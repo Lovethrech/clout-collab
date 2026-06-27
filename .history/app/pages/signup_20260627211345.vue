@@ -21,6 +21,7 @@ const form=ref({
 const authTitle=ref("Create your account");
 const authDesc=ref("Join creators, musicians, and brands building together.");
 const loading=ref(false);
+const btnText=ref("Create account");
 const authQ=ref("Already have an account?");
 const authQLinkDesc=ref("Log in");
 const authQLink=ref("/login");
@@ -71,11 +72,12 @@ const handleNextStep=async()=>{
                     <input v-model="email" class="form-email-and-password" id="form-email" type="text" placeholder="Email address" required/>
                     <input v-model="password" class="form-email-and-password" id="form-password" type="password" placeholder="Password" required/>
                 </div>
-                <button class="btn-main-auth" :disabled="loading" @click="handleNextStep">
+                <button class="btn-main-auth" :disabled="loading">
                     <p class="btn-main-auth-text">
-                        {{ loading ? "Processing..." : "Create Account" }}
+                        {{ loading ? "Processing..." : btnText }}
                     </p>
                 </button>
+                <BtnMainAuth :btnText="btnText" :loading="loading" @click="showRoleBox"/> 
             </form>
             <br/>
             <AuthQuestion :authQ="authQ" :authQLinkDesc="authQLinkDesc" :authQLink="authQLink"/>
