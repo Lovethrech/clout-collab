@@ -1,7 +1,7 @@
 <template>
     <div class="form-email-and-password-ctn">
         <input class="form-email-and-password" id="form-email" type="text" placeholder="Email address" required/>
-        <input class="form-email-and-password" id="form-password" type="password" placeholder="Password" required/>
+        <input class="form-email-and-password" id="form-password" type="password" placeholder="Password"/>
     </div>
 </template>
 

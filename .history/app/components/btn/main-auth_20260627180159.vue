@@ -1,8 +1,7 @@
 <script setup>
 const {btnText, loading}=defineProps(["btnText", "loading"]);
+console.log(loading);
 </script>
-
-
 
 <template>
     <button class="btn-main-auth" type="submit" :disabled="loading">
@@ -14,7 +13,6 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
 
 <style scoped>
 .btn-main-auth{
-    width: 100%;
     background:var(--purple); 
     color:var(--slate-50); 
     text-align:center; 
@@ -29,7 +27,8 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
     cursor: pointer;
     transform: scale(0.98);
 }
-.button.btn-main-auth:disabled{
+.btn-main-auth:disabled{
+    width: 100%;
     background:var(--slate-400);
     cursor: not-allowed;
 }

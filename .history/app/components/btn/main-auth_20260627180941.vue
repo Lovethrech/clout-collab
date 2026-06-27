@@ -29,7 +29,7 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
     cursor: pointer;
     transform: scale(0.98);
 }
-.button.btn-main-auth:disabled{
+.button:disabled{
     background:var(--slate-400);
     cursor: not-allowed;
 }

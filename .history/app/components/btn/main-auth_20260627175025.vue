@@ -2,8 +2,6 @@
 const {btnText, loading}=defineProps(["btnText", "loading"]);
 </script>
 
-
-
 <template>
     <button class="btn-main-auth" type="submit" :disabled="loading">
         <p class="btn-main-auth-text">
@@ -13,23 +11,13 @@ const {btnText, loading}=defineProps(["btnText", "loading"]);
 </template>
 
 <style scoped>
-.btn-main-auth{
-    width: 100%;
-    background:var(--purple); 
-    color:var(--slate-50); 
-    text-align:center; 
-    font-weight:700; 
-    font-size:1.8vh; 
-    border-radius:14px; 
-    padding:1.6vh 0; 
-    margin-bottom:2vh;
-    transition: all 0.2s ease-in-out;
-}
+
 .btn-main-auth:hover{
     cursor: pointer;
     transform: scale(0.98);
 }
-.button.btn-main-auth:disabled{
+.btn-main-auth:disabled{
+    width: 100%;
     background:var(--slate-400);
     cursor: not-allowed;
 }
