@@ -14,7 +14,7 @@
 <style scoped>
 .profile-edit-header-ctn{
     text-align: center;
-    padding: 2vh;
+    padding: 
     border: 0;
     border-bottom: 0.1vh solid var(--slate-700);
 }

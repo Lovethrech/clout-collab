@@ -14,9 +14,9 @@
 <style scoped>
 .profile-edit-header-ctn{
     text-align: center;
-    padding: 2vh;
     border: 0;
-    border-bottom: 0.1vh solid var(--slate-700);
+    border-bottom:1vh solid var(--slate-700);
+    border: 
 }
 .profile-edit-header-title{
     font-size: 3vh;
