@@ -7,6 +7,6 @@ definePageMeta({
 <template>
     <section class="profile-new-page">
         <ProfileNewHeader/>
-        <ProfileNewForm/>
+        
     </section>
 </template>
