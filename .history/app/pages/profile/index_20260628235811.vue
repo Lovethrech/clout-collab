@@ -16,7 +16,7 @@ useSeoMeta({
 </script>
 
 <template>
-    <div>
-        pROFI
-    </div>
+    <>
+        pROFILE
+    </template>
 </template>

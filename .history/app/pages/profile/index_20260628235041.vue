@@ -1,8 +1,4 @@
 <script setup>
-definePageMeta({
-    layout: false 
-})
-
 const title = 'Dashboard | Clout Collabs'
 const description = ''
 useSeoMeta({
@@ -16,7 +12,7 @@ useSeoMeta({
 </script>
 
 <template>
-    <div>
-        pROFI
-    </div>
+    <template>
+
+    </template>
 </template>

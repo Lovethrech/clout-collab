@@ -1,8 +1,4 @@
 <script setup>
-definePageMeta({
-    layout: false 
-})
-
 const title = 'Dashboard | Clout Collabs'
 const description = ''
 useSeoMeta({
@@ -13,10 +9,11 @@ useSeoMeta({
     ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
     twitterCard: 'summary_large_image'
 })
+
 </script>
 
 <template>
-    <div>
-        pROFI
-    </div>
+    <template>
+
+    </template>
 </template>

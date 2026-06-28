@@ -17,6 +17,6 @@ useSeoMeta({
 
 <template>
     <div>
-        pROFI
+        pROFILE 
     </div>
 </template>

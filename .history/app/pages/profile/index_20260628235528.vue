@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-    layout: false 
+  layout: false // turns off app.vue layout for this page only
 })
 
 const title = 'Dashboard | Clout Collabs'
@@ -16,7 +16,7 @@ useSeoMeta({
 </script>
 
 <template>
-    <div>
-        pROFI
-    </div>
+    <template>
+        
+    </template>
 </template>
