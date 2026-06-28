@@ -16,7 +16,7 @@ useSeoMeta({
 </script>
 
 <template>
-    <section class="profile-page">
-        <ProfileHeader/>
-    </section>
+    <d class="profile-page">
+        \
+    </div>
 </template>
