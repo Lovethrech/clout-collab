@@ -48,21 +48,15 @@
                         </select>
                     </div>
                     <div class="profile-new-user-form-input-and-label-field">
-                        <label for="bio" class="profile-new-user-form-label">Location:</label>
-                        <input type="text" id="bio" class="profile-new-user-form-input" placeholder="City, Country"/>
+                        <label for="niche" class="profile-new-user-form-label">Location:</label>
+                        <select type="text" id="niche" class="profile-new-user-form-input profile-new-user-form-input-select">
+                            <option value="0" class="profile-new-user-form-input-select-option">Ogun</option>
+                            <option value="1" class="profile-new-user-form-input-select-option">Lagos</option>
+                            <option value="2" class="profile-new-user-form-input-select-option">Abuja</option>
+                        </select>
                     </div>
                 </div>
                 <hr/>
-                <div class="profile-new-user-form-input-and-label-portfolio-ctn">
-                    <div class="profile-new-user-form-input-and-label-portfolio-empty dsp-flex-jstf-center-plc-center">
-                        <p class="profile-new-user-form-input-and-label-portfolio-empty-sign">
-                            +
-                        </p>
-                        <p class="profile-new-user-form-input-and-label-portfolio-empty-desc">
-                            Add sample project
-                        </p>
-                    </div>
-                </div>
             </div>
             
         </form>
@@ -101,14 +95,7 @@
 }
 .profile-new-user-form-input-and-label-field-and-portfolio-ctn{
     margin-top: 7vh;
-    padding: 2vh 6vw;
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 3vh;
-}
-.profile-new-user-form-input-and-label-field-ctn, .profile-new-user-form-input-and-label-portfolio-ctn{
-    width: 50%;
+    padding: 2vh 4vh;
 }
 .profile-new-user-form-input-and-label-field{
     display: flex;
@@ -125,24 +112,5 @@
 }
 .profile-new-user-form-input-select-option{
     text-transform: capitalize;
-}
-
-.profile-new-user-form-input-and-label-portfolio-ctn{
-    height: 56vh;
-    background-color: red;
-}
-.profile-new-user-form-input-and-label-portfolio-empty{
-    background-color: orange;
-    width: 100%;
-    height: 100%;
-}
-
-@media screen and (max-width: 990px) {
-    .profile-new-user-form-input-and-label-field-and-portfolio-ctn{
-        flex-direction: column;
-    }
-    .profile-new-user-form-input-and-label-field-ctn, .profile-new-user-form-input-and-label-portfolio-ctn{
-        width: 100%;
-    }
 }
 </style>

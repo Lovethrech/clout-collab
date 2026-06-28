@@ -54,10 +54,7 @@
                 </div>
                 <hr/>
                 <div class="profile-new-user-form-input-and-label-portfolio-ctn">
-                    <div class="profile-new-user-form-input-and-label-portfolio-empty dsp-flex-jstf-center-plc-center">
-                        <p class="profile-new-user-form-input-and-label-portfolio-empty-sign">
-                            +
-                        </p>
+                    <div class="profile-new-user-form-input-and-label-portfolio-empty">
                         <p class="profile-new-user-form-input-and-label-portfolio-empty-desc">
                             Add sample project
                         </p>

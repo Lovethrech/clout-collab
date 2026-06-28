@@ -54,14 +54,10 @@
                 </div>
                 <hr/>
                 <div class="profile-new-user-form-input-and-label-portfolio-ctn">
-                    <div class="profile-new-user-form-input-and-label-portfolio-empty dsp-flex-jstf-center-plc-center">
-                        <p class="profile-new-user-form-input-and-label-portfolio-empty-sign">
-                            +
-                        </p>
-                        <p class="profile-new-user-form-input-and-label-portfolio-empty-desc">
-                            Add sample project
-                        </p>
+                    <div class="profile-new-user-form-input-and-label-portfolio-empty">
+
                     </div>
+                    Portfolio section
                 </div>
             </div>
             
@@ -131,11 +127,8 @@
     height: 56vh;
     background-color: red;
 }
-.profile-new-user-form-input-and-label-portfolio-empty{
-    background-color: orange;
-    width: 100%;
-    height: 100%;
-}
+..profile-new-user-form-input-and-label-portfolio-ctn{
+
 
 @media screen and (max-width: 990px) {
     .profile-new-user-form-input-and-label-field-and-portfolio-ctn{
