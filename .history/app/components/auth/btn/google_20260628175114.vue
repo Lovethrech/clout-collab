@@ -1,13 +1,13 @@
 <script setup>
 defineProps({
-    loading: {
-        type: Boolean,
-        default: false
-    },
-    text: {
-        type: String,
-        default: 'Continue with Google'
-    }
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  text: {
+    type: String,
+    default: 'Continue with Google'
+  }
 })
 
 const emit = defineEmits(['click'])

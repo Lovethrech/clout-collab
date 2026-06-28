@@ -42,13 +42,17 @@ const handleGoogleAuth = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: getRedirectUrl()
+        redirectTo: getRedirectUrl(),
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent'
+        }
       }
     })
 
     if (error) throw error
   } catch (error) {
-    console.error('Google auth error:', error)
+    console.error('Google login error:', error)
     errorMessage.value = error.message || 'Unable to continue with Google.'
     googleLoading.value = false
   }
@@ -118,11 +122,7 @@ const handleLogin = async () => {
     <AuthDesc :authDesc="authDesc" />
 
     <form class="auth-page-form" @submit.prevent="handleLogin">
-      <AuthBtnGoogle
-        :loading="googleLoading"
-        text="Continue with Google"
-        @click="handleGoogleAuth"
-      />
+      <AuthBtnGoogle />
 
       <div class="divider">
         <span class="line"></span>

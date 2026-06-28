@@ -1,28 +1,28 @@
 <script setup>
 defineProps({
-    loading: {
-        type: Boolean,
-        default: false
-    },
-    text: {
-        type: String,
-        default: 'Continue with Google'
-    }
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  text: {
+    type: String,
+    default: 'Continue with Google'
+  }
 })
 
 const emit = defineEmits(['click'])
 </script>
 
 <template>
-    <button
-        type="button"
-        class="btn-google dsp-flex-jstf-center-plc-center"
-        :disabled="loading"
-        @click="emit('click')"
-    >
-        <span class="g dsp-flex-jstf-center-plc-center">G</span>
-        {{ loading ? 'Redirecting...' : text }}
-    </button>
+  <button
+    type="button"
+    class="btn-google dsp-flex-jstf-center-plc-center"
+    :disabled="loading"
+    @click="emit('click')"
+  >
+    <span class="g dsp-flex-jstf-center-plc-center">G</span>
+    {{ loading ? 'Redirecting...' : text }}
+  </button>
 </template>
 
 <style scoped>
