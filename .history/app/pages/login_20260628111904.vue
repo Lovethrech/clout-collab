@@ -57,7 +57,7 @@ const handleLogin = async () => {
       return
     }
 
-    await router.push('/profile/new')
+    await router.push('/profile/e')
   } catch (error) {
     console.error('Login error:', error)
     errorMessage.value = error.message || 'Login failed. Please try again.'

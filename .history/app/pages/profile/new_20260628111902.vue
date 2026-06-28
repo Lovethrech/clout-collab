@@ -5,5 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-    PROFILE EDIT PAGE
+    PROFILE NEW PAGE
 </template>
