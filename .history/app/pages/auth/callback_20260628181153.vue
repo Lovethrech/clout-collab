@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-    layout: false
+  layout: false
 })
 
 const supabase = useSupabaseClient()
@@ -13,12 +13,12 @@ const errorMessage = ref('')
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const getUserDisplayName = (authUser) => {
-    return (
-        authUser?.user_metadata?.full_name ||
-        authUser?.user_metadata?.name ||
-        authUser?.user_metadata?.display_name ||
-        ''
-    )
+  return (
+    authUser?.user_metadata?.full_name ||
+    authUser?.user_metadata?.name ||
+    authUser?.user_metadata?.display_name ||
+    ''
+  )
 }
 
 const waitForSession = async () => {

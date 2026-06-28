@@ -430,7 +430,6 @@ const buildProfilePayload = async () => {
         email: user.value.email,
         bio: form.value.bio.trim(),
         location: form.value.location.trim(),
-        // role: userRole.value,   
         social_links: {
             instagram: form.value.social_links.instagram.trim(),
             snapchat: form.value.social_links.snapchat.trim()
@@ -657,61 +656,7 @@ onMounted(loadProfile)
                 </div>
             </div>
 
-            <div class="profile-new-user-form-input-and-label-field">
-                <label for="skills" class="profile-new-user-form-label">
-                    Skills: select at least 5
-                </label>
-
-                <div class="multi-select-wrapper">
-                    <button
-                    type="button"
-                    class="multi-select-trigger"
-                    @click="toggleDropdown('skills')"
-                    >
-                    <span>
-                        {{ getSelectedText('skills', 'Select skill options') }}
-                    </span>
-
-                    <span class="multi-select-arrow">
-                        {{ dropdowns.skills ? '▲' : '▼' }}
-                    </span>
-                    </button>
-
-                    <div v-if="dropdowns.skills" class="multi-select-dropdown">
-                    <label
-                        v-for="option in skillOptions"
-                        :key="option"
-                        class="multi-select-option"
-                    >
-                        <input
-                        type="checkbox"
-                        :checked="isSelected('skills', option)"
-                        @change="toggleOption('skills', option)"
-                        />
-
-                        <span>{{ option }}</span>
-                    </label>
-                    </div>
-
-                    <div v-if="form.skills.length" class="selected-tags">
-                    <span
-                        v-for="item in form.skills"
-                        :key="item"
-                        class="selected-tag"
-                    >
-                        {{ item }}
-
-                        <button
-                        type="button"
-                        class="selected-tag-remove"
-                        @click="removeOption('skills', item)"
-                        >
-                        ×
-                        </button>
-                    </span>
-                    </div>
-                </div>
-            </div>   
+                
 
             <div class="profile-new-user-form-input-and-label-field">
                 <label for="location" class="profile-new-user-form-label">

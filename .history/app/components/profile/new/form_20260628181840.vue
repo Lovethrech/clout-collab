@@ -430,7 +430,6 @@ const buildProfilePayload = async () => {
         email: user.value.email,
         bio: form.value.bio.trim(),
         location: form.value.location.trim(),
-        // role: userRole.value,   
         social_links: {
             instagram: form.value.social_links.instagram.trim(),
             snapchat: form.value.social_links.snapchat.trim()
@@ -602,116 +601,60 @@ onMounted(loadProfile)
             </div>
 
             <div class="profile-new-user-form-input-and-label-field">
-                <label for="niche" class="profile-new-user-form-label">
-                    Niche: select at least 5
-                </label>
+  <label for="niche" class="profile-new-user-form-label">
+    Niche: select at least 5
+  </label>
 
-                <div class="multi-select-wrapper">
-                    <button
-                    type="button"
-                    class="multi-select-trigger"
-                    @click="toggleDropdown('niche')"
-                    >
-                    <span>
-                        {{ getSelectedText('niche', 'Select niche options') }}
-                    </span>
+  <div class="multi-select-wrapper">
+    <button
+      type="button"
+      class="multi-select-trigger"
+      @click="toggleDropdown('niche')"
+    >
+      <span>
+        {{ getSelectedText('niche', 'Select niche options') }}
+      </span>
 
-                    <span class="multi-select-arrow">
-                        {{ dropdowns.niche ? '▲' : '▼' }}
-                    </span>
-                    </button>
+      <span class="multi-select-arrow">
+        {{ dropdowns.niche ? '▲' : '▼' }}
+      </span>
+    </button>
 
-                    <div v-if="dropdowns.niche" class="multi-select-dropdown">
-                    <label
-                        v-for="option in nicheOptions"
-                        :key="option"
-                        class="multi-select-option"
-                    >
-                        <input
-                        type="checkbox"
-                        :checked="isSelected('niche', option)"
-                        @change="toggleOption('niche', option)"
-                        />
+    <div v-if="dropdowns.niche" class="multi-select-dropdown">
+      <label
+        v-for="option in nicheOptions"
+        :key="option"
+        class="multi-select-option"
+      >
+        <input
+          type="checkbox"
+          :checked="isSelected('niche', option)"
+          @change="toggleOption('niche', option)"
+        />
 
-                        <span>{{ option }}</span>
-                    </label>
-                    </div>
+        <span>{{ option }}</span>
+      </label>
+    </div>
 
-                    <div v-if="form.niche.length" class="selected-tags">
-                    <span
-                        v-for="item in form.niche"
-                        :key="item"
-                        class="selected-tag"
-                    >
-                        {{ item }}
+    <div v-if="form.niche.length" class="selected-tags">
+      <span
+        v-for="item in form.niche"
+        :key="item"
+        class="selected-tag"
+      >
+        {{ item }}
 
-                        <button
-                        type="button"
-                        class="selected-tag-remove"
-                        @click="removeOption('niche', item)"
-                        >
-                        ×
-                        </button>
-                    </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="profile-new-user-form-input-and-label-field">
-                <label for="skills" class="profile-new-user-form-label">
-                    Skills: select at least 5
-                </label>
-
-                <div class="multi-select-wrapper">
-                    <button
-                    type="button"
-                    class="multi-select-trigger"
-                    @click="toggleDropdown('skills')"
-                    >
-                    <span>
-                        {{ getSelectedText('skills', 'Select skill options') }}
-                    </span>
-
-                    <span class="multi-select-arrow">
-                        {{ dropdowns.skills ? '▲' : '▼' }}
-                    </span>
-                    </button>
-
-                    <div v-if="dropdowns.skills" class="multi-select-dropdown">
-                    <label
-                        v-for="option in skillOptions"
-                        :key="option"
-                        class="multi-select-option"
-                    >
-                        <input
-                        type="checkbox"
-                        :checked="isSelected('skills', option)"
-                        @change="toggleOption('skills', option)"
-                        />
-
-                        <span>{{ option }}</span>
-                    </label>
-                    </div>
-
-                    <div v-if="form.skills.length" class="selected-tags">
-                    <span
-                        v-for="item in form.skills"
-                        :key="item"
-                        class="selected-tag"
-                    >
-                        {{ item }}
-
-                        <button
-                        type="button"
-                        class="selected-tag-remove"
-                        @click="removeOption('skills', item)"
-                        >
-                        ×
-                        </button>
-                    </span>
-                    </div>
-                </div>
-            </div>   
+        <button
+          type="button"
+          class="selected-tag-remove"
+          @click="removeOption('niche', item)"
+        >
+          ×
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
 
             <div class="profile-new-user-form-input-and-label-field">
                 <label for="location" class="profile-new-user-form-label">

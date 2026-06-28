@@ -430,7 +430,6 @@ const buildProfilePayload = async () => {
         email: user.value.email,
         bio: form.value.bio.trim(),
         location: form.value.location.trim(),
-        // role: userRole.value,   
         social_links: {
             instagram: form.value.social_links.instagram.trim(),
             snapchat: form.value.social_links.snapchat.trim()
@@ -611,13 +610,14 @@ onMounted(loadProfile)
                     type="button"
                     class="multi-select-trigger"
                     @click="toggleDropdown('niche')"
+                    
                     >
                     <span>
                         {{ getSelectedText('niche', 'Select niche options') }}
                     </span>
 
                     <span class="multi-select-arrow">
-                        {{ dropdowns.niche ? '▲' : '▼' }}
+                        {{ showNicheDropdown ? '▲' : '▼' }}
                     </span>
                     </button>
 
@@ -666,14 +666,14 @@ onMounted(loadProfile)
                     <button
                     type="button"
                     class="multi-select-trigger"
-                    @click="toggleDropdown('skills')"
+                    @click="toggleDropdown('skills')" 
                     >
                     <span>
                         {{ getSelectedText('skills', 'Select skill options') }}
                     </span>
 
                     <span class="multi-select-arrow">
-                        {{ dropdowns.skills ? '▲' : '▼' }}
+                        {{ showSkillsDropdown ? '▲' : '▼' }}
                     </span>
                     </button>
 
@@ -711,7 +711,7 @@ onMounted(loadProfile)
                     </span>
                     </div>
                 </div>
-            </div>   
+            </div>
 
             <div class="profile-new-user-form-input-and-label-field">
                 <label for="location" class="profile-new-user-form-label">

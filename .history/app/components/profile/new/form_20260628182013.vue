@@ -430,7 +430,6 @@ const buildProfilePayload = async () => {
         email: user.value.email,
         bio: form.value.bio.trim(),
         location: form.value.location.trim(),
-        // role: userRole.value,   
         social_links: {
             instagram: form.value.social_links.instagram.trim(),
             snapchat: form.value.social_links.snapchat.trim()

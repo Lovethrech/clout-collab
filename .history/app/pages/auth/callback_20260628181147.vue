@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-    layout: false
+  layout: false
 })
 
 const supabase = useSupabaseClient()
@@ -13,30 +13,30 @@ const errorMessage = ref('')
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const getUserDisplayName = (authUser) => {
-    return (
-        authUser?.user_metadata?.full_name ||
-        authUser?.user_metadata?.name ||
-        authUser?.user_metadata?.display_name ||
-        ''
-    )
+  return (
+    authUser?.user_metadata?.full_name ||
+    authUser?.user_metadata?.name ||
+    authUser?.user_metadata?.display_name ||
+    ''
+  )
 }
 
 const waitForSession = async () => {
-    for (let attempt = 0; attempt < 10; attempt++) {
-        const { data } = await supabase.auth.getSession()
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const { data } = await supabase.auth.getSession()
 
-        if (data?.session?.user) {
-        return data.session.user
-        }
-
-        if (user.value) {
-        return user.value
-        }
-
-        await sleep(300)
+    if (data?.session?.user) {
+      return data.session.user
     }
 
-    return null
+    if (user.value) {
+      return user.value
+    }
+
+    await sleep(300)
+  }
+
+  return null
 }
 
 const createOrRepairGoogleProfile = async (authUser) => {
