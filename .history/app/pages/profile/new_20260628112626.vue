@@ -5,8 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-    <section class="profile-new-page">
-        <ProfileNewHeader/>
-
-    </section>
+    <ProfileNewHeader
 </template>
