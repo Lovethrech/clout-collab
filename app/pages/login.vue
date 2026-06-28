@@ -44,20 +44,34 @@ const handleLogin = async () => {
       password: form.value.password
     })
 
-    if (error) {
-      throw error
+    if (error) throw error
+
+    const user = data.user
+
+    if (!user) {
+      errorMessage.value = 'Unable to find logged-in user.'
+      return
     }
 
-    console.log('Login successful:', data)
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('id, role, profile_completed')
+      .eq('id', user.id)
+      .single()
 
-    const userRole = data.user?.user_metadata?.role
+    if (profileError) throw profileError
 
-    if (!userRole) {
+    if (!profile?.role) {
       await router.push('/signup')
       return
     }
 
-    await router.push('/profile/new')
+    if (!profile.profile_completed) {
+      await router.push('/profile/new')
+      return
+    }
+
+    await router.push('/profile')
   } catch (error) {
     console.error('Login error:', error)
     errorMessage.value = error.message || 'Login failed. Please try again.'
