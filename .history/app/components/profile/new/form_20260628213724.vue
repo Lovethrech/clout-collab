@@ -400,19 +400,52 @@ const validateForm = () => {
  * Build Update Payload
  */
 const buildProfilePayload = async () => {
+    let profileImageUrl = null
+    const portfolioProjects = []
+
+    if (profileImageFile.value) {
+        profileImageUrl = await uploadFile({
+        bucket: STORAGE_BUCKETS.profileImages,
+        file: profileImageFile.value,
+        folder: user.value.id
+        })
+    }
+
+    if (projectFile.value) {
+        const projectUrl = await uploadFile({
+        bucket: STORAGE_BUCKETS.portfolioProjects,
+        file: projectFile.value,
+        folder: user.value.id
+        })
+
+        portfolioProjects.push({
+        name: projectFile.value.name,
+        url: projectUrl,
+        uploaded_at: new Date().toISOString()
+        })
+    }
+
     const payload = {
         name: form.value.name.trim(),
         email: user.value.email,
         bio: form.value.bio.trim(),
         location: form.value.location.trim(),
         social_links: {
-        instagram: form.value.social_links.instagram.trim(),
-        snapchat: form.value.social_links.snapchat.trim()
+            instagram: form.value.social_links.instagram.trim(),
+            snapchat: form.value.social_links.snapchat.trim()
         },
         niche: form.value.niche,
         skills: form.value.skills,
         profile_completed: true,
         updated_at: new Date().toISOString()
+    }
+
+    if (profileImageUrl) {
+        payload.profile_image = profileImageUrl
+    }
+
+    if (portfolioProjects.length) {
+        payload.portfolio_projects = portfolioProjects
     }
 
     return payload
@@ -421,50 +454,35 @@ const buildProfilePayload = async () => {
 /**
  * Submit Profile
  */
-const getCurrentUser = async () => {
-  const { data, error } = await supabase.auth.getUser()
-
-  if (error) throw error
-
-  return data.user
-}
-
 const handleSubmit = async () => {
     loading.value = true
     errorMessage.value = ''
     successMessage.value = ''
 
     try {
-        const authUser = await getCurrentUser()
-
-        if (!authUser) {
-        errorMessage.value = 'You must be logged in to save your profile.'
+        if (!user.value) {
         await router.push('/login')
         return
         }
 
-        if (!validateForm()) return
+    if (!validateForm()) return
 
-        const updatePayload = await buildProfilePayload()
+    const updatePayload = await buildProfilePayload()
 
-        const { data, error } = await supabase
+    const { error } = await supabase
         .from('profiles')
         .upsert(
             {
-            id: authUser.id,
-            email: authUser.email,
+            id: user.value.id,
             ...updatePayload
             },
             {
             onConflict: 'id'
             }
         )
-        .select()
-        .single()
+        
 
         if (error) throw error
-
-        console.log('Profile saved:', data)
 
         successMessage.value = 'Profile saved successfully.'
         await router.push('/profile')
@@ -477,11 +495,6 @@ const handleSubmit = async () => {
 }
 
 onMounted(loadProfile)
-const { data: sessionData } = await supabase.auth.getSession()
-
-console.log('Current session:', sessionData.session)
-console.log('useSupabaseUser:', user.value)
-console.log('User ID being saved:', user.value?.id)
 </script>
 
 <template>

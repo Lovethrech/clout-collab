@@ -421,23 +421,13 @@ const buildProfilePayload = async () => {
 /**
  * Submit Profile
  */
-const getCurrentUser = async () => {
-  const { data, error } = await supabase.auth.getUser()
-
-  if (error) throw error
-
-  return data.user
-}
-
 const handleSubmit = async () => {
     loading.value = true
     errorMessage.value = ''
     successMessage.value = ''
 
     try {
-        const authUser = await getCurrentUser()
-
-        if (!authUser) {
+        if (!user.value?.id) {
         errorMessage.value = 'You must be logged in to save your profile.'
         await router.push('/login')
         return
@@ -451,8 +441,7 @@ const handleSubmit = async () => {
         .from('profiles')
         .upsert(
             {
-            id: authUser.id,
-            email: authUser.email,
+            id: user.value.id,
             ...updatePayload
             },
             {
