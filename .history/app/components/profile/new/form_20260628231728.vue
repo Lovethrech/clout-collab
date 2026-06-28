@@ -271,26 +271,26 @@ const handleProfileImageChange = (event) => {
 }
 
 const handleProjectChange = (event) => {
-    const file = event.target.files?.[0]
+  const file = event.target.files?.[0]
 
-    if (!file) return
+  if (!file) return
 
-    errorMessage.value = ''
+  errorMessage.value = ''
 
-    if (!file.type.startsWith('image/')) {
-        errorMessage.value = 'Portfolio project must be an image file.'
-        return
-    }
+  if (!file.type.startsWith('image/')) {
+    errorMessage.value = 'Portfolio project must be an image file.'
+    return
+  }
 
-    const isValidSize = validateFileSize(
-        file,
-        'Project file must not exceed 5MB.'
-    )
+  const isValidSize = validateFileSize(
+    file,
+    'Project file must not exceed 5MB.'
+  )
 
-    if (!isValidSize) return
+  if (!isValidSize) return
 
-    projectFile.value = file
-    projectFileName.value = file.name
+  projectFile.value = file
+  projectFileName.value = file.name
 }
 
 /**
@@ -330,7 +330,7 @@ const loadProfile = async () => {
         .from('profiles')
         .select('name, bio, location, role, niche, skills, social_links, profile_completed')
         .eq('id', user.value.id)
-        .maybeSingle()
+        .single()
 
     if (error) {
         errorMessage.value = error.message

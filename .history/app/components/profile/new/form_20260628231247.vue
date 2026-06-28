@@ -277,11 +277,6 @@ const handleProjectChange = (event) => {
 
     errorMessage.value = ''
 
-    if (!file.type.startsWith('image/')) {
-        errorMessage.value = 'Portfolio project must be an image file.'
-        return
-    }
-
     const isValidSize = validateFileSize(
         file,
         'Project file must not exceed 5MB.'
@@ -330,7 +325,7 @@ const loadProfile = async () => {
         .from('profiles')
         .select('name, bio, location, role, niche, skills, social_links, profile_completed')
         .eq('id', user.value.id)
-        .maybeSingle()
+        .single()
 
     if (error) {
         errorMessage.value = error.message
@@ -462,11 +457,11 @@ const buildProfilePayload = async (authUser) => {
  * Submit Profile
  */
 const getCurrentUser = async () => {
-    const { data, error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser()
 
-    if (error) throw error
+  if (error) throw error
 
-    return data.user
+  return data.user
 }
 
 const handleSubmit = async () => {
@@ -485,7 +480,7 @@ const handleSubmit = async () => {
 
         if (!validateForm()) return
 
-        const updatePayload = await buildProfilePayload(authUser)
+        const updatePayload = await buildProfilePayload()
 
         const { data, error } = await supabase
         .from('profiles')
@@ -770,11 +765,10 @@ console.log('User ID being saved:', user.value?.id)
                 </p>
 
                 <input
-                    ref="projectInput"
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    @change="handleProjectChange"
+                ref="projectInput"
+                type="file"
+                hidden
+                @change="handleProjectChange"
                 />
             </div>
             </div>

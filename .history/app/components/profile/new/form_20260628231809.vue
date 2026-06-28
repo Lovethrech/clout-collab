@@ -330,7 +330,7 @@ const loadProfile = async () => {
         .from('profiles')
         .select('name, bio, location, role, niche, skills, social_links, profile_completed')
         .eq('id', user.value.id)
-        .maybeSingle()
+        .single()
 
     if (error) {
         errorMessage.value = error.message

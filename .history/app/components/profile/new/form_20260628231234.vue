@@ -277,11 +277,6 @@ const handleProjectChange = (event) => {
 
     errorMessage.value = ''
 
-    if (!file.type.startsWith('image/')) {
-        errorMessage.value = 'Portfolio project must be an image file.'
-        return
-    }
-
     const isValidSize = validateFileSize(
         file,
         'Project file must not exceed 5MB.'
@@ -330,7 +325,7 @@ const loadProfile = async () => {
         .from('profiles')
         .select('name, bio, location, role, niche, skills, social_links, profile_completed')
         .eq('id', user.value.id)
-        .maybeSingle()
+        .single()
 
     if (error) {
         errorMessage.value = error.message
@@ -405,68 +400,68 @@ const validateForm = () => {
  * Build Update Payload
  */
 const buildProfilePayload = async (authUser) => {
-    let profileImageUrl = null
-    const portfolioProjects = []
+  let profileImageUrl = null
+  const portfolioProjects = []
 
-    if (profileImageFile.value) {
-        profileImageUrl = await uploadFile({
-        bucket: STORAGE_BUCKETS.profileImages,
-        file: profileImageFile.value,
-        folder: authUser.id
-        })
-    }
+  if (profileImageFile.value) {
+    profileImageUrl = await uploadFile({
+      bucket: STORAGE_BUCKETS.profileImages,
+      file: profileImageFile.value,
+      folder: authUser.id
+    })
+  }
 
-    if (projectFile.value) {
-        const projectUrl = await uploadFile({
-        bucket: STORAGE_BUCKETS.portfolioProjects,
-        file: projectFile.value,
-        folder: authUser.id
-        })
+  if (projectFile.value) {
+    const projectUrl = await uploadFile({
+      bucket: STORAGE_BUCKETS.portfolioProjects,
+      file: projectFile.value,
+      folder: authUser.id
+    })
 
-        portfolioProjects.push({
-        name: projectFile.value.name,
-        url: projectUrl,
-        type: projectFile.value.type,
-        size: projectFile.value.size,
-        uploaded_at: new Date().toISOString()
-        })
-    }
+    portfolioProjects.push({
+      name: projectFile.value.name,
+      url: projectUrl,
+      type: projectFile.value.type,
+      size: projectFile.value.size,
+      uploaded_at: new Date().toISOString()
+    })
+  }
 
-    const payload = {
-        name: form.value.name.trim(),
-        email: authUser.email,
-        bio: form.value.bio.trim(),
-        location: form.value.location.trim(),
-        social_links: {
-        instagram: form.value.social_links.instagram.trim(),
-        snapchat: form.value.social_links.snapchat.trim()
-        },
-        niche: form.value.niche,
-        skills: form.value.skills,
-        profile_completed: true,
-        updated_at: new Date().toISOString()
-    }
+  const payload = {
+    name: form.value.name.trim(),
+    email: authUser.email,
+    bio: form.value.bio.trim(),
+    location: form.value.location.trim(),
+    social_links: {
+      instagram: form.value.social_links.instagram.trim(),
+      snapchat: form.value.social_links.snapchat.trim()
+    },
+    niche: form.value.niche,
+    skills: form.value.skills,
+    profile_completed: true,
+    updated_at: new Date().toISOString()
+  }
 
-    if (profileImageUrl) {
-        payload.profile_image = profileImageUrl
-    }
+  if (profileImageUrl) {
+    payload.profile_image = profileImageUrl
+  }
 
-    if (portfolioProjects.length) {
-        payload.portfolio_projects = portfolioProjects
-    }
+  if (portfolioProjects.length) {
+    payload.portfolio_projects = portfolioProjects
+  }
 
-    return payload
+  return payload
 }
 
 /**
  * Submit Profile
  */
 const getCurrentUser = async () => {
-    const { data, error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser()
 
-    if (error) throw error
+  if (error) throw error
 
-    return data.user
+  return data.user
 }
 
 const handleSubmit = async () => {
@@ -485,7 +480,7 @@ const handleSubmit = async () => {
 
         if (!validateForm()) return
 
-        const updatePayload = await buildProfilePayload(authUser)
+        const updatePayload = await buildProfilePayload()
 
         const { data, error } = await supabase
         .from('profiles')
@@ -770,11 +765,10 @@ console.log('User ID being saved:', user.value?.id)
                 </p>
 
                 <input
-                    ref="projectInput"
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    @change="handleProjectChange"
+                ref="projectInput"
+                type="file"
+                hidden
+                @change="handleProjectChange"
                 />
             </div>
             </div>

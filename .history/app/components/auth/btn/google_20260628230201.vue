@@ -27,12 +27,12 @@ const emit = defineEmits(['click'])
 
 <style scoped>
 .btn-google{ 
-    width: 100%;   
+    width
     gap:1vh; 
     background:var(--slate-50); 
     color:var(--slate-900); 
     font-weight:600; 
-    font-size:1.8vh;
+    font-size:1.8vh; 
     border-radius:14px; 
     padding:1.6vh 0; 
     margin-bottom: 2vh; 

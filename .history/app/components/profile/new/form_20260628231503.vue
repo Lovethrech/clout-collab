@@ -277,11 +277,6 @@ const handleProjectChange = (event) => {
 
     errorMessage.value = ''
 
-    if (!file.type.startsWith('image/')) {
-        errorMessage.value = 'Portfolio project must be an image file.'
-        return
-    }
-
     const isValidSize = validateFileSize(
         file,
         'Project file must not exceed 5MB.'
@@ -330,7 +325,7 @@ const loadProfile = async () => {
         .from('profiles')
         .select('name, bio, location, role, niche, skills, social_links, profile_completed')
         .eq('id', user.value.id)
-        .maybeSingle()
+        .single()
 
     if (error) {
         errorMessage.value = error.message
@@ -775,7 +770,7 @@ console.log('User ID being saved:', user.value?.id)
                     accept="image/*"
                     hidden
                     @change="handleProjectChange"
-                />
+                    />
             </div>
             </div>
         </div>
