@@ -61,12 +61,7 @@ const handleLogin = async () => {
 
     if (profileError) throw profileError
 
-    if (!profile) {
-      await router.push('/signup')
-      return
-    }
-
-    if (!profile.role) {
+    if (!profile?.role) {
       await router.push('/signup')
       return
     }
