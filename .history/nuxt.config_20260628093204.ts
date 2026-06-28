@@ -4,16 +4,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@vite-pwa/nuxt',
-    '@nuxtjs/supabase'
+    '@nuxtjs/supabase',
   ],
   supabase:{
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_ANON_KEY,
-    redirect: false,   
-    cookieOptions:{
-      maxAge: 60 * 60 * 24 * 7,  // 7 days
-      secure: true
-    }
+    redirect: false  
+    // cookieOptions:{
+    //   maxAge: 60 * 60 * 24 * 7,  7 days
+    //   secure: true
+    // }
   },
   app:{
     head:{

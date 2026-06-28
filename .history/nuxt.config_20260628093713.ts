@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@vite-pwa/nuxt',
-    '@nuxtjs/supabase'
+    '@nuxtjs/supabase''
   ],
   supabase:{
     url: process.env.SUPABASE_URL,
