@@ -69,13 +69,14 @@ const btnText=ref("Save Info");
                             Add sample project
                         </p>
                     </div>
-                </div>   
+                </div>
+                
             </div>
-            <button type="submit" class="btn-main-auth profile-new-user-form-btn" :disabled="loading">
-                <p class="btn-main-auth-text">
-                {{ loading ? 'Adding to database...' : btnText }}
-                </p>
-            </button>
+            <button type="submit" class="btn-main-auth" :disabled="loading">
+                    <p class="btn-main-auth-text">
+                    {{ loading ? 'Adding to database...' : btnText }}
+                    </p>
+                </button>
             
         </form>
     </div>
@@ -118,7 +119,6 @@ const btnText=ref("Save Info");
     flex-direction: row;
     justify-content: space-between;
     gap: 3vh;
-    margin-bottom: 3vh;
 }
 .profile-new-user-form-input-and-label-field-ctn, .profile-new-user-form-input-and-label-portfolio-ctn{
     width: 50%;
@@ -156,6 +156,7 @@ const btnText=ref("Save Info");
 }
 .profile-new-user-form-input-and-label-portfolio-empty:hover{
     transform: scale(0.99);
+    border: 0;
 }
 .profile-new-user-form-input-and-label-portfolio-empty-sign{
     font-size: 40px;
@@ -170,9 +171,6 @@ const btnText=ref("Save Info");
     }
     .profile-new-user-form-input-and-label-field-ctn, .profile-new-user-form-input-and-label-portfolio-ctn{
         width: 100%;
-    }
-    .profile-new-user-form-input-and-label-portfolio-ctn{
-        height: 26vh;
     }
 }
 </style>

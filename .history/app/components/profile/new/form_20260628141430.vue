@@ -113,7 +113,7 @@ const btnText=ref("Save Info");
 }
 .profile-new-user-form-input-and-label-field-and-portfolio-ctn{
     margin-top: 7vh;
-    padding: 2vh 6vw;
+    padding: 2vh 6;
     display:flex;
     flex-direction: row;
     justify-content: space-between;

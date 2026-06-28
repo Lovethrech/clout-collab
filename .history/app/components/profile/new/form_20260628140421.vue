@@ -69,13 +69,13 @@ const btnText=ref("Save Info");
                             Add sample project
                         </p>
                     </div>
-                </div>   
+                </div>
+                <button type="submit" class="btn-main-auth" :disabled="loading">
+                    <p class="btn-main-auth-text">
+                    {{ loading ? 'Saving...' : btnText }}
+                    </p>
+                </button>
             </div>
-            <button type="submit" class="btn-main-auth profile-new-user-form-btn" :disabled="loading">
-                <p class="btn-main-auth-text">
-                {{ loading ? 'Adding to database...' : btnText }}
-                </p>
-            </button>
             
         </form>
     </div>
@@ -118,7 +118,6 @@ const btnText=ref("Save Info");
     flex-direction: row;
     justify-content: space-between;
     gap: 3vh;
-    margin-bottom: 3vh;
 }
 .profile-new-user-form-input-and-label-field-ctn, .profile-new-user-form-input-and-label-portfolio-ctn{
     width: 50%;
@@ -170,9 +169,6 @@ const btnText=ref("Save Info");
     }
     .profile-new-user-form-input-and-label-field-ctn, .profile-new-user-form-input-and-label-portfolio-ctn{
         width: 100%;
-    }
-    .profile-new-user-form-input-and-label-portfolio-ctn{
-        height: 26vh;
     }
 }
 </style>

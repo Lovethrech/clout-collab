@@ -164,6 +164,7 @@ const btnText=ref("Save Info");
     font-size: 20px;
 }
 
+
 @media screen and (max-width: 990px) {
     .profile-new-user-form-input-and-label-field-and-portfolio-ctn{
         flex-direction: column;

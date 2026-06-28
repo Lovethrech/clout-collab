@@ -71,7 +71,7 @@ const btnText=ref("Save Info");
                     </div>
                 </div>   
             </div>
-            <button type="submit" class="btn-main-auth profile-new-user-form-btn" :disabled="loading">
+            <button type="submit" class="btn-main-auth profile-new-user-form-b" :disabled="loading">
                 <p class="btn-main-auth-text">
                 {{ loading ? 'Adding to database...' : btnText }}
                 </p>

@@ -163,6 +163,9 @@ const btnText=ref("Save Info");
 .profile-new-user-form-input-and-label-portfolio-empty-desc{
     font-size: 20px;
 }
+.profile-new-user-form-btn{
+    margin
+}
 
 @media screen and (max-width: 990px) {
     .profile-new-user-form-input-and-label-field-and-portfolio-ctn{

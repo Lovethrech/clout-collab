@@ -71,7 +71,7 @@ const btnText=ref("Save Info");
                     </div>
                 </div>   
             </div>
-            <button type="submit" class="btn-main-auth profile-new-user-form-btn" :disabled="loading">
+            <button type="submit" class="btn-main-auth" :disabled="loading">
                 <p class="btn-main-auth-text">
                 {{ loading ? 'Adding to database...' : btnText }}
                 </p>
@@ -156,6 +156,7 @@ const btnText=ref("Save Info");
 }
 .profile-new-user-form-input-and-label-portfolio-empty:hover{
     transform: scale(0.99);
+    border: 0;
 }
 .profile-new-user-form-input-and-label-portfolio-empty-sign{
     font-size: 40px;
