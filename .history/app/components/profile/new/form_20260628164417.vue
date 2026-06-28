@@ -323,7 +323,7 @@ const loadProfile = async () => {
 
     const { data, error } = await supabase
         .from('profiles')
-        .select('name, bio, location, role, niche, skills, social_links, profile_completed')
+        .select('name, bio, location, role, niche, skills, profile_completed')
         .eq('id', user.value.id)
         .single()
 
@@ -344,11 +344,7 @@ const loadProfile = async () => {
         bio: data?.bio || '',
         location: data?.location || '',
         niche: data?.niche || [],
-        skills: data?.skills || [],
-        social_links: {
-            instagram: data?.social_links?.instagram || '',
-            snapchat: data?.social_links?.snapchat || ''
-        }
+        skills: data?.skills || []
     }
 }
 
@@ -370,16 +366,6 @@ const validateForm = () => {
 
     if (!form.value.location.trim()) {
         errorMessage.value = 'Location is required.'
-        return false
-    }
-
-    if (!form.value.social_links.instagram.trim()) {
-        errorMessage.value = 'Instagram handle is required.'
-        return false
-    }
-
-    if (!form.value.social_links.snapchat.trim()) {
-        errorMessage.value = 'Snapchat handle is required.'
         return false
     }
 
@@ -430,10 +416,6 @@ const buildProfilePayload = async () => {
         email: user.value.email,
         bio: form.value.bio.trim(),
         location: form.value.location.trim(),
-        social_links: {
-            instagram: form.value.social_links.instagram.trim(),
-            snapchat: form.value.social_links.snapchat.trim()
-        },
         niche: form.value.niche,
         skills: form.value.skills,
         profile_completed: true,
@@ -471,15 +453,7 @@ const handleSubmit = async () => {
 
     const { error } = await supabase
         .from('profiles')
-        .upsert(
-            {
-            id: user.value.id,
-            ...updatePayload
-            },
-            {
-            onConflict: 'id'
-            }
-        )
+        .update(updatePayload)
         .eq('id', user.value.id)
 
         if (error) throw error
@@ -554,50 +528,6 @@ onMounted(loadProfile)
                 placeholder="Tell people about yourself..."
                 required
                 ></textarea>
-            </div>
-
-            <div class="profile-new-user-form-social-links">
-                <p class="profile-new-user-form-section-title">
-                    Social Links
-                </p>
-
-                <div class="profile-new-user-form-input-and-label-field">
-                    <label for="instagram" class="profile-new-user-form-label">
-                    Instagram Handle:
-                    </label>
-
-                    <div class="social-input-wrapper">
-                    <span class="social-prefix">@</span>
-
-                    <input
-                        v-model="form.social_links.instagram"
-                        type="text"
-                        id="instagram"
-                        class="profile-new-user-form-input social-input"
-                        placeholder="your_instagram_handle"
-                        required
-                    />
-                    </div>
-                </div>
-
-                <div class="profile-new-user-form-input-and-label-field">
-                    <label for="snapchat" class="profile-new-user-form-label">
-                    Snapchat Handle:
-                    </label>
-
-                    <div class="social-input-wrapper">
-                    <span class="social-prefix">@</span>
-
-                    <input
-                        v-model="form.social_links.snapchat"
-                        type="text"
-                        id="snapchat"
-                        class="profile-new-user-form-input social-input"
-                        placeholder="your_snapchat_handle"
-                        required
-                    />
-                    </div>
-                </div>
             </div>
 
             <div class="profile-new-user-form-input-and-label-field">
@@ -981,52 +911,6 @@ onMounted(loadProfile)
     font-size: 16px;
     cursor: pointer;
     line-height: 1;
-}
-.profile-new-user-form-social-links {
-    width: 100%;
-    padding: 2vh;
-    border: 1px solid var(--slate-700);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.04);
-    margin-bottom: 2vh;
-}
-
-.profile-new-user-form-section-title {
-    font-family: var(--mono-font);
-    color: var(--slate-200);
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 2vh;
-}
-
-.social-input-wrapper {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border: 1px solid var(--slate-700);
-    border-radius: 12px;
-    background: var(--slate-800);
-    overflow: hidden;
-}
-
-.social-prefix {
-    height: 100%;
-    padding: 0 14px;
-    color: var(--slate-400);
-    font-family: var(--mono-font);
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.social-input {
-    border: none;
-    border-left: 1px solid var(--slate-700);
-    border-radius: 0;
-    background: transparent;
-}
-
-.social-input:focus {
-  outline: none;
 }
 
 @media screen and (max-width: 990px) {

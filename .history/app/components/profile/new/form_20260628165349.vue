@@ -471,15 +471,7 @@ const handleSubmit = async () => {
 
     const { error } = await supabase
         .from('profiles')
-        .upsert(
-            {
-            id: user.value.id,
-            ...updatePayload
-            },
-            {
-            onConflict: 'id'
-            }
-        )
+        .update(updatePayload)
         .eq('id', user.value.id)
 
         if (error) throw error
@@ -983,46 +975,46 @@ onMounted(loadProfile)
     line-height: 1;
 }
 .profile-new-user-form-social-links {
-    width: 100%;
-    padding: 2vh;
-    border: 1px solid var(--slate-700);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.04);
-    margin-bottom: 2vh;
+  width: 100%;
+  padding: 2vh;
+  border: 1px solid var(--slate-700);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 2vh;
 }
 
 .profile-new-user-form-section-title {
-    font-family: var(--mono-font);
-    color: var(--slate-200);
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 2vh;
+  font-family: var(--mono-font);
+  color: var(--slate-200);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 2vh;
 }
 
 .social-input-wrapper {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border: 1px solid var(--slate-700);
-    border-radius: 12px;
-    background: var(--slate-800);
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--slate-700);
+  border-radius: 12px;
+  background: var(--slate-800);
+  overflow: hidden;
 }
 
 .social-prefix {
-    height: 100%;
-    padding: 0 14px;
-    color: var(--slate-400);
-    font-family: var(--mono-font);
-    font-size: 16px;
-    font-weight: 700;
+  height: 100%;
+  padding: 0 14px;
+  color: var(--slate-400);
+  font-family: var(--mono-font);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .social-input {
-    border: none;
-    border-left: 1px solid var(--slate-700);
-    border-radius: 0;
-    background: transparent;
+  border: none;
+  border-left: 1px solid var(--slate-700);
+  border-radius: 0;
+  background: transparent;
 }
 
 .social-input:focus {

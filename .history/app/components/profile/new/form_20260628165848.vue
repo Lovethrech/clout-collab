@@ -469,17 +469,11 @@ const handleSubmit = async () => {
 
     const updatePayload = await buildProfilePayload()
 
+        
+
     const { error } = await supabase
         .from('profiles')
-        .upsert(
-            {
-            id: user.value.id,
-            ...updatePayload
-            },
-            {
-            onConflict: 'id'
-            }
-        )
+        .update(updatePayload)
         .eq('id', user.value.id)
 
         if (error) throw error

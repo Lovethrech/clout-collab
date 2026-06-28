@@ -17,8 +17,8 @@ const successMessage = ref('')
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 
 const STORAGE_BUCKETS = {
-    profileImages: 'profile-images',
-    portfolioProjects: 'portfolio-projects'
+  profileImages: 'profile-images',
+  portfolioProjects: 'portfolio-projects'
 }
 
 /**
@@ -39,212 +39,208 @@ const projectFileName = ref('')
 const userRole = ref('creator')
 
 const form = ref({
-    name: '',
-    bio: '',
-    location: '',
-    niche: [],
-    skills: [],
-    social_links: {
-        instagram: '',
-        snapchat: ''
-    }
+  name: '',
+  bio: '',
+  location: '',
+  niche: [],
+  skills: []
 })
 
 /**
  * Dropdown State
  */
 const dropdowns = ref({
-    niche: false,
-    skills: false
+  niche: false,
+  skills: false
 })
 
 /**
  * Role-Based Options
  */
 const roleOptions = {
-    creator: {
-        niches: [
-        'Short-form video',
-        'Long-form video',
-        'Live streaming',
-        'Gaming',
-        'Lifestyle/Vlog',
-        'Comedy/Skits',
-        'Beauty',
-        'Fashion',
-        'Travel',
-        'Food',
-        'Education',
-        'Fitness'
-        ],
-        skills: [
-        'Short-form video editing',
-        'Long-form video editing',
-        'Scriptwriting',
-        'Content strategy',
-        'Photography',
-        'Videography',
-        'Community management',
-        'Brand storytelling',
-        'Canva design',
-        'CapCut editing'
-        ]
-    },
+  creator: {
+    niches: [
+      'Short-form video',
+      'Long-form video',
+      'Live streaming',
+      'Gaming',
+      'Lifestyle/Vlog',
+      'Comedy/Skits',
+      'Beauty',
+      'Fashion',
+      'Travel',
+      'Food',
+      'Education',
+      'Fitness'
+    ],
+    skills: [
+      'Short-form video editing',
+      'Long-form video editing',
+      'Scriptwriting',
+      'Content strategy',
+      'Photography',
+      'Videography',
+      'Community management',
+      'Brand storytelling',
+      'Canva design',
+      'CapCut editing'
+    ]
+  },
 
-    musician: {
-        niches: [
-        'Afrobeats',
-        'Hip-hop',
-        'R&B',
-        'Gospel',
-        'Pop',
-        'DJ mixes',
-        'Instrumentals',
-        'Song covers',
-        'Live performance',
-        'Music education'
-        ],
-        skills: [
-        'Music production',
-        'Sound design',
-        'Songwriting',
-        'Vocal recording',
-        'Mixing',
-        'Mastering',
-        'Beat making',
-        'Live performance',
-        'DJing',
-        'Audio editing'
-        ]
-    },
+  musician: {
+    niches: [
+      'Afrobeats',
+      'Hip-hop',
+      'R&B',
+      'Gospel',
+      'Pop',
+      'DJ mixes',
+      'Instrumentals',
+      'Song covers',
+      'Live performance',
+      'Music education'
+    ],
+    skills: [
+      'Music production',
+      'Sound design',
+      'Songwriting',
+      'Vocal recording',
+      'Mixing',
+      'Mastering',
+      'Beat making',
+      'Live performance',
+      'DJing',
+      'Audio editing'
+    ]
+  },
 
-    brand: {
-        niches: [
-        'Fashion brand',
-        'Beauty brand',
-        'Food and beverage',
-        'Tech brand',
-        'Lifestyle brand',
-        'Fitness brand',
-        'Travel brand',
-        'Education brand',
-        'Events',
-        'E-commerce'
-        ],
-        skills: [
-        'Campaign planning',
-        'Influencer marketing',
-        'Social media strategy',
-        'Brand management',
-        'Content briefing',
-        'Paid ads',
-        'Community engagement',
-        'Analytics reporting',
-        'Partnership management',
-        'Creative direction'
-        ]
-    },
+  brand: {
+    niches: [
+      'Fashion brand',
+      'Beauty brand',
+      'Food and beverage',
+      'Tech brand',
+      'Lifestyle brand',
+      'Fitness brand',
+      'Travel brand',
+      'Education brand',
+      'Events',
+      'E-commerce'
+    ],
+    skills: [
+      'Campaign planning',
+      'Influencer marketing',
+      'Social media strategy',
+      'Brand management',
+      'Content briefing',
+      'Paid ads',
+      'Community engagement',
+      'Analytics reporting',
+      'Partnership management',
+      'Creative direction'
+    ]
+  },
 
-    creative_professional: {
-        niches: [
-        'Video editing',
-        'Graphic design',
-        'Animation',
-        'Photography',
-        'UI/UX design',
-        'Motion graphics',
-        'Copywriting',
-        'Creative direction',
-        'Brand identity',
-        '3D design'
-        ],
-        skills: [
-        'Adobe Premiere Pro',
-        'After Effects',
-        'Photoshop',
-        'Illustrator',
-        'Figma',
-        'Motion design',
-        'Photo retouching',
-        'Brand design',
-        'Copywriting',
-        'Project management'
-        ]
-    }
+  creative_professional: {
+    niches: [
+      'Video editing',
+      'Graphic design',
+      'Animation',
+      'Photography',
+      'UI/UX design',
+      'Motion graphics',
+      'Copywriting',
+      'Creative direction',
+      'Brand identity',
+      '3D design'
+    ],
+    skills: [
+      'Adobe Premiere Pro',
+      'After Effects',
+      'Photoshop',
+      'Illustrator',
+      'Figma',
+      'Motion design',
+      'Photo retouching',
+      'Brand design',
+      'Copywriting',
+      'Project management'
+    ]
+  }
 }
 
 /**
  * Computed Options
  */
 const nicheOptions = computed(() => {
-    return roleOptions[userRole.value]?.niches || roleOptions.creator.niches
+  return roleOptions[userRole.value]?.niches || roleOptions.creator.niches
 })
 
 const skillOptions = computed(() => {
-    return roleOptions[userRole.value]?.skills || roleOptions.creator.skills
+  return roleOptions[userRole.value]?.skills || roleOptions.creator.skills
 })
 
 /**
  * Multi-Select Dropdown Methods
  */
 const toggleDropdown = (field) => {
-    dropdowns.value[field] = !dropdowns.value[field]
+  dropdowns.value[field] = !dropdowns.value[field]
 }
 
 const closeDropdown = (field) => {
-    dropdowns.value[field] = false
+  dropdowns.value[field] = false
 }
 
 const toggleOption = (field, option) => {
-    const selectedOptions = form.value[field]
+  const selectedOptions = form.value[field]
 
-    if (selectedOptions.includes(option)) {
-        form.value[field] = selectedOptions.filter((item) => item !== option)
-        return
-    }
+  if (selectedOptions.includes(option)) {
+    form.value[field] = selectedOptions.filter((item) => item !== option)
+    return
+  }
 
-    form.value[field] = [...selectedOptions, option]
+  form.value[field] = [...selectedOptions, option]
 }
 
 const removeOption = (field, option) => {
-    form.value[field] = form.value[field].filter((item) => item !== option)
+  form.value[field] = form.value[field].filter((item) => item !== option)
 }
 
 const isSelected = (field, option) => {
-    return form.value[field].includes(option)
+  return form.value[field].includes(option)
 }
 
 const getSelectedText = (field, placeholder) => {
-    const selectedCount = form.value[field].length
+  const selectedCount = form.value[field].length
 
-    if (!selectedCount) {
-        return placeholder
-    }
+  if (!selectedCount) {
+    return placeholder
+  }
 
-    return `${selectedCount} selected`
+  return `${selectedCount} selected`
 }
 
 /**
  * File Picker Methods
  */
 const openProfileImagePicker = () => {
-    profileImageInput.value?.click()
+  profileImageInput.value?.click()
 }
 
 const openProjectPicker = () => {
-    projectInput.value?.click()
+  projectInput.value?.click()
 }
 
 /**
  * File Validation
  */
 const validateFileSize = (file, message) => {
-    if (file.size > MAX_FILE_SIZE) {
-        errorMessage.value = message
-        return false
-    }
+  if (file.size > MAX_FILE_SIZE) {
+    errorMessage.value = message
+    return false
+  }
 
-    return true
+  return true
 }
 
 const handleProfileImageChange = (event) => {
@@ -323,7 +319,7 @@ const loadProfile = async () => {
 
     const { data, error } = await supabase
         .from('profiles')
-        .select('name, bio, location, role, niche, skills, social_links, profile_completed')
+        .select('name, bio, location, role, niche, skills, profile_completed')
         .eq('id', user.value.id)
         .single()
 
@@ -344,11 +340,7 @@ const loadProfile = async () => {
         bio: data?.bio || '',
         location: data?.location || '',
         niche: data?.niche || [],
-        skills: data?.skills || [],
-        social_links: {
-            instagram: data?.social_links?.instagram || '',
-            snapchat: data?.social_links?.snapchat || ''
-        }
+        skills: data?.skills || []
     }
 }
 
@@ -370,16 +362,6 @@ const validateForm = () => {
 
     if (!form.value.location.trim()) {
         errorMessage.value = 'Location is required.'
-        return false
-    }
-
-    if (!form.value.social_links.instagram.trim()) {
-        errorMessage.value = 'Instagram handle is required.'
-        return false
-    }
-
-    if (!form.value.social_links.snapchat.trim()) {
-        errorMessage.value = 'Snapchat handle is required.'
         return false
     }
 
@@ -430,10 +412,6 @@ const buildProfilePayload = async () => {
         email: user.value.email,
         bio: form.value.bio.trim(),
         location: form.value.location.trim(),
-        social_links: {
-            instagram: form.value.social_links.instagram.trim(),
-            snapchat: form.value.social_links.snapchat.trim()
-        },
         niche: form.value.niche,
         skills: form.value.skills,
         profile_completed: true,
@@ -471,15 +449,7 @@ const handleSubmit = async () => {
 
     const { error } = await supabase
         .from('profiles')
-        .upsert(
-            {
-            id: user.value.id,
-            ...updatePayload
-            },
-            {
-            onConflict: 'id'
-            }
-        )
+        .update(updatePayload)
         .eq('id', user.value.id)
 
         if (error) throw error
@@ -556,50 +526,6 @@ onMounted(loadProfile)
                 ></textarea>
             </div>
 
-            <div class="profile-new-user-form-social-links">
-                <p class="profile-new-user-form-section-title">
-                    Social Links
-                </p>
-
-                <div class="profile-new-user-form-input-and-label-field">
-                    <label for="instagram" class="profile-new-user-form-label">
-                    Instagram Handle:
-                    </label>
-
-                    <div class="social-input-wrapper">
-                    <span class="social-prefix">@</span>
-
-                    <input
-                        v-model="form.social_links.instagram"
-                        type="text"
-                        id="instagram"
-                        class="profile-new-user-form-input social-input"
-                        placeholder="your_instagram_handle"
-                        required
-                    />
-                    </div>
-                </div>
-
-                <div class="profile-new-user-form-input-and-label-field">
-                    <label for="snapchat" class="profile-new-user-form-label">
-                    Snapchat Handle:
-                    </label>
-
-                    <div class="social-input-wrapper">
-                    <span class="social-prefix">@</span>
-
-                    <input
-                        v-model="form.social_links.snapchat"
-                        type="text"
-                        id="snapchat"
-                        class="profile-new-user-form-input social-input"
-                        placeholder="your_snapchat_handle"
-                        required
-                    />
-                    </div>
-                </div>
-            </div>
-
             <div class="profile-new-user-form-input-and-label-field">
                 <label for="niche" class="profile-new-user-form-label">
                     Niche: select at least 5
@@ -609,7 +535,7 @@ onMounted(loadProfile)
                     <button
                     type="button"
                     class="multi-select-trigger"
-                    @click="toggleDropdown('niche')"
+                    @click="showNicheDropdown = !showNicheDropdown"
                     >
                     <span>
                         {{ getSelectedText('niche', 'Select niche options') }}
@@ -620,7 +546,7 @@ onMounted(loadProfile)
                     </span>
                     </button>
 
-                    <div v-if="dropdowns.niche" class="multi-select-dropdown">
+                    <div v-if="showNicheDropdown" class="multi-select-dropdown">
                     <label
                         v-for="option in nicheOptions"
                         :key="option"
@@ -665,7 +591,7 @@ onMounted(loadProfile)
                     <button
                     type="button"
                     class="multi-select-trigger"
-                    @click="toggleDropdown('skills')" 
+                    @click="showSkillsDropdown = !showSkillsDropdown"
                     >
                     <span>
                         {{ getSelectedText('skills', 'Select skill options') }}
@@ -676,7 +602,7 @@ onMounted(loadProfile)
                     </span>
                     </button>
 
-                    <div v-if="dropdowns.skills" class="multi-select-dropdown">
+                    <div v-if="showSkillsDropdown" class="multi-select-dropdown">
                     <label
                         v-for="option in skillOptions"
                         :key="option"
@@ -981,52 +907,6 @@ onMounted(loadProfile)
     font-size: 16px;
     cursor: pointer;
     line-height: 1;
-}
-.profile-new-user-form-social-links {
-    width: 100%;
-    padding: 2vh;
-    border: 1px solid var(--slate-700);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.04);
-    margin-bottom: 2vh;
-}
-
-.profile-new-user-form-section-title {
-    font-family: var(--mono-font);
-    color: var(--slate-200);
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 2vh;
-}
-
-.social-input-wrapper {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border: 1px solid var(--slate-700);
-    border-radius: 12px;
-    background: var(--slate-800);
-    overflow: hidden;
-}
-
-.social-prefix {
-    height: 100%;
-    padding: 0 14px;
-    color: var(--slate-400);
-    font-family: var(--mono-font);
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.social-input {
-    border: none;
-    border-left: 1px solid var(--slate-700);
-    border-radius: 0;
-    background: transparent;
-}
-
-.social-input:focus {
-  outline: none;
 }
 
 @media screen and (max-width: 990px) {

@@ -480,6 +480,10 @@ const handleSubmit = async () => {
             onConflict: 'id'
             }
         )
+
+    const { error } = await supabase
+        .from('profiles')
+        .update(updatePayload)
         .eq('id', user.value.id)
 
         if (error) throw error
