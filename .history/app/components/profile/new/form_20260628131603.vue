@@ -52,7 +52,10 @@
                     <select type="text" id="niche" class="profile-new-user-form-input profile-new-user-form-input-select">
                         <option value="0" class="profile-new-user-form-input-select-option">Ogun</option>
                         <option value="1" class="profile-new-user-form-input-select-option">Lagos</option>
-                        <option value="2" class="profile-new-user-form-input-select-option">Abuja</option>
+                        <option value="2" class="profile-new-user-form-input-select-option">scriptwriting</option>
+                        <option value="3" class="profile-new-user-form-input-select-option">content strategy</option>
+                        <option value="4" class="profile-new-user-form-input-select-option">music production</option>
+                        <option value="5" class="profile-new-user-form-input-select-option">sound design</option>
                     </select>
                 </div>
             </div>
