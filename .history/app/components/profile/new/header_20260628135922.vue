@@ -27,6 +27,6 @@
     font-size: 1.6vh;
     font-family: var(--mono-font);
     color: var(--slate-200);
-    letter-spacing:5px;
+    letter-spacing: 2px;
 }
 </style>

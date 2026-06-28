@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <hr/>
-                <div class="profile-new-user-form-input-and-label-portfolio-ctn profile-new-user-form-label">
+                <div class="profile-new-user-form-input-and-label-portfolio-ctn">
                     Portfolio:
                     <div class="profile-new-user-form-input-and-label-portfolio-empty dsp-flex-jstf-center-plc-center">
                         <p class="profile-new-user-form-input-and-label-portfolio-empty-sign">
@@ -135,21 +135,7 @@
     width: 100%;
     height: 100%;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.137);
-    border:0.5vh dashed var(--slate-900);
-    margin-top: 2vh;
-    font-weight: 700;
-    cursor:pointer;
-    transition: transform .2s ease;
-}
-.profile-new-user-form-input-and-label-portfolio-empty:hover{
-    transform: scale(0.99);
-}
-.profile-new-user-form-input-and-label-portfolio-empty-sign{
-    font-size: 40px;
-}
-.profile-new-user-form-input-and-label-portfolio-empty-desc{
-    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.555);
 }
 
 @media screen and (max-width: 990px) {

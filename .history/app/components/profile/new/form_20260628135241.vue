@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <hr/>
-                <div class="profile-new-user-form-input-and-label-portfolio-ctn profile-new-user-form-label">
+                <div class="profile-new-user-form-input-and-label-portfolio-ctn">
                     Portfolio:
                     <div class="profile-new-user-form-input-and-label-portfolio-empty dsp-flex-jstf-center-plc-center">
                         <p class="profile-new-user-form-input-and-label-portfolio-empty-sign">
@@ -139,11 +139,6 @@
     border:0.5vh dashed var(--slate-900);
     margin-top: 2vh;
     font-weight: 700;
-    cursor:pointer;
-    transition: transform .2s ease;
-}
-.profile-new-user-form-input-and-label-portfolio-empty:hover{
-    transform: scale(0.99);
 }
 .profile-new-user-form-input-and-label-portfolio-empty-sign{
     font-size: 40px;

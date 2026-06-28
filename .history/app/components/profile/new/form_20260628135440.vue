@@ -140,10 +140,9 @@
     margin-top: 2vh;
     font-weight: 700;
     cursor:pointer;
-    transition: transform .2s ease;
 }
 .profile-new-user-form-input-and-label-portfolio-empty:hover{
-    transform: scale(0.99);
+    trans
 }
 .profile-new-user-form-input-and-label-portfolio-empty-sign{
     font-size: 40px;
