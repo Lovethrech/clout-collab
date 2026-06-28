@@ -16,12 +16,10 @@ export default defineNuxtConfig({
       secure: true
     }
   },
-  runtimeConfig:{
-    public:{
-      supabase:{
-        url: process.env.SUPABASE_URL,
-        key: process.env.SUPABASE_ANON_KEY
-      }
+  runtimeConfig: {
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
     }
   },
   app:{

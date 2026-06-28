@@ -64,7 +64,7 @@ const cancel = () => {
             </div>
         </div>
 
-        <button class="role-submit-btn" @click="complete" :disabled="!selectedRole">
+        <button type="submit" class="role-submit-btn" @click="complete" :disabled="!selectedRole">
             Continue
         </button>
         </div>
