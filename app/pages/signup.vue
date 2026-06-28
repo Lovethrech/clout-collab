@@ -1,5 +1,5 @@
 <script setup>
-const { $supabase } = useNuxtApp()
+const supabase = useSupabaseClient()
 const router = useRouter()
 
 const title = 'Clout Collabs | Authentication'
@@ -41,8 +41,8 @@ const handleNextStep = async () => {
     showRoleSelector.value = true
     step.value = 'role'
   } catch (error) {
-    console.error('Error during signup step:', error)
-    alert('An error occurred. Please try again.')
+    console.error('Error during signup:', error)
+    alert('An error occurred during signup. Please try again.')
   } finally {
     loading.value = false
   }
@@ -64,7 +64,7 @@ const finalizeSignUp = async (selectedRole) => {
       return
     }
 
-    const { data, error } = await $supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: pendingUserData.value.email,
       password: pendingUserData.value.password,
       options: {
@@ -81,11 +81,10 @@ const finalizeSignUp = async (selectedRole) => {
     console.log('Signup successful:', data)
 
     alert('Sign up successful! Please check your email to confirm your account.')
-
     await router.push('/login')
   } catch (error) {
     console.error('Error during finalizing signup:', error)
-    alert(error.message || 'An error occurred during signup. Please try again.')
+    alert(error.message || 'An error occurred during finalizing signup. Please try again.')
   } finally {
     loading.value = false
   }
@@ -155,13 +154,13 @@ const goBackToSignup = () => {
     </div>
 
     <AuthRole
-      v-if="step === 'role'"
-      :step="step"
-      :pendingUserData="pendingUserData"
-      :showRoleSelector="showRoleSelector"
-      :loading="loading"
-      @complete="finalizeSignUp"
-      @back="goBackToSignup"
+        v-if="step === 'role'"
+        :step="step"
+        :pendingUserData="pendingUserData"
+        :showRoleSelector="showRoleSelector"
+        :loading="loading"
+        @complete="finalizeSignUp"
+        @back="goBackToSignup"
     />
   </div>
 </template>
