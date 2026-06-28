@@ -217,6 +217,8 @@ const goBackToSignup = () => {
           {{ errorMessage }}
         </p>
 
+
+        
         <button type="submit" class="btn-main-auth" :disabled="loading">
           <p class="btn-main-auth-text">
             {{ loading ? 'Processing...' : 'Create Account' }}

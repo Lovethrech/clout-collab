@@ -182,10 +182,10 @@ const goBackToSignup = () => {
 
       <form @submit.prevent="handleNextStep" class="auth-page-form">
         <AuthBtnGoogle
-          :loading="googleLoading"
-          text="Continue with Google"
-          @click="handleGoogleAuth"
-        />>
+        :loading="googleLoading"
+        text="Continue with Google"
+        @click="handleGoogleAuth"
+      />>
 
         <div class="divider">
           <span class="line"></span>

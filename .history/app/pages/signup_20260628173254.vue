@@ -181,11 +181,7 @@ const goBackToSignup = () => {
       <AuthDesc :authDesc="'Join creators, musicians, and brands building together.'" />
 
       <form @submit.prevent="handleNextStep" class="auth-page-form">
-        <AuthBtnGoogle
-          :loading="googleLoading"
-          text="Continue with Google"
-          @click="handleGoogleAuth"
-        />>
+        <AuthBtnGoogle />
 
         <div class="divider">
           <span class="line"></span>

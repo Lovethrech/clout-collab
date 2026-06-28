@@ -281,6 +281,14 @@ const goBackToSignup = () => {
   text-align: center;
 }
 
+
+.error-message {
+  color: #ef4444;
+  font-size: 1.5vh;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  text-align: center;
+}
 .fine-print {
   text-align: center;
   font-size: 1.8vh;
