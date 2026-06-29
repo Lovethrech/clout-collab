@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Clout Collabs — Notifications</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0F172A;--bg2:#0B1220;--card:#1E293B;--card-hi:#243350;
+  --border:rgba(255,255,255,0.07);--border-hi:rgba(255,255,255,0.13);
+  --purple:#6D28D9;--purple-md:#7C3AED;--purple-lt:#A78BFA;
+  --blue:#3B82F6;--blue-lt:#93C5FD;--pink:#EC4899;--pink-lt:#F9A8D4;
+  --green:#10B981;--green-lt:#6EE7B7;--amber:#F59E0B;--amber-lt:#FCD34D;
+  --violet:#8B5CF6;--violet-lt:#C4B5FD;--slate:#64748B;--slate-lt:#94A3B8;
+  --tx-1:#F8FAFC;--tx-2:#94A3B8;--tx-3:#64748B;--tx-4:#475569;
+  --r-card:16px;--r-chip:100px;--font:'Inter',-apple-system,sans-serif;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);}
+body{font-family:var(--font);color:var(--tx-1);-webkit-font-smoothing:antialiased;}
+.app{position:fixed;inset:0;background:var(--bg);}
+
+/* ── NAV ─────────────────────────────────── */
+.nav-bar{
+  position:absolute;top:0;left:0;right:0;height:60px;z-index:300;
+  background:rgba(11,18,32,0.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:0 16px;display:flex;align-items:center;gap:10px;
+}
+.nav-back{width:34px;height:34px;border-radius:50%;background:var(--card);
+  border:1px solid var(--border);color:var(--tx-2);font-size:17px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  flex-shrink:0;transition:background 0.18s;}
+.nav-back:hover{background:var(--card-hi);}
+.nav-title{font-size:16px;font-weight:700;color:var(--tx-1);flex:1;letter-spacing:-0.2px;}
+.nav-mark-all{font-size:13px;font-weight:600;color:var(--purple-lt);
+  background:none;border:none;cursor:pointer;font-family:var(--font);
+  transition:color 0.18s;white-space:nowrap;}
+.nav-mark-all:hover{color:var(--blue-lt);}
+.nav-gear{width:34px;height:34px;border-radius:50%;background:var(--card);
+  border:1px solid var(--border);color:var(--tx-2);font-size:14px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background 0.18s;}
+.nav-gear:hover{background:var(--card-hi);}
+
+/* ── PANE ────────────────────────────────── */
+.pane{position:absolute;top:60px;left:0;right:0;bottom:70px;
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
+.pane::-webkit-scrollbar{display:none;}
+
+/* ══════════════════════════════════════════
+   BADGE INDICATOR REFERENCE (Dev Handoff)
+══════════════════════════════════════════ */
+.badge-ref-card{
+  margin:18px 20px 0;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-card);overflow:hidden;
+}
+.badge-ref-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px 10px;border-bottom:1px solid var(--border);
+}
+.badge-ref-title{font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;color:var(--tx-3);}
+.badge-ref-sub{font-size:10px;font-weight:500;color:var(--tx-4);}
+
+/* Badge demo grid */
+.badge-demos{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;border-bottom:1px solid var(--border);
+}
+.badge-demo-cell{
+  padding:14px 6px 10px;text-align:center;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+}
+.badge-demo-cell:last-child{border-right:none;}
+
+/* DOT badge */
+.b-dot-wrap{position:relative;width:32px;height:32px;}
+.b-dot-ico{width:32px;height:32px;border-radius:50%;background:var(--card-hi);
+  border:1px solid var(--border-hi);display:flex;align-items:center;
+  justify-content:center;font-size:15px;}
+.b-dot{position:absolute;top:1px;right:1px;width:9px;height:9px;
+  border-radius:50%;background:var(--pink);border:2px solid var(--card);}
+
+/* COUNT badge */
+.b-count-wrap{position:relative;width:32px;height:32px;}
+.b-count-ico{width:32px;height:32px;border-radius:50%;background:var(--card-hi);
+  border:1px solid var(--border-hi);display:flex;align-items:center;
+  justify-content:center;font-size:15px;}
+.b-count{position:absolute;top:-4px;right:-6px;min-width:18px;height:18px;
+  padding:0 4px;border-radius:100px;background:var(--pink);
+  color:#fff;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--card);}
+
+/* TAB badge */
+.b-tab{height:28px;padding:0 10px;border-radius:var(--r-chip);
+  background:var(--purple);color:#fff;font-size:12px;font-weight:600;
+  display:flex;align-items:center;gap:5px;}
+.b-tab-count{font-size:10px;font-weight:700;padding:1px 5px;
+  border-radius:100px;background:rgba(255,255,255,0.22);}
+
+/* LEFT BAR badge */
+.b-bar-wrap{width:80%;height:32px;border-radius:8px;background:var(--card-hi);
+  border:1px solid var(--border-hi);border-left:2.5px solid var(--green-lt);
+  display:flex;align-items:center;padding:0 7px;gap:5px;}
+.b-bar-dot{width:6px;height:6px;border-radius:50%;background:var(--green-lt);flex-shrink:0;}
+.b-bar-line{height:6px;border-radius:3px;background:rgba(255,255,255,0.12);flex:1;}
+
+/* RING badge */
+.b-ring-wrap{width:36px;height:36px;border-radius:50%;padding:2px;
+  background:conic-gradient(var(--purple-lt) 0%,var(--pink-lt) 50%,var(--purple-lt) 100%);}
+.b-ring-inner{width:100%;height:100%;border-radius:50%;background:var(--card);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--tx-1);}
+
+.badge-lbl{font-size:9px;font-weight:600;color:var(--tx-4);text-transform:uppercase;letter-spacing:0.4px;}
+
+/* Colour semantics row */
+.badge-semantics{
+  display:flex;align-items:center;justify-content:space-around;
+  flex-wrap:wrap;gap:4px;padding:10px 14px;
+}
+.sem-item{display:flex;align-items:center;gap:4px;}
+.sem-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.sem-lbl{font-size:10px;font-weight:500;color:var(--tx-3);}
+
+/* ══════════════════════════════════════════
+   FILTER TABS WITH BADGE COUNTS
+══════════════════════════════════════════ */
+.filter-bar{
+  position:sticky;top:0;z-index:150;
+  background:rgba(11,18,32,0.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  display:flex;gap:0;overflow-x:auto;padding:0 6px;
+  scrollbar-width:none;
+}
+.filter-bar::-webkit-scrollbar{display:none;}
+.ftab{
+  flex-shrink:0;height:44px;padding:0 14px;
+  background:none;border:none;border-bottom:2px solid transparent;
+  font-family:var(--font);font-size:13px;font-weight:500;color:var(--tx-3);
+  cursor:pointer;display:flex;align-items:center;gap:6px;
+  transition:color 0.18s,border-color 0.18s;white-space:nowrap;
+}
+.ftab:hover{color:var(--tx-2);}
+.ftab.act{color:var(--tx-1);font-weight:700;border-bottom-color:var(--purple-lt);}
+.ftab-badge{
+  min-width:17px;height:17px;padding:0 4px;border-radius:100px;
+  background:var(--purple);color:#fff;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+.ftab:not(.act) .ftab-badge{background:rgba(255,255,255,0.1);color:var(--tx-3);}
+.ftab.act .ftab-badge{background:var(--purple);}
+
+/* ══════════════════════════════════════════
+   NOTIFICATION LIST
+══════════════════════════════════════════ */
+.notif-list{padding:0 0 16px;}
+
+/* Time group separator */
+.time-group{padding:14px 20px 6px;}
+.time-label{font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;color:var(--tx-3);}
+
+/* ── Notification Item ─────────────────────
+   Signature: type-coloured left border accent */
+.notif-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:13px 16px 13px 18px;
+  border-left:2px solid transparent; /* always present, no layout shift */
+  transition:background 0.18s,border-color 0.15s;
+  cursor:pointer;position:relative;
+}
+.notif-item:hover{background:rgba(255,255,255,0.025);}
+.notif-item.unread{
+  background:rgba(255,255,255,0.025);
+  border-left-color:var(--t-color,var(--purple-lt));
+}
+/* Separator between items */
+.notif-item+.notif-item{border-top:1px solid var(--border);}
+.notif-item.unread+.notif-item.unread{border-top-color:rgba(255,255,255,0.05);}
+
+/* Actor avatar */
+.notif-ava{width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;position:relative;}
+/* System icon (no person actor) */
+.notif-sys-ico{width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;background:var(--t-bg,rgba(109,40,217,0.15));}
+/* Type badge on actor avatar */
+.notif-type-badge{
+  position:absolute;bottom:-2px;right:-2px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--t-color,var(--purple-lt));
+  border:2px solid var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;
+}
+
+/* Notification body */
+.notif-body{flex:1;min-width:0;}
+.notif-text{font-size:13px;line-height:1.52;color:var(--tx-2);margin-bottom:4px;}
+.notif-text strong{color:var(--tx-1);font-weight:600;}
+.notif-time{font-size:11px;color:var(--tx-3);}
+.notif-item.unread .notif-time{color:var(--t-color,var(--purple-lt));}
+
+/* Action buttons */
+.notif-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;}
+.notif-btn-primary{height:30px;padding:0 12px;border-radius:var(--r-chip);
+  background:var(--t-color,var(--purple-lt));
+  border:none;color:var(--bg);font-family:var(--font);
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:opacity 0.18s,transform 0.15s;}
+.notif-btn-primary:hover{opacity:0.88;transform:scale(0.98);}
+.notif-btn-ghost{height:30px;padding:0 12px;border-radius:var(--r-chip);
+  background:none;border:1px solid var(--border-hi);color:var(--tx-2);
+  font-family:var(--font);font-size:11px;font-weight:500;cursor:pointer;
+  transition:border-color 0.18s,color 0.18s;}
+.notif-btn-ghost:hover{border-color:var(--tx-2);color:var(--tx-1);}
+
+/* Unread dot (right side) */
+.notif-unread-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--t-color,var(--purple-lt));
+  flex-shrink:0;margin-top:6px;
+  opacity:0;transition:opacity 0.2s;
+}
+.notif-item.unread .notif-unread-dot{opacity:1;}
+
+/* ── Empty state ───────────────────────────── */
+.empty-notifs{text-align:center;padding:60px 24px;}
+.empty-ico{font-size:44px;margin-bottom:14px;}
+.empty-title{font-size:16px;font-weight:700;margin-bottom:6px;}
+.empty-body{font-size:14px;color:var(--tx-2);}
+
+/* ── BOTTOM NAV ──────────────────────────── */
+.btm-nav{position:absolute;bottom:0;left:0;right:0;height:70px;z-index:200;
+  background:rgba(11,18,32,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-around;padding:0 6px 4px;}
+.btm-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:6px 0;border-radius:10px;cursor:pointer;transition:background 0.18s;position:relative;}
+.btm-tab:hover{background:rgba(255,255,255,0.03);}
+.btm-ico{font-size:19px;color:var(--tx-3);line-height:1;transition:color 0.18s,transform 0.18s;}
+.btm-lbl{font-size:10px;font-weight:500;color:var(--tx-3);transition:color 0.18s;}
+.btm-tab.act .btm-ico,.btm-tab.act .btm-lbl{color:var(--purple-lt);}
+.btm-tab:hover .btm-ico{transform:translateY(-1px);}
+/* Bottom nav badge */
+.btm-badge{position:absolute;top:3px;right:calc(50% - 14px);
+  min-width:16px;height:16px;padding:0 4px;border-radius:100px;
+  background:var(--pink);color:#fff;font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--bg);}
+
+/* Mark-all animation */
+@keyframes fadeRead{from{background:rgba(109,40,217,0.06);}to{background:transparent;}}
+.notif-item.just-read{animation:fadeRead 0.6s ease forwards;}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ── NAV ──────────────────────────────────── -->
+<header class="nav-bar">
+  <button class="nav-back" onclick="history.back()" aria-label="Back">←</button>
+  <span class="nav-title">Notifications</span>
+  <button class="nav-mark-all" id="markAllBtn" onclick="markAllRead()">Mark all read</button>
+  <button class="nav-gear" title="Notification settings">⚙️</button>
+</header>
+
+<!-- ── MAIN PANE ────────────────────────────── -->
+<div class="pane" id="mainPane">
+
+  <!-- ── BADGE INDICATOR REFERENCE ───────────── -->
+  <div class="badge-ref-card">
+    <div class="badge-ref-header">
+      <span class="badge-ref-title">Badge Indicator System</span>
+      <span class="badge-ref-sub">Developer handoff reference</span>
+    </div>
+    <div class="badge-demos">
+
+      <!-- 1. Dot badge -->
+      <div class="badge-demo-cell">
+        <div class="b-dot-wrap">
+          <div class="b-dot-ico">🔔</div>
+          <div class="b-dot"></div>
+        </div>
+        <span class="badge-lbl">Dot</span>
+      </div>
+
+      <!-- 2. Count badge -->
+      <div class="badge-demo-cell">
+        <div class="b-count-wrap">
+          <div class="b-count-ico">🔔</div>
+          <div class="b-count">4</div>
+        </div>
+        <span class="badge-lbl">Count</span>
+      </div>
+
+      <!-- 3. Tab badge -->
+      <div class="badge-demo-cell">
+        <div class="b-tab">All <span class="b-tab-count">4</span></div>
+        <span class="badge-lbl">Tab</span>
+      </div>
+
+      <!-- 4. Left bar (unread accent) -->
+      <div class="badge-demo-cell">
+        <div class="b-bar-wrap">
+          <div class="b-bar-dot"></div>
+          <div class="b-bar-line"></div>
+        </div>
+        <span class="badge-lbl">Bar</span>
+      </div>
+
+      <!-- 5. Ring badge (story/activity) -->
+      <div class="badge-demo-cell">
+        <div class="b-ring-wrap">
+          <div class="b-ring-inner">YO</div>
+        </div>
+        <span class="badge-lbl">Ring</span>
+      </div>
+
+    </div>
+    <!-- Colour semantics -->
+    <div class="badge-semantics">
+      <div class="sem-item"><div class="sem-dot" style="background:#EC4899"></div><span class="sem-lbl">Unread</span></div>
+      <div class="sem-item"><div class="sem-dot" style="background:#A78BFA"></div><span class="sem-lbl">Activity</span></div>
+      <div class="sem-item"><div class="sem-dot" style="background:#93C5FD"></div><span class="sem-lbl">Message</span></div>
+      <div class="sem-item"><div class="sem-dot" style="background:#6EE7B7"></div><span class="sem-lbl">Success</span></div>
+      <div class="sem-item"><div class="sem-dot" style="background:#FCD34D"></div><span class="sem-lbl">Pending</span></div>
+      <div class="sem-item"><div class="sem-dot" style="background:#94A3B8"></div><span class="sem-lbl">System</span></div>
+    </div>
+  </div>
+
+  <!-- ── FILTER TABS ───────────────────────── -->
+  <div class="filter-bar" id="filterBar">
+    <button class="ftab act" data-f="all"         onclick="setFilter('all',this)">All       <span class="ftab-badge" id="badge-all">4</span></button>
+    <button class="ftab"      data-f="unread"      onclick="setFilter('unread',this)">Unread <span class="ftab-badge" id="badge-unread">4</span></button>
+    <button class="ftab"      data-f="connection"  onclick="setFilter('connection',this)">Connections <span class="ftab-badge" id="badge-conn">1</span></button>
+    <button class="ftab"      data-f="message"     onclick="setFilter('message',this)">Messages    <span class="ftab-badge" id="badge-msg">1</span></button>
+    <button class="ftab"      data-f="system"      onclick="setFilter('system',this)">Updates     <span class="ftab-badge" id="badge-sys">0</span></button>
+  </div>
+
+  <!-- ── NOTIFICATION LIST ────────────────── -->
+  <div class="notif-list" id="notifList"></div>
+
+</div><!-- /pane -->
+
+<!-- Bottom nav with badge on Messages -->
+<nav class="btm-nav">
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">🏠</div><span class="btm-lbl">Home</span></div>
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">🔍</div><span class="btm-lbl">Discover</span></div>
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">📝</div><span class="btm-lbl">Posts</span></div>
+  <div class="btm-tab" onclick="setNavTab(this)"><div class="btm-ico">💼</div><span class="btm-lbl">Hiring</span></div>
+  <div class="btm-tab act" onclick="setNavTab(this)">
+    <div class="btm-ico">🔔</div>
+    <span class="btm-lbl">Alerts</span>
+    <div class="btm-badge" id="btmBadge">4</div>
+  </div>
+</nav>
+
+</div>
+<script>
+/* ── Type tokens ──────────────────────────── */
+const T = {
+  connection:  {icon:"🤝",color:"#A78BFA",bg:"rgba(109,40,217,0.15)",  badge:"👤"},
+  message:     {icon:"💬",color:"#93C5FD",bg:"rgba(59,130,246,0.15)",   badge:"💬"},
+  application: {icon:"✅",color:"#6EE7B7",bg:"rgba(16,185,129,0.15)",   badge:"✅"},
+  collab:      {icon:"🎯",color:"#F9A8D4",bg:"rgba(236,72,153,0.15)",   badge:"🎯"},
+  profile_view:{icon:"👁", color:"#C4B5FD",bg:"rgba(139,92,246,0.15)", badge:"👁"},
+  job_match:   {icon:"💼",color:"#C4B5FD",bg:"rgba(139,92,246,0.15)",  badge:"💼"},
+  applicant:   {icon:"📝",color:"#93C5FD",bg:"rgba(59,130,246,0.15)",   badge:"📩"},
+  milestone:   {icon:"🏆",color:"#FCD34D",bg:"rgba(245,158,11,0.15)",  badge:"🏆"},
+  platform:    {icon:"📣",color:"#94A3B8",bg:"rgba(100,116,139,0.15)",  badge:"📣"},
+};
+
+/* ── Notification data ────────────────────── */
+const NOTIFS = [
+  // TODAY — unread
+  {id:1, type:"application", group:"today",
+   actor:{name:"NovaBrands",ini:"NB",c:"#10B981",g:"#059669"},
+   text:"shortlisted you for <em>Content Creator — 3-Month Campaign</em>. Expect a call soon.",
+   time:"2 min ago", unread:true, isSystem:false,
+   actions:[{label:"View Application",primary:true}]},
+
+  {id:2, type:"message", group:"today",
+   actor:{name:"NovaBrands",ini:"NB",c:"#10B981",g:"#059669"},
+   text:"sent you a message: <em>\"Friday works! How does 3 PM sound?\"</em>",
+   time:"10 min ago", unread:true, isSystem:false,
+   actions:[{label:"Reply",primary:true}]},
+
+  {id:3, type:"connection", group:"today",
+   actor:{name:"Amara Osei",ini:"AO",c:"#6D28D9",g:"#7C3AED"},
+   text:"wants to connect with you",
+   time:"1h ago", unread:true, isSystem:false,
+   actions:[{label:"Accept",primary:true},{label:"Decline",primary:false}]},
+
+  {id:4, type:"collab", group:"today",
+   actor:{name:"Bello Sonic",ini:"BS",c:"#EC4899",g:"#DB2777"},
+   text:"posted a new collab opportunity matching your skills: <em>Need a Videographer for Afrobeats Visual</em>",
+   time:"2h ago", unread:true, isSystem:false,
+   actions:[{label:"View Post",primary:true}]},
+
+  // TODAY — read
+  {id:5, type:"profile_view", group:"today",
+   actor:{name:"Pulse Media",ini:"PM",c:"#3B82F6",g:"#2563EB"},
+   text:"viewed your profile",
+   time:"4h ago", unread:false, isSystem:false, actions:[]},
+
+  // YESTERDAY
+  {id:6, type:"job_match", group:"yesterday",
+   actor:null, text:"3 new job listings match your skills profile. Check them out before they close.",
+   time:"Yesterday, 4:22 PM", unread:false, isSystem:true,
+   actions:[{label:"View Jobs",primary:true}]},
+
+  {id:7, type:"applicant", group:"yesterday",
+   actor:{name:"Tunde Visuals",ini:"TV",c:"#3B82F6",g:"#2563EB"},
+   text:"applied to your collab post: <em>Need a Videographer for Fashion Shoot</em>",
+   time:"Yesterday, 2:15 PM", unread:false, isSystem:false,
+   actions:[{label:"View Application",primary:true}]},
+
+  {id:8, type:"connection", group:"yesterday",
+   actor:{name:"Kemi Studio",ini:"KS",c:"#14B8A6",g:"#0D9488"},
+   text:"accepted your connection request. You can now message each other.",
+   time:"Yesterday, 11:08 AM", unread:false, isSystem:false, actions:[]},
+
+  // EARLIER
+  {id:9, type:"milestone", group:"earlier",
+   actor:null, text:"Your profile reached <strong>100 views</strong> this week! 🎉 Keep building your presence.",
+   time:"3 days ago", unread:false, isSystem:true,
+   actions:[{label:"View Profile",primary:true}]},
+
+  {id:10, type:"platform", group:"earlier",
+   actor:null, text:"New feature: Voice notes are now available in chat. Send your first voice message!",
+   time:"5 days ago", unread:false, isSystem:true,
+   actions:[{label:"Try Now",primary:true}]},
+];
+
+/* ── State ───────────────────────────────── */
+let activeFilter = "all";
+
+function getFiltered() {
+  if (activeFilter === "all")        return NOTIFS;
+  if (activeFilter === "unread")     return NOTIFS.filter(n => n.unread);
+  if (activeFilter === "connection") return NOTIFS.filter(n => n.type === "connection");
+  if (activeFilter === "message")    return NOTIFS.filter(n => n.type === "message");
+  if (activeFilter === "system")     return NOTIFS.filter(n => n.isSystem);
+  return NOTIFS;
+}
+
+function unreadCount()     { return NOTIFS.filter(n=>n.unread).length; }
+function countByType(type) { return NOTIFS.filter(n=>n.type===type&&n.unread).length; }
+
+/* ── Build a notification item ────────────── */
+function makeNotifItem(n) {
+  const tk = T[n.type] || T.platform;
+  const el = document.createElement("div");
+  el.className = "notif-item" + (n.unread ? " unread" : "");
+  el.dataset.id = n.id;
+  el.style.setProperty("--t-color", tk.color);
+  el.style.setProperty("--t-bg",    tk.bg);
+
+  // Actor or system icon
+  let actorHtml = "";
+  if (n.actor) {
+    actorHtml = `<div class="notif-ava"
+      style="background:linear-gradient(135deg,${n.actor.c},${n.actor.g})">
+      ${n.actor.ini}
+      <div class="notif-type-badge">${tk.badge}</div>
+    </div>`;
+  } else {
+    actorHtml = `<div class="notif-sys-ico">${tk.icon}</div>`;
+  }
+
+  // Actions
+  const actHtml = n.actions && n.actions.length
+    ? `<div class="notif-actions">
+        ${n.actions.map(a =>
+          a.primary
+            ? `<button class="notif-btn-primary" onclick="handleAction(${n.id},event)">${a.label}</button>`
+            : `<button class="notif-btn-ghost"   onclick="handleAction(${n.id},event)">${a.label}</button>`
+        ).join("")}
+       </div>`
+    : "";
+
+  // Format text (bold actor name prefix for person notifications)
+  const textHtml = n.actor
+    ? `<strong>${n.actor.name}</strong> ${n.text}`
+    : n.text;
+
+  el.innerHTML = `
+    ${actorHtml}
+    <div class="notif-body">
+      <p class="notif-text">${textHtml}</p>
+      <span class="notif-time">${n.time}</span>
+      ${actHtml}
+    </div>
+    <div class="notif-unread-dot"></div>`;
+
+  // Mark read on click
+  el.addEventListener("click", () => markRead(n.id));
+  return el;
+}
+
+/* ── Render list ─────────────────────────── */
+function renderNotifs() {
+  const list = getFiltered();
+  const container = document.getElementById("notifList");
+  container.innerHTML = "";
+
+  if (!list.length) {
+    container.innerHTML = `<div class="empty-notifs">
+      <div class="empty-ico">🔔</div>
+      <div class="empty-title">All caught up</div>
+      <p class="empty-body">No notifications in this category</p>
+    </div>`;
+    return;
+  }
+
+  const groups = [
+    {key:"today",     label:"Today"},
+    {key:"yesterday", label:"Yesterday"},
+    {key:"earlier",   label:"Earlier this week"},
+  ];
+
+  groups.forEach(({key, label}) => {
+    const items = list.filter(n => n.group === key);
+    if (!items.length) return;
+    const groupDiv = document.createElement("div");
+    groupDiv.className = "time-group";
+    groupDiv.innerHTML = `<div class="time-label">${label}</div>`;
+    container.appendChild(groupDiv);
+    items.forEach(n => container.appendChild(makeNotifItem(n)));
+  });
+}
+
+/* ── Update badge counts ─────────────────── */
+function updateBadges() {
+  const uc = unreadCount();
+  const connC = countByType("connection");
+  const msgC  = countByType("message");
+
+  document.getElementById("badge-all").textContent    = uc;
+  document.getElementById("badge-unread").textContent = uc;
+  document.getElementById("badge-conn").textContent   = connC;
+  document.getElementById("badge-msg").textContent    = msgC;
+  document.getElementById("badge-sys").textContent    = "0";
+  const btmBadge = document.getElementById("btmBadge");
+  btmBadge.textContent = uc;
+  btmBadge.style.display = uc > 0 ? "flex" : "none";
+
+  // Hide mark all if nothing unread
+  document.getElementById("markAllBtn").style.opacity = uc > 0 ? "1" : "0.4";
+  document.getElementById("markAllBtn").style.pointerEvents = uc > 0 ? "all" : "none";
+}
+
+/* ── Mark single read ────────────────────── */
+function markRead(id) {
+  const n = NOTIFS.find(x => x.id === id);
+  if (!n || !n.unread) return;
+  n.unread = false;
+  const el = document.querySelector(`.notif-item[data-id="${id}"]`);
+  if (el) {
+    el.classList.remove("unread");
+    el.classList.add("just-read");
+    el.querySelector(".notif-unread-dot").style.opacity = "0";
+    el.style.borderLeftColor = "transparent";
+  }
+  updateBadges();
+}
+
+/* ── Mark all read ───────────────────────── */
+function markAllRead() {
+  NOTIFS.forEach(n => { n.unread = false; });
+  document.querySelectorAll(".notif-item.unread").forEach(el => {
+    el.classList.remove("unread");
+    el.classList.add("just-read");
+    const dot = el.querySelector(".notif-unread-dot");
+    if (dot) dot.style.opacity = "0";
+    el.style.borderLeftColor = "transparent";
+  });
+  updateBadges();
+}
+
+/* ── Action handler ──────────────────────── */
+function handleAction(id, event) {
+  event.stopPropagation();
+  markRead(id);
+  // Remove action buttons with animation
+  const item = document.querySelector(`.notif-item[data-id="${id}"]`);
+  if (item) {
+    const actions = item.querySelector(".notif-actions");
+    if (actions) {
+      actions.style.transition = "opacity 0.3s";
+      actions.style.opacity = "0";
+      setTimeout(() => actions.remove(), 300);
+    }
+  }
+}
+
+/* ── Filter ──────────────────────────────── */
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll(".ftab").forEach(t => t.classList.remove("act"));
+  btn.classList.add("act");
+  renderNotifs();
+  document.getElementById("mainPane").scrollTop = 0;
+}
+
+function setNavTab(el) {
+  document.querySelectorAll(".btm-tab").forEach(t => t.classList.remove("act"));
+  el.classList.add("act");
+}
+
+/* ── Init ────────────────────────────────── */
+updateBadges();
+renderNotifs();
+</script>
+</body>
+</html>

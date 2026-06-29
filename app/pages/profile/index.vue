@@ -3,7 +3,7 @@ definePageMeta({
     layout: false 
 })
 
-const title = 'Dashboard | Clout Collabs'
+const title = 'Profile | Clout Collabs'
 const description = ''
 useSeoMeta({
     title,
@@ -17,6 +17,10 @@ useSeoMeta({
 
 <template>
     <section class="profile-page">
-        <ProfileHeader/>
+        <ProfileHeader/>        
     </section>
 </template>
+
+<style scoped>
+
+</style>
