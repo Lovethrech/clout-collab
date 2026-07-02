@@ -1507,20 +1507,6 @@ onMounted(async () => {
   font-size: 13px;
   margin-bottom: 14px;
 }
-.apply-btn.applied,
-.apply-btn:disabled {
-  background: rgba(16, 185, 129, 0.16);
-  color: var(--cc-green-lt);
-  cursor: not-allowed;
-  box-shadow: none;
-  opacity: 1;
-}
-
-.apply-btn.applied:hover,
-.apply-btn:disabled:hover {
-  transform: none;
-  opacity: 1;
-}
 
 @media (min-width: 900px) {
   .post-list {

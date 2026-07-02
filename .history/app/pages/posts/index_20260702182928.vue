@@ -751,18 +751,18 @@ onMounted(async () => {
                 </div>
 
                 <button
-                  class="apply-btn"
-                  type="button"
-                  :class="{ applied: hasApplied(post.id) }"
-                  :disabled="hasApplied(post.id) || applyingPostId === post.id"
-                  @click="applyToPost(post)"
-                >
-                  <span v-if="applyingPostId === post.id">Applying...</span>
-                  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
-                  <span v-else>
-                    Apply Now <span class="apply-arrow">→</span>
-                  </span>
-                </button>
+  class="apply-btn"
+  type="button"
+  :class="{ applied: hasApplied(post.id) }"
+  :disabled="hasApplied(post.id) || applyingPostId === post.id"
+  @click="applyToPost(post)"
+>
+  <span v-if="applyingPostId === post.id">Applying...</span>
+  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
+  <span v-else>
+    Apply Now <span class="apply-arrow">→</span>
+  </span>
+</button>
             </article>
             </div>
 
@@ -1506,20 +1506,6 @@ onMounted(async () => {
   color: #6ee7b7;
   font-size: 13px;
   margin-bottom: 14px;
-}
-.apply-btn.applied,
-.apply-btn:disabled {
-  background: rgba(16, 185, 129, 0.16);
-  color: var(--cc-green-lt);
-  cursor: not-allowed;
-  box-shadow: none;
-  opacity: 1;
-}
-
-.apply-btn.applied:hover,
-.apply-btn:disabled:hover {
-  transform: none;
-  opacity: 1;
 }
 
 @media (min-width: 900px) {

@@ -184,61 +184,6 @@ const hasApplied = (postId) => {
   })
 }
 
-const applyToPost = async (post) => {
-  if (!post?.id) return
-
-  applyingPostId.value = post.id
-  errorMessage.value = ''
-
-  try {
-    const profile = await getCurrentProfile()
-
-    if (post.profile_id === profile.id) {
-      throw new Error('You cannot apply to your own collab post.')
-    }
-
-    if (hasApplied(post.id)) {
-      throw new Error('You have already applied to this collab.')
-    }
-
-    const { error: applicationError } = await supabase
-      .from('collab_applications')
-      .insert({
-        post_id: post.id,
-        applicant_profile_id: profile.id,
-        message: null,
-        status: 'Pending'
-      })
-
-    if (applicationError) {
-      if (applicationError.code === '23505') {
-        throw new Error('You have already applied to this collab.')
-      }
-
-      throw applicationError
-    }
-
-    const newApplicantCount = (post.applicant_count || 0) + 1
-
-    const { error: countError } = await supabase
-      .from('collab_posts')
-      .update({
-        applicant_count: newApplicantCount,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', post.id)
-
-    if (countError) throw countError
-
-    await getPosts()
-    await getMyApplications()
-  } catch (error) {
-    errorMessage.value = error.message || 'Could not apply to this collab.'
-  } finally {
-    applyingPostId.value = ''
-  }
-}
-
 const filteredPosts = computed(() => {
   let result = posts.value.filter((post) => {
     if (activeFilter.value === 'All') return true
@@ -413,9 +358,8 @@ const goToProfile = (profileId) => {
   router.push(`/profile/${profileId}`)
 }
 
-onMounted(async () => {
-  await getPosts()
-  await getMyApplications()
+onMounted(() => {
+  getPosts()
 })
 </script>
 
@@ -750,18 +694,8 @@ onMounted(async () => {
                 </span>
                 </div>
 
-                <button
-                  class="apply-btn"
-                  type="button"
-                  :class="{ applied: hasApplied(post.id) }"
-                  :disabled="hasApplied(post.id) || applyingPostId === post.id"
-                  @click="applyToPost(post)"
-                >
-                  <span v-if="applyingPostId === post.id">Applying...</span>
-                  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
-                  <span v-else>
-                    Apply Now <span class="apply-arrow">→</span>
-                  </span>
+                <button class="apply-btn preview-apply" type="button">
+                Apply Now →
                 </button>
             </article>
             </div>
@@ -1506,20 +1440,6 @@ onMounted(async () => {
   color: #6ee7b7;
   font-size: 13px;
   margin-bottom: 14px;
-}
-.apply-btn.applied,
-.apply-btn:disabled {
-  background: rgba(16, 185, 129, 0.16);
-  color: var(--cc-green-lt);
-  cursor: not-allowed;
-  box-shadow: none;
-  opacity: 1;
-}
-
-.apply-btn.applied:hover,
-.apply-btn:disabled:hover {
-  transform: none;
-  opacity: 1;
 }
 
 @media (min-width: 900px) {
