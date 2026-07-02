@@ -7,121 +7,121 @@ const loading = ref(true)
 const errorMessage = ref('')
 
 onMounted(async () => {
-    try {
-        profile.value = await getProfileById(route.params.id)
-    } catch (error) {
-        errorMessage.value = error.message || 'Profile not found.'
-    } finally {
-        loading.value = false
-    }
+  try {
+    profile.value = await getProfileById(route.params.id)
+  } catch (error) {
+    errorMessage.value = error.message || 'Profile not found.'
+  } finally {
+    loading.value = false
+  }
 })
 </script>
 
 <template>
-    <main class="profile-page">
-        <div v-if="loading" class="state">
-        Loading profile...
+  <main class="profile-page">
+    <div v-if="loading" class="state">
+      Loading profile...
+    </div>
+
+    <div v-else-if="errorMessage" class="state error">
+      {{ errorMessage }}
+    </div>
+
+    <section v-else class="profile-shell">
+      <div class="cover"></div>
+
+      <div class="profile-head">
+        <div class="avatar">
+          {{ profile.display_name ? profile.display_name.slice(0, 2).toUpperCase() : 'CC' }}
         </div>
 
-        <div v-else-if="errorMessage" class="state error">
-        {{ errorMessage }}
+        <span v-if="profile.is_featured" class="featured">
+          ★ Featured
+        </span>
+
+        <div class="name-row">
+          <h1>{{ profile.display_name }}</h1>
+          <span v-if="profile.is_verified" class="verified">✓</span>
         </div>
 
-        <section v-else class="profile-shell">
-        <div class="cover"></div>
+        <p class="role-line">
+          {{ profile.title || profile.role }}
+          <span v-if="profile.location"> · {{ profile.location }}</span>
+        </p>
 
-        <div class="profile-head">
-            <div class="avatar">
-            {{ profile.display_name ? profile.display_name.slice(0, 2).toUpperCase() : 'CC' }}
-            </div>
+        <p class="bio">
+          {{ profile.bio }}
+        </p>
+      </div>
 
-            <span v-if="profile.is_featured" class="featured">
-            ★ Featured
-            </span>
-
-            <div class="name-row">
-            <h1>{{ profile.display_name }}</h1>
-            <span v-if="profile.is_verified" class="verified">✓</span>
-            </div>
-
-            <p class="role-line">
-            {{ profile.title || profile.role }}
-            <span v-if="profile.location"> · {{ profile.location }}</span>
-            </p>
-
-            <p class="bio">
-            {{ profile.bio }}
-            </p>
+      <div class="stats-row">
+        <div>
+          <strong>{{ profile.profile_views || 0 }}</strong>
+          <span>Views</span>
         </div>
 
-        <div class="stats-row">
-            <div>
-            <strong>{{ profile.profile_views || 0 }}</strong>
-            <span>Views</span>
-            </div>
-
-            <div>
-            <strong>{{ profile.project_count || 0 }}</strong>
-            <span>Projects</span>
-            </div>
-
-            <div>
-            <strong>{{ profile.rating || 0 }}</strong>
-            <span>Rating</span>
-            </div>
+        <div>
+          <strong>{{ profile.project_count || 0 }}</strong>
+          <span>Projects</span>
         </div>
 
-        <div v-if="profile.skills && profile.skills.length" class="tag-row">
-            <span v-for="skill in profile.skills" :key="skill">
-            {{ skill }}
-            </span>
+        <div>
+          <strong>{{ profile.rating || 0 }}</strong>
+          <span>Rating</span>
+        </div>
+      </div>
+
+      <div v-if="profile.skills && profile.skills.length" class="tag-row">
+        <span v-for="skill in profile.skills" :key="skill">
+          {{ skill }}
+        </span>
+      </div>
+
+      <div class="portfolio-section">
+        <div class="portfolio-head">
+          <h2>Portfolio</h2>
+          <span v-if="profile.portfolio_items?.length">
+            See all ({{ profile.portfolio_items.length }}) →
+          </span>
         </div>
 
-        <div class="portfolio-section">
-            <div class="portfolio-head">
-            <h2>Portfolio</h2>
-            <span v-if="profile.portfolio_items?.length">
-                See all ({{ profile.portfolio_items.length }}) →
-            </span>
+        <div v-if="profile.portfolio_items?.length" class="portfolio-grid">
+          <article
+            v-for="item in profile.portfolio_items"
+            :key="item.id"
+            class="portfolio-card"
+          >
+            <div class="portfolio-thumb">
+              <span>{{ item.category }}</span>
             </div>
 
-            <div v-if="profile.portfolio_items?.length" class="portfolio-grid">
-            <article
-                v-for="item in profile.portfolio_items"
-                :key="item.id"
-                class="portfolio-card"
-            >
-                <div class="portfolio-thumb">
-                <span>{{ item.category }}</span>
-                </div>
-
-                <div class="portfolio-body">
-                <h3>{{ item.title }}</h3>
-                <p>{{ item.view_count || 0 }} views</p>
-                </div>
-            </article>
+            <div class="portfolio-body">
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.view_count || 0 }} views</p>
             </div>
-
-            <p v-else class="empty">
-            No portfolio items yet.
-            </p>
+          </article>
         </div>
 
-        <div class="profile-cta">
-            <button>Message</button>
-        </div>
-        </section>
-    </main>
+        <p v-else class="empty">
+          No portfolio items yet.
+        </p>
+      </div>
+
+      <div class="profile-cta">
+        <button>Message</button>
+      </div>
+    </section>
+  </main>
 </template>
 
 <style scoped>
 .profile-page {
-    min-height: 100vh;
-    background: #0f172a;
-    color: #f8fafc;
-    display: flex;
-    justify-content: center;
-    padding: 24px 14px;
+  min-height: 100vh;
+  background: #0f172a;
+  color: #f8fafc;
+  display: flex;
+  justify-content: center;
+  padding: 24px 14px;
 }
 
 .profile-shell {

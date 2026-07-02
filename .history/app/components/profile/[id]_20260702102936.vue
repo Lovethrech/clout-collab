@@ -7,13 +7,13 @@ const loading = ref(true)
 const errorMessage = ref('')
 
 onMounted(async () => {
-    try {
-        profile.value = await getProfileById(route.params.id)
-    } catch (error) {
-        errorMessage.value = error.message || 'Profile not found.'
-    } finally {
-        loading.value = false
-    }
+  try {
+    profile.value = await getProfileById(route.params.id)
+  } catch (error) {
+    errorMessage.value = error.message || 'Profile not found.'
+  } finally {
+    loading.value = false
+  }
 })
 </script>
 

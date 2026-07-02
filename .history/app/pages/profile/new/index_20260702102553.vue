@@ -7,16 +7,16 @@ const loading = ref(false)
 const errorMessage = ref('')
 
 const form = reactive({
-    display_name: '',
-    username: '',
-    role: 'creator',
-    title: '',
-    location: '',
-    bio: '',
-    skillsInput: '',
-    instagram: '',
-    tiktok: '',
-    youtube: ''
+  display_name: '',
+  username: '',
+  role: 'creator',
+  title: '',
+  location: '',
+  bio: '',
+  skillsInput: '',
+  instagram: '',
+  tiktok: '',
+  youtube: ''
 })
 
 onMounted(async () => {

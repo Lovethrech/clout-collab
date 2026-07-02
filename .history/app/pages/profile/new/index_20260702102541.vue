@@ -7,73 +7,73 @@ const loading = ref(false)
 const errorMessage = ref('')
 
 const form = reactive({
-    display_name: '',
-    username: '',
-    role: 'creator',
-    title: '',
-    location: '',
-    bio: '',
-    skillsInput: '',
-    instagram: '',
-    tiktok: '',
-    youtube: ''
+  display_name: '',
+  username: '',
+  role: 'creator',
+  title: '',
+  location: '',
+  bio: '',
+  skillsInput: '',
+  instagram: '',
+  tiktok: '',
+  youtube: ''
 })
 
 onMounted(async () => {
-    if (!user.value) {
-        router.push('/login')
-        return
-    }
+  if (!user.value) {
+    router.push('/login')
+    return
+  }
 
-    try {
-        const existingProfile = await getMyProfile()
+  try {
+    const existingProfile = await getMyProfile()
 
-        if (existingProfile) {
-        form.display_name = existingProfile.display_name || ''
-        form.username = existingProfile.username || ''
-        form.role = existingProfile.role || 'creator'
-        form.title = existingProfile.title || ''
-        form.location = existingProfile.location || ''
-        form.bio = existingProfile.bio || ''
-        form.skillsInput = existingProfile.skills ? existingProfile.skills.join(', ') : ''
-        form.instagram = existingProfile.socials?.instagram || ''
-        form.tiktok = existingProfile.socials?.tiktok || ''
-        form.youtube = existingProfile.socials?.youtube || ''
-        }
-    } catch (error) {
-        errorMessage.value = error.message || 'Could not load profile.'
+    if (existingProfile) {
+      form.display_name = existingProfile.display_name || ''
+      form.username = existingProfile.username || ''
+      form.role = existingProfile.role || 'creator'
+      form.title = existingProfile.title || ''
+      form.location = existingProfile.location || ''
+      form.bio = existingProfile.bio || ''
+      form.skillsInput = existingProfile.skills ? existingProfile.skills.join(', ') : ''
+      form.instagram = existingProfile.socials?.instagram || ''
+      form.tiktok = existingProfile.socials?.tiktok || ''
+      form.youtube = existingProfile.socials?.youtube || ''
     }
+  } catch (error) {
+    errorMessage.value = error.message || 'Could not load profile.'
+  }
 })
 
 const saveProfile = async () => {
-    loading.value = true
-    errorMessage.value = ''
+  loading.value = true
+  errorMessage.value = ''
 
-    try {
-        const savedProfile = await upsertMyProfile({
-        display_name: form.display_name,
-        username: form.username,
-        role: form.role,
-        title: form.title,
-        location: form.location,
-        bio: form.bio,
-        skills: form.skillsInput
-            .split(',')
-            .map((skill) => skill.trim())
-            .filter((skill) => skill),
-        socials: {
-            instagram: form.instagram,
-            tiktok: form.tiktok,
-            youtube: form.youtube
-        }
-        })
+  try {
+    const savedProfile = await upsertMyProfile({
+      display_name: form.display_name,
+      username: form.username,
+      role: form.role,
+      title: form.title,
+      location: form.location,
+      bio: form.bio,
+      skills: form.skillsInput
+        .split(',')
+        .map((skill) => skill.trim())
+        .filter((skill) => skill),
+      socials: {
+        instagram: form.instagram,
+        tiktok: form.tiktok,
+        youtube: form.youtube
+      }
+    })
 
-        router.push(`/profile/${savedProfile.id}`)
-    } catch (error) {
-        errorMessage.value = error.message || 'Could not save profile.'
-    } finally {
-        loading.value = false
-    }
+    router.push(`/profile/${savedProfile.id}`)
+  } catch (error) {
+    errorMessage.value = error.message || 'Could not save profile.'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
