@@ -55,7 +55,7 @@ const formatRole = (role) => {
 }
 
 onMounted(() => {
-    getProfile()
+  getProfile()
 })
 </script>
 

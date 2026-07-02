@@ -11,51 +11,51 @@ const loading = ref(true)
 const errorMessage = ref('')
 
 const getProfile = async () => {
-    loading.value = true
-    errorMessage.value = ''
+  loading.value = true
+  errorMessage.value = ''
 
-    try {
-        const profileId = route.params.id
+  try {
+    const profileId = route.params.id
 
-        const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', profileId)
-        .single()
+    const { data: profileData, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', profileId)
+      .single()
 
-        if (profileError) {
-        throw profileError
-        }
-
-        const { data: portfolioData, error: portfolioError } = await supabase
-        .from('portfolio_items')
-        .select('*')
-        .eq('profile_id', profileId)
-        .order('created_at', { ascending: false })
-
-        if (portfolioError) {
-        throw portfolioError
-        }
-
-        profile.value = profileData
-        portfolioItems.value = portfolioData || []
-    } catch (error) {
-        errorMessage.value = error.message || 'Could not load profile.'
-    } finally {
-        loading.value = false
+    if (profileError) {
+      throw profileError
     }
+
+    const { data: portfolioData, error: portfolioError } = await supabase
+      .from('portfolio_items')
+      .select('*')
+      .eq('profile_id', profileId)
+      .order('created_at', { ascending: false })
+
+    if (portfolioError) {
+      throw portfolioError
+    }
+
+    profile.value = profileData
+    portfolioItems.value = portfolioData || []
+  } catch (error) {
+    errorMessage.value = error.message || 'Could not load profile.'
+  } finally {
+    loading.value = false
+  }
 }
 
 const formatRole = (role) => {
-    if (!role) return 'Creator'
+  if (!role) return 'Creator'
 
-    return role
-        .replace('_', ' ')
-        .replace(/\b\w/g, (letter) => letter.toUpperCase())
+  return role
+    .replace('_', ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
 }
 
 onMounted(() => {
-    getProfile()
+  getProfile()
 })
 </script>
 

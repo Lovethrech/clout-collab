@@ -47,15 +47,15 @@ const getProfile = async () => {
 }
 
 const formatRole = (role) => {
-    if (!role) return 'Creator'
+  if (!role) return 'Creator'
 
-    return role
-        .replace('_', ' ')
-        .replace(/\b\w/g, (letter) => letter.toUpperCase())
+  return role
+    .replace('_', ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
 }
 
 onMounted(() => {
-    getProfile()
+  getProfile()
 })
 </script>
 
