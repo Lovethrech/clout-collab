@@ -5,6 +5,7 @@ definePageMeta({
 const route = useRoute()
 const router = useRouter()
 const supabase = useSupabaseClient()
+const supabase = useSupabaseClient()
 
 const profile = ref(null)
 const portfolioItems = ref([])

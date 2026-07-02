@@ -3,7 +3,6 @@ definePageMeta({
     layout: false 
 })
 const route = useRoute()
-const router = useRouter()
 const supabase = useSupabaseClient()
 
 const profile = ref(null)
