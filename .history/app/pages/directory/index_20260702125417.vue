@@ -839,192 +839,192 @@ onMounted(() => {
 }
 
 .card-bio {
-    font-size: 18px;
+    font-size: 13px;
     color: var(--tx-2);
     line-height: 1.55;
     margin-bottom: 12px;
     display: -webkit-box;
-    line-clamp: 2;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 15px;
-    min-height: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 15px;
+  min-height: 24px;
 }
 
 .tag {
-    display: inline-flex;
-    align-items: center;
-    height: 24px;
-    padding: 0 10px;
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 500;
-    background: var(--cat-soft);
-    color: var(--cat-lt);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--cat-soft);
+  color: var(--cat-lt);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .card-cta {
-    width: 100%;
-    height: 38px;
-    border-radius: 10px;
-    border: 1px solid var(--cat);
-    background: var(--cat-soft);
-    color: var(--cat-lt);
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--cat);
+  background: var(--cat-soft);
+  color: var(--cat-lt);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .card-cta:hover {
-    background: var(--cat);
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35);
+  background: var(--cat);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35);
 }
 
 .cta-arrow {
-    font-size: 14px;
-    transition: transform 0.2s;
+  font-size: 14px;
+  transition: transform 0.2s;
 }
 
 .card-cta:hover .cta-arrow {
-    transform: translateX(3px);
+  transform: translateX(3px);
 }
 
 .empty-state {
-    grid-column: 1 / -1;
-    padding: 64px 20px;
-    text-align: center;
+  grid-column: 1 / -1;
+  padding: 64px 20px;
+  text-align: center;
 }
 
 .empty-ico {
-    font-size: 42px;
-    margin-bottom: 14px;
+  font-size: 42px;
+  margin-bottom: 14px;
 }
 
 .empty-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--tx-1);
-    margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--tx-1);
+  margin-bottom: 6px;
 }
 
 .empty-body {
-    font-size: 14px;
-    color: var(--tx-2);
+  font-size: 14px;
+  color: var(--tx-2);
 }
 
 .empty-clear {
-    margin-top: 20px;
-    padding: 10px 24px;
-    border-radius: 100px;
-    background: var(--purple);
-    border: none;
-    color: #fff;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
+  margin-top: 20px;
+  padding: 10px 24px;
+  border-radius: 100px;
+  background: var(--purple);
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .fab {
-    position: fixed;
-    bottom: 86px;
-    right: 20px;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--purple-md), var(--pink));
-    border: none;
-    color: #fff;
-    font-size: 22px;
-    font-weight: 300;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 22px rgba(109, 40, 217, 0.55);
-    transition: transform 0.22s, box-shadow 0.22s;
-    z-index: 150;
+  position: fixed;
+  bottom: 86px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple-md), var(--pink));
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 22px rgba(109, 40, 217, 0.55);
+  transition: transform 0.22s, box-shadow 0.22s;
+  z-index: 150;
 }
 
 .fab:hover {
-    transform: scale(1.06) rotate(45deg);
-    box-shadow: 0 6px 28px rgba(109, 40, 217, 0.7);
+  transform: scale(1.06) rotate(45deg);
+  box-shadow: 0 6px 28px rgba(109, 40, 217, 0.7);
 }
 
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(13, 21, 37, 0.96);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 0 8px 4px;
-    z-index: 180;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(13, 21, 37, 0.96);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px 4px;
+  z-index: 180;
 }
 
 .nav-tab {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
-    cursor: pointer;
-    padding: 6px 0;
-    border-radius: 10px;
-    transition: background 0.18s;
-    background: transparent;
-    border: none;
-    font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  cursor: pointer;
+  padding: 6px 0;
+  border-radius: 10px;
+  transition: background 0.18s;
+  background: transparent;
+  border: none;
+  font-family: inherit;
 }
 
 .nav-tab:hover {
-    background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .nav-tab-ico {
-    font-size: 20px;
-    color: var(--tx-3);
+  font-size: 20px;
+  color: var(--tx-3);
 }
 
 .nav-tab-lbl {
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--tx-3);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--tx-3);
 }
 
 .nav-tab.active .nav-tab-ico,
 .nav-tab.active .nav-tab-lbl {
-    color: var(--purple-lt);
+  color: var(--purple-lt);
 }
 
 @media (max-width: 600px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 1100px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

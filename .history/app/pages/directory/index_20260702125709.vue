@@ -1006,25 +1006,25 @@ onMounted(() => {
 }
 
 .nav-tab-lbl {
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--tx-3);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--tx-3);
 }
 
 .nav-tab.active .nav-tab-ico,
 .nav-tab.active .nav-tab-lbl {
-    color: var(--purple-lt);
+  color: var(--purple-lt);
 }
 
 @media (max-width: 600px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 1100px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

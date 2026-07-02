@@ -1017,14 +1017,14 @@ onMounted(() => {
 }
 
 @media (max-width: 600px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 1100px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

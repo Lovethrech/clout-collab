@@ -982,49 +982,49 @@ onMounted(() => {
 }
 
 .nav-tab {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
-    cursor: pointer;
-    padding: 6px 0;
-    border-radius: 10px;
-    transition: background 0.18s;
-    background: transparent;
-    border: none;
-    font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  cursor: pointer;
+  padding: 6px 0;
+  border-radius: 10px;
+  transition: background 0.18s;
+  background: transparent;
+  border: none;
+  font-family: inherit;
 }
 
 .nav-tab:hover {
-    background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .nav-tab-ico {
-    font-size: 20px;
-    color: var(--tx-3);
+  font-size: 20px;
+  color: var(--tx-3);
 }
 
 .nav-tab-lbl {
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--tx-3);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--tx-3);
 }
 
 .nav-tab.active .nav-tab-ico,
 .nav-tab.active .nav-tab-lbl {
-    color: var(--purple-lt);
+  color: var(--purple-lt);
 }
 
 @media (max-width: 600px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 1100px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>
