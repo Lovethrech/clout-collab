@@ -539,18 +539,18 @@ onMounted(async () => {
                 </div>
 
                 <button
-                  class="apply-btn"
-                  type="button"
-                  :class="{ applied: hasApplied(post.id) }"
-                  :disabled="hasApplied(post.id) || applyingPostId === post.id"
-                  @click="applyToPost(post)"
-                >
-                  <span v-if="applyingPostId === post.id">Applying...</span>
-                  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
-                  <span v-else>
-                    Apply Now <span class="apply-arr">→</span>
-                  </span>
-                </button>
+  class="apply-btn"
+  type="button"
+  :class="{ applied: hasApplied(post.id) }"
+  :disabled="hasApplied(post.id) || applyingPostId === post.id"
+  @click="applyToPost(post)"
+>
+  <span v-if="applyingPostId === post.id">Applying...</span>
+  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
+  <span v-else>
+    Apply Now <span class="apply-arr">→</span>
+  </span>
+</button>
             </article>
         </div>
 
@@ -761,8 +761,18 @@ onMounted(async () => {
                 </span>
                 </div>
 
-                <button class="apply-btn preview-apply" type="button" disabled>
-                  Apply Now →
+                <button
+                  class="apply-btn"
+                  type="button"
+                  :class="{ applied: hasApplied(post.id) }"
+                  :disabled="hasApplied(post.id) || applyingPostId === post.id"
+                  @click="applyToPost(post)"
+                >
+                  <span v-if="applyingPostId === post.id">Applying...</span>
+                  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
+                  <span v-else>
+                    Apply Now <span class="apply-arrow">→</span>
+                  </span>
                 </button>
             </article>
             </div>

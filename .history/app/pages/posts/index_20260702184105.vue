@@ -6,13 +6,13 @@ definePageMeta({
 const router = useRouter()
 const supabase = useSupabaseClient()
 
-
+const myApplications = ref([])
+const applyingPostId = ref('')
 const loading = ref(true)
 const saving = ref(false)
 const errorMessage = ref('')
 const successMessage = ref('')
-const myApplications = ref([])
-const applyingPostId = ref('')
+
 
 const posts = ref([])
 const activeFilter = ref('All')
@@ -538,29 +538,25 @@ onMounted(async () => {
                     </span>
                 </div>
 
-                <button
-                  class="apply-btn"
-                  type="button"
-                  :class="{ applied: hasApplied(post.id) }"
-                  :disabled="hasApplied(post.id) || applyingPostId === post.id"
-                  @click="applyToPost(post)"
-                >
-                  <span v-if="applyingPostId === post.id">Applying...</span>
-                  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
-                  <span v-else>
+                <button class="apply-btn" type="button">
                     Apply Now <span class="apply-arr">→</span>
-                  </span>
                 </button>
             </article>
         </div>
 
         <button
-            class="floating-create-btn"
-            type="button"
-            @click="openCreate"
-        >
-            +
-        </button>
+  class="apply-btn"
+  type="button"
+  :class="{ applied: hasApplied(post.id) }"
+  :disabled="hasApplied(post.id) || applyingPostId === post.id"
+  @click="applyToPost(post)"
+>
+  <span v-if="applyingPostId === post.id">Applying...</span>
+  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
+  <span v-else>
+    Apply Now <span class="apply-arr">→</span>
+  </span>
+</button>
         </section>
 
         <section v-else class="pane create-pane">
@@ -761,8 +757,18 @@ onMounted(async () => {
                 </span>
                 </div>
 
-                <button class="apply-btn preview-apply" type="button" disabled>
-                  Apply Now →
+                <button
+                  class="apply-btn"
+                  type="button"
+                  :class="{ applied: hasApplied(post.id) }"
+                  :disabled="hasApplied(post.id) || applyingPostId === post.id"
+                  @click="applyToPost(post)"
+                >
+                  <span v-if="applyingPostId === post.id">Applying...</span>
+                  <span v-else-if="hasApplied(post.id)">Applied ✓</span>
+                  <span v-else>
+                    Apply Now <span class="apply-arrow">→</span>
+                  </span>
                 </button>
             </article>
             </div>
