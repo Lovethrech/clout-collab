@@ -339,374 +339,374 @@ onMounted(() => {
 </script>
 
 <template>
-    <main class="posts-page" :class="{ 'show-create': showCreate }">
-        <section v-if="!showCreate" class="pane feed-pane">
-        <div class="feed-head">
-            <h1 class="feed-title">Collab Requests</h1>
-            <p class="feed-sub">Browse open collaboration opportunities</p>
+  <main class="posts-page" :class="{ 'show-create': showCreate }">
+    <section v-if="!showCreate" class="pane feed-pane">
+      <div class="feed-head">
+        <h1 class="feed-title">Collab Requests</h1>
+        <p class="feed-sub">Browse open collaboration opportunities</p>
+      </div>
+
+      <div class="filter-row">
+        <button
+          v-for="filter in filters"
+          :key="filter"
+          type="button"
+          class="fchip"
+          :class="{ on: activeFilter === filter }"
+          @click="activeFilter = filter"
+        >
+          <span v-if="filter === 'Open'">🟢</span>
+          <span v-else-if="filter === 'Paid'">💰</span>
+          <span v-else-if="filter === 'Unpaid'">🤝</span>
+          <span v-else-if="filter === 'Local'">📍</span>
+          <span v-else-if="filter === 'International'">✈️</span>
+          {{ filter }}
+        </button>
+      </div>
+
+      <div class="results-bar">
+        <p class="results-count">
+          <strong>{{ filteredPosts.length }}</strong>
+          open collabs
+        </p>
+
+        <button class="sort-btn" type="button" @click="cycleSort">
+          {{ activeSort }} ↓
+        </button>
+      </div>
+
+      <div class="post-list">
+        <div v-if="loading" class="feed-empty">
+          <div class="feed-empty-ico">⏳</div>
+          <div class="feed-empty-title">Loading collabs...</div>
+          <p class="feed-empty-body">Fetching open collaboration opportunities.</p>
         </div>
 
-        <div class="filter-row">
-            <button
-            v-for="filter in filters"
-            :key="filter"
-            type="button"
-            class="fchip"
-            :class="{ on: activeFilter === filter }"
-            @click="activeFilter = filter"
+        <div v-else-if="errorMessage" class="feed-empty">
+          <div class="feed-empty-ico">⚠️</div>
+          <div class="feed-empty-title">Something went wrong</div>
+          <p class="feed-empty-body">{{ errorMessage }}</p>
+        </div>
+
+        <div v-else-if="!filteredPosts.length" class="feed-empty">
+          <div class="feed-empty-ico">📭</div>
+          <div class="feed-empty-title">No collabs match this filter</div>
+          <p class="feed-empty-body">Try a different filter or check back later.</p>
+        </div>
+
+        <article
+          v-for="post in filteredPosts"
+          v-else
+          :key="post.id"
+          class="post-card"
+          :class="skillClassMap[post.skill_needed] || 'skill-blue'"
+        >
+          <div class="card-header-row">
+            <span class="skill-badge">
+              {{ post.skill_needed }}
+            </span>
+
+            <span
+              class="status-pill"
+              :class="post.status === 'Open' ? 'open' : 'closed'"
             >
-            <span v-if="filter === 'Open'">🟢</span>
-            <span v-else-if="filter === 'Paid'">💰</span>
-            <span v-else-if="filter === 'Unpaid'">🤝</span>
-            <span v-else-if="filter === 'Local'">📍</span>
-            <span v-else-if="filter === 'International'">✈️</span>
-            {{ filter }}
+              <span class="status-dot"></span>
+              {{ post.status }}
+            </span>
+          </div>
+
+          <h2 class="post-title">
+            {{ post.title }}
+          </h2>
+
+          <p class="post-desc">
+            {{ post.description }}
+          </p>
+
+          <div class="poster-row">
+            <button
+              class="poster-ava"
+              type="button"
+              @click="goToProfile(post.profile_id)"
+            >
+              <img
+                v-if="post.profiles?.profile_image"
+                :src="post.profiles.profile_image"
+                :alt="getPosterName(post)"
+              />
+
+              <span v-else>
+                {{ getPosterInitials(post) }}
+              </span>
             </button>
+
+            <button
+              class="poster-name"
+              type="button"
+              @click="goToProfile(post.profile_id)"
+            >
+              {{ getPosterName(post) }}
+            </button>
+
+            <span class="poster-sep">·</span>
+
+            <span class="post-time">
+              {{ formatTime(post.created_at) }}
+            </span>
+
+            <span class="post-applicants">
+              {{ post.applicant_count || 0 }} applied
+            </span>
+          </div>
+
+          <div class="meta-row">
+            <span class="meta-chip">
+              {{ getLocationLabel(post) }}
+            </span>
+
+            <span class="meta-chip">
+              {{ post.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
+            </span>
+          </div>
+
+          <button class="apply-btn" type="button">
+            Apply Now <span class="apply-arr">→</span>
+          </button>
+        </article>
+      </div>
+
+      <button
+        class="floating-create-btn"
+        type="button"
+        @click="openCreate"
+      >
+        +
+      </button>
+    </section>
+
+    <section v-else class="pane create-pane">
+      <div class="create-top">
+        <button class="back-btn" type="button" @click="closeCreate">
+          ←
+        </button>
+
+        <h1>New Collab Post</h1>
+      </div>
+
+      <div class="create-scroll">
+        <div class="fgroup">
+          <label class="flabel">
+            What are you looking for? <em>*</em>
+          </label>
+
+          <input
+            v-model="form.title"
+            class="finput"
+            type="text"
+            placeholder="e.g. Need a videographer for a fashion shoot"
+            maxlength="80"
+            autocomplete="off"
+          />
         </div>
 
-        <div class="results-bar">
-            <p class="results-count">
-            <strong>{{ filteredPosts.length }}</strong>
-            open collabs
+        <div class="fgroup">
+          <label class="flabel">
+            Describe the collaboration <em>*</em>
+          </label>
+
+          <div class="textarea-wrap">
+            <textarea
+              v-model="form.description"
+              class="finput"
+              rows="4"
+              placeholder="What are you working on? What do you need from your collaborator? Share any useful details…"
+              maxlength="280"
+            />
+
+            <span
+              class="char-pill"
+              :class="{
+                warn: descriptionCount >= 220,
+                over: descriptionCount >= 260
+              }"
+            >
+              {{ descriptionCount }} / 280
+            </span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="fgroup">
+          <label class="flabel">
+            Skill needed <em>*</em>
+          </label>
+
+          <div class="skill-grid">
+            <button
+              v-for="skill in skills"
+              :key="skill.value"
+              type="button"
+              class="sk-opt"
+              :class="[
+                skillClassMap[skill.value] || 'skill-blue',
+                { sel: form.skill_needed === skill.value }
+              ]"
+              @click="form.skill_needed = skill.value"
+            >
+              {{ skill.label }}
+            </button>
+          </div>
+        </div>
+
+        <div class="fgroup">
+          <label class="flabel">Location preference</label>
+
+          <div class="seg">
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on': form.location_type === 'Local' }"
+              @click="form.location_type = 'Local'"
+            >
+              📍 Local
+            </button>
+
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on seg-blue': form.location_type === 'International' }"
+              @click="form.location_type = 'International'"
+            >
+              ✈️ International
+            </button>
+
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on': form.location_type === 'Both' }"
+              @click="form.location_type = 'Both'"
+            >
+              🌍 Both
+            </button>
+          </div>
+        </div>
+
+        <div v-if="form.location_type !== 'International'" class="fgroup">
+          <label class="flabel">
+            City
+          </label>
+
+          <input
+            v-model="form.city"
+            class="finput"
+            type="text"
+            placeholder="e.g. Lagos"
+          />
+        </div>
+
+        <div class="fgroup">
+          <label class="flabel">Compensation</label>
+
+          <div class="seg">
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on': form.compensation_type === 'Paid' }"
+              @click="form.compensation_type = 'Paid'"
+            >
+              💰 Paid
+            </button>
+
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on seg-muted': form.compensation_type === 'Unpaid' }"
+              @click="form.compensation_type = 'Unpaid'"
+            >
+              🤝 Unpaid
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="preview-wrap">
+          <div class="preview-header">
+            <span class="preview-label">Post preview</span>
+            <span class="live-badge">● Live</span>
+          </div>
+
+          <article
+            class="post-card preview-card"
+            :class="selectedSkillClass"
+          >
+            <div class="card-header-row">
+              <span class="skill-badge">
+                {{ getPreviewPost.skill_needed }}
+              </span>
+
+              <span class="status-pill open">
+                <span class="status-dot"></span>
+                Open
+              </span>
+            </div>
+
+            <h2 class="post-title">
+              {{ getPreviewPost.title }}
+            </h2>
+
+            <p class="post-desc">
+              {{ getPreviewPost.description }}
             </p>
 
-            <button class="sort-btn" type="button" @click="cycleSort">
-            {{ activeSort }} ↓
+            <div class="poster-row">
+              <div class="poster-ava">
+                YO
+              </div>
+
+              <span class="poster-name static-name">You</span>
+
+              <span class="poster-sep">·</span>
+
+              <span class="post-time">Just now</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-chip">
+                {{ getLocationLabel(getPreviewPost) }}
+              </span>
+
+              <span class="meta-chip">
+                {{ form.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
+              </span>
+            </div>
+
+            <button class="apply-btn preview-apply" type="button">
+              Apply Now →
             </button>
+          </article>
         </div>
 
-        <div class="post-list">
-            <div v-if="loading" class="feed-empty">
-            <div class="feed-empty-ico">⏳</div>
-            <div class="feed-empty-title">Loading collabs...</div>
-            <p class="feed-empty-body">Fetching open collaboration opportunities.</p>
-            </div>
+        <p v-if="errorMessage" class="form-error">
+          {{ errorMessage }}
+        </p>
 
-            <div v-else-if="errorMessage" class="feed-empty">
-            <div class="feed-empty-ico">⚠️</div>
-            <div class="feed-empty-title">Something went wrong</div>
-            <p class="feed-empty-body">{{ errorMessage }}</p>
-            </div>
-
-            <div v-else-if="!filteredPosts.length" class="feed-empty">
-            <div class="feed-empty-ico">📭</div>
-            <div class="feed-empty-title">No collabs match this filter</div>
-            <p class="feed-empty-body">Try a different filter or check back later.</p>
-            </div>
-
-            <article
-            v-for="post in filteredPosts"
-            v-else
-            :key="post.id"
-            class="post-card"
-            :class="skillClassMap[post.skill_needed] || 'skill-blue'"
-            >
-                <div class="card-header-row">
-                    <span class="skill-badge">
-                    {{ post.skill_needed }}
-                    </span>
-
-                    <span
-                    class="status-pill"
-                    :class="post.status === 'Open' ? 'open' : 'closed'"
-                    >
-                    <span class="status-dot"></span>
-                    {{ post.status }}
-                    </span>
-                </div>
-
-                <h2 class="post-title">
-                    {{ post.title }}
-                </h2>
-
-                <p class="post-desc">
-                    {{ post.description }}
-                </p>
-
-                <div class="poster-row">
-                    <button
-                    class="poster-ava"
-                    type="button"
-                    @click="goToProfile(post.profile_id)"
-                    >
-                    <img
-                        v-if="post.profiles?.profile_image"
-                        :src="post.profiles.profile_image"
-                        :alt="getPosterName(post)"
-                    />
-
-                    <span v-else>
-                        {{ getPosterInitials(post) }}
-                    </span>
-                    </button>
-
-                    <button
-                    class="poster-name"
-                    type="button"
-                    @click="goToProfile(post.profile_id)"
-                    >
-                    {{ getPosterName(post) }}
-                    </button>
-
-                    <span class="poster-sep">·</span>
-
-                    <span class="post-time">
-                    {{ formatTime(post.created_at) }}
-                    </span>
-
-                    <span class="post-applicants">
-                    {{ post.applicant_count || 0 }} applied
-                    </span>
-                </div>
-
-                <div class="meta-row">
-                    <span class="meta-chip">
-                    {{ getLocationLabel(post) }}
-                    </span>
-
-                    <span class="meta-chip">
-                    {{ post.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
-                    </span>
-                </div>
-
-                <button class="apply-btn" type="button">
-                    Apply Now <span class="apply-arr">→</span>
-                </button>
-            </article>
-        </div>
+        <p v-if="successMessage" class="form-success">
+          {{ successMessage }}
+        </p>
 
         <button
-            class="floating-create-btn"
-            type="button"
-            @click="openCreate"
+          class="post-btn"
+          type="button"
+          :disabled="!isFormValid || saving"
+          @click="createPost"
         >
-            +
+          {{ saving ? 'Posting...' : 'Post Collab ✦' }}
         </button>
-        </section>
-
-        <section v-else class="pane create-pane">
-        <div class="create-top">
-            <button class="back-btn" type="button" @click="closeCreate">
-            ←
-            </button>
-
-            <h1>New Collab Post</h1>
-        </div>
-
-        <div class="create-scroll">
-            <div class="fgroup">
-            <label class="flabel">
-                What are you looking for? <em>*</em>
-            </label>
-
-            <input
-                v-model="form.title"
-                class="finput"
-                type="text"
-                placeholder="e.g. Need a videographer for a fashion shoot"
-                maxlength="80"
-                autocomplete="off"
-            />
-            </div>
-
-            <div class="fgroup">
-            <label class="flabel">
-                Describe the collaboration <em>*</em>
-            </label>
-
-            <div class="textarea-wrap">
-                <textarea
-                v-model="form.description"
-                class="finput"
-                rows="4"
-                placeholder="What are you working on? What do you need from your collaborator? Share any useful details…"
-                maxlength="280"
-                />
-
-                <span
-                class="char-pill"
-                :class="{
-                    warn: descriptionCount >= 220,
-                    over: descriptionCount >= 260
-                }"
-                >
-                {{ descriptionCount }} / 280
-                </span>
-            </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="fgroup">
-            <label class="flabel">
-                Skill needed <em>*</em>
-            </label>
-
-            <div class="skill-grid">
-                <button
-                v-for="skill in skills"
-                :key="skill.value"
-                type="button"
-                class="sk-opt"
-                :class="[
-                    skillClassMap[skill.value] || 'skill-blue',
-                    { sel: form.skill_needed === skill.value }
-                ]"
-                @click="form.skill_needed = skill.value"
-                >
-                {{ skill.label }}
-                </button>
-            </div>
-            </div>
-
-            <div class="fgroup">
-            <label class="flabel">Location preference</label>
-
-            <div class="seg">
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on': form.location_type === 'Local' }"
-                @click="form.location_type = 'Local'"
-                >
-                📍 Local
-                </button>
-
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on seg-blue': form.location_type === 'International' }"
-                @click="form.location_type = 'International'"
-                >
-                ✈️ International
-                </button>
-
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on': form.location_type === 'Both' }"
-                @click="form.location_type = 'Both'"
-                >
-                🌍 Both
-                </button>
-            </div>
-            </div>
-
-            <div v-if="form.location_type !== 'International'" class="fgroup">
-            <label class="flabel">
-                City
-            </label>
-
-            <input
-                v-model="form.city"
-                class="finput"
-                type="text"
-                placeholder="e.g. Lagos"
-            />
-            </div>
-
-            <div class="fgroup">
-            <label class="flabel">Compensation</label>
-
-            <div class="seg">
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on': form.compensation_type === 'Paid' }"
-                @click="form.compensation_type = 'Paid'"
-                >
-                💰 Paid
-                </button>
-
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on seg-muted': form.compensation_type === 'Unpaid' }"
-                @click="form.compensation_type = 'Unpaid'"
-                >
-                🤝 Unpaid
-                </button>
-            </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="preview-wrap">
-            <div class="preview-header">
-                <span class="preview-label">Post preview</span>
-                <span class="live-badge">● Live</span>
-            </div>
-
-            <article
-                class="post-card preview-card"
-                :class="selectedSkillClass"
-            >
-                <div class="card-header-row">
-                <span class="skill-badge">
-                    {{ getPreviewPost.skill_needed }}
-                </span>
-
-                <span class="status-pill open">
-                    <span class="status-dot"></span>
-                    Open
-                </span>
-                </div>
-
-                <h2 class="post-title">
-                {{ getPreviewPost.title }}
-                </h2>
-
-                <p class="post-desc">
-                {{ getPreviewPost.description }}
-                </p>
-
-                <div class="poster-row">
-                <div class="poster-ava">
-                    YO
-                </div>
-
-                <span class="poster-name static-name">You</span>
-
-                <span class="poster-sep">·</span>
-
-                <span class="post-time">Just now</span>
-                </div>
-
-                <div class="meta-row">
-                <span class="meta-chip">
-                    {{ getLocationLabel(getPreviewPost) }}
-                </span>
-
-                <span class="meta-chip">
-                    {{ form.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
-                </span>
-                </div>
-
-                <button class="apply-btn preview-apply" type="button">
-                Apply Now →
-                </button>
-            </article>
-            </div>
-
-            <p v-if="errorMessage" class="form-error">
-            {{ errorMessage }}
-            </p>
-
-            <p v-if="successMessage" class="form-success">
-            {{ successMessage }}
-            </p>
-
-            <button
-            class="post-btn"
-            type="button"
-            :disabled="!isFormValid || saving"
-            @click="createPost"
-            >
-            {{ saving ? 'Posting...' : 'Post Collab ✦' }}
-            </button>
-        </div>
-        </section>
-    </main>
+      </div>
+    </section>
+  </main>
 </template>
 
 <style scoped>
@@ -761,6 +761,7 @@ onMounted(() => {
 }
 
 .feed-head {
+    background-color: red;
     padding: 22px 20px 0;
 }
 
@@ -772,157 +773,157 @@ onMounted(() => {
 }
 
 .feed-sub {
-    font-size: 2vh;
+    font-size: 14px;
     color: var(--tx-2);
     margin-top: 4px;
 }
 
 .filter-row {
-    padding: 14px 20px 0;
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
+  padding: 14px 20px 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
 .filter-row::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .fchip {
-    flex-shrink: 0;
-    height: 32px;
-    padding: 0 14px;
-    border-radius: 100px;
-    font-size: 1.6vh;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--tx-2);
-    transition: all 0.18s;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--tx-2);
+  transition: all 0.18s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .fchip:hover {
-    border-color: var(--purple-md);
-    color: var(--tx-1);
+  border-color: var(--purple-md);
+  color: var(--tx-1);
 }
 
 .fchip.on {
-    background: var(--purple);
-    border-color: var(--purple);
-    color: #fff;
-    font-weight: 600;
+  background: var(--purple);
+  border-color: var(--purple);
+  color: #fff;
+  font-weight: 600;
 }
 
 .results-bar {
-    padding: 13px 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  padding: 13px 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .results-count {
-    font-size:  1.4vh;
-    color: var(--tx-2);
+  font-size: 13px;
+  color: var(--tx-2);
 }
 
 .results-count strong {
-    color: var(--tx-1);
-    font-weight: 600;
+  color: var(--tx-1);
+  font-weight: 600;
 }
 
 .sort-btn {
-    font-size: 1.6vh;
-    font-weight: 500;
-    color: var(--purple-lt);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--purple-lt);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .post-list {
-    padding: 10px 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  padding: 10px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .post-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 15px 15px 14px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s, background 0.22s;
-    --sk: var(--blue);
-    --sk-lt: var(--blue-lt);
-    --sk-sf: rgba(59, 130, 246, 0.12);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 15px 15px 14px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s, background 0.22s;
+  --sk: var(--blue);
+  --sk-lt: var(--blue-lt);
+  --sk-sf: rgba(59, 130, 246, 0.12);
 }
 
 .post-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--sk) 0%, var(--sk-lt) 60%, transparent 100%);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--sk) 0%, var(--sk-lt) 60%, transparent 100%);
 }
 
 .post-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 56px;
-    background: linear-gradient(180deg, var(--sk-sf) 0%, transparent 100%);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: linear-gradient(180deg, var(--sk-sf) 0%, transparent 100%);
   pointer-events: none;
 }
 
 .post-card:hover {
-    transform: translateY(-2px);
-    background: var(--card-hi);
-    border-color: var(--border-hi);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
+  transform: translateY(-2px);
+  background: var(--card-hi);
+  border-color: var(--border-hi);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
 }
 
 .skill-blue {
-    --sk: var(--blue);
-    --sk-lt: var(--blue-lt);
-    --sk-sf: rgba(59, 130, 246, 0.12);
+  --sk: var(--blue);
+  --sk-lt: var(--blue-lt);
+  --sk-sf: rgba(59, 130, 246, 0.12);
 }
 
 .skill-violet {
-    --sk: var(--violet);
-    --sk-lt: var(--violet-lt);
-    --sk-sf: rgba(139, 92, 246, 0.12);
+  --sk: var(--violet);
+  --sk-lt: var(--violet-lt);
+  --sk-sf: rgba(139, 92, 246, 0.12);
 }
 
 .skill-pink {
-    --sk: var(--pink);
-    --sk-lt: var(--pink-lt);
-    --sk-sf: rgba(236, 72, 153, 0.12);
+  --sk: var(--pink);
+  --sk-lt: var(--pink-lt);
+  --sk-sf: rgba(236, 72, 153, 0.12);
 }
 
 .skill-green {
-    --sk: var(--green);
-    --sk-lt: var(--green-lt);
-    --sk-sf: rgba(16, 185, 129, 0.12);
+  --sk: var(--green);
+  --sk-lt: var(--green-lt);
+  --sk-sf: rgba(16, 185, 129, 0.12);
 }
 
 .skill-amber {
-    --sk: var(--amber);
-    --sk-lt: var(--amber-lt);
-    --sk-sf: rgba(245, 158, 11, 0.12);
+  --sk: var(--amber);
+  --sk-lt: var(--amber-lt);
+  --sk-sf: rgba(245, 158, 11, 0.12);
 }
 
 .skill-cyan {
@@ -950,64 +951,64 @@ onMounted(() => {
 }
 
 .card-header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 9px;
-    position: relative;
-    z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  position: relative;
+  z-index: 1;
 }
 
 .skill-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    height: 23px;
-    padding: 0 10px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 600;
-    background: var(--sk-sf);
-    color: var(--sk-lt);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 23px;
+  padding: 0 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--sk-sf);
+  color: var(--sk-lt);
 }
 
 .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    height: 22px;
-    padding: 0 9px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .status-pill.open {
-    background: rgba(16, 185, 129, 0.12);
-    color: var(--green-lt);
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--green-lt);
 }
 
 .status-pill.closed {
-    background: rgba(100, 116, 139, 0.14);
-    color: var(--tx-3);
+  background: rgba(100, 116, 139, 0.14);
+  color: var(--tx-3);
 }
 
 .status-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: currentColor;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
 }
 
 .post-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--tx-1);
-    line-height: 1.38;
-    margin-bottom: 6px;
-    letter-spacing: -0.15px;
-    position: relative;
-    z-index: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tx-1);
+  line-height: 1.38;
+  margin-bottom: 6px;
+  letter-spacing: -0.15px;
+  position: relative;
+  z-index: 1;
 }
 
 .post-desc {

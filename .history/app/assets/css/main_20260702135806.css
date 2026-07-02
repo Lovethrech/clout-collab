@@ -180,6 +180,7 @@ html, body {
 
 .cc-page-shell-wide {
     width: 100%;
+     1120px;
     margin: 0 auto;
 }
 
@@ -196,6 +197,7 @@ html, body {
 }
 
 .cc-page-sub {
+     540px;
     color: var(--cc-muted);
     font-size: 14px;
     line-height: 1.55;

@@ -1,0 +1,129 @@
+/* Shared authenticated page tokens */
+:root {
+  --cc-bg: #0f172a;
+  --cc-bg-raised: #0d1525;
+  --cc-card: #1e293b;
+  --cc-card-hover: #243350;
+  --cc-border: rgba(255, 255, 255, 0.07);
+  --cc-border-hi: rgba(255, 255, 255, 0.13);
+
+  --cc-purple: #6d28d9;
+  --cc-purple-md: #7c3aed;
+  --cc-purple-lt: #a78bfa;
+  --cc-blue: #3b82f6;
+  --cc-blue-lt: #93c5fd;
+  --cc-pink: #ec4899;
+  --cc-pink-lt: #f9a8d4;
+  --cc-green: #10b981;
+  --cc-green-lt: #6ee7b7;
+  --cc-amber: #f59e0b;
+  --cc-amber-lt: #fcd34d;
+  --cc-cyan: #06b6d4;
+  --cc-cyan-lt: #67e8f9;
+  --cc-violet: #8b5cf6;
+  --cc-violet-lt: #c4b5fd;
+  --cc-orange: #f97316;
+  --cc-orange-lt: #fdba74;
+  --cc-teal: #14b8a6;
+  --cc-teal-lt: #5eead4;
+
+  --cc-text: #f8fafc;
+  --cc-muted: #94a3b8;
+  --cc-soft: #64748b;
+  --cc-dim: #475569;
+
+  --cc-radius-card: 16px;
+  --cc-radius-chip: 999px;
+  --cc-radius-input: 12px;
+  --cc-radius-button: 12px;
+
+  --cc-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.cc-auth-page {
+  min-height: calc(100vh - 60px);
+  background: var(--cc-bg);
+  color: var(--cc-text);
+  font-family: var(--cc-font);
+  padding-bottom: 90px;
+}
+
+.cc-page-shell {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.cc-page-head {
+  padding: 22px 20px 0;
+}
+
+.cc-page-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
+  color: var(--cc-text);
+}
+
+.cc-page-sub {
+  font-size: 14px;
+  color: var(--cc-muted);
+  margin-top: 4px;
+}
+
+.cc-empty-state {
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--cc-muted);
+}
+
+.cc-empty-ico {
+  font-size: 38px;
+  margin-bottom: 14px;
+}
+
+.cc-empty-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cc-text);
+  margin-bottom: 6px;
+}
+
+.cc-empty-body {
+  font-size: 14px;
+  color: var(--cc-muted);
+  line-height: 1.5;
+}
+
+.cc-pill-button {
+  border: 1px solid var(--cc-border);
+  border-radius: var(--cc-radius-chip);
+  background: var(--cc-card);
+  color: var(--cc-muted);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.cc-pill-button:hover {
+  background: var(--cc-card-hover);
+  border-color: var(--cc-border-hi);
+  color: var(--cc-text);
+}
+
+.cc-gradient-button {
+  border: 0;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--cc-purple-md), var(--cc-pink));
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.cc-gradient-button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  box-shadow: none;
+}

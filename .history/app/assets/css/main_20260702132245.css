@@ -112,9 +112,11 @@ html, body {
 }
 
 /* =========================================================
-    Clout Collabs Shared Authenticated UI Additions
-    NOTE:
-    ========================================================= */
+   Clout Collabs Shared Authenticated UI Additions
+   NOTE:
+   Do not rename existing global variables/classes above.
+   These cc-* tokens/classes are additive only.
+   ========================================================= */
 
 :root {
     --cc-bg: #0f172a;
@@ -175,16 +177,18 @@ html, body {
 
 .cc-page-shell {
     width: 100%;
+    max-width: 920px;
     margin: 0 auto;
 }
 
 .cc-page-shell-wide {
     width: 100%;
+    max-width: 1120px;
     margin: 0 auto;
 }
 
 .cc-page-head {
-    padding: 22px 20px 0;
+    adding: 22px 20px 0;
 }
 
 .cc-page-title {
@@ -196,6 +200,7 @@ html, body {
 }
 
 .cc-page-sub {
+    max-width: 540px;
     color: var(--cc-muted);
     font-size: 14px;
     line-height: 1.55;

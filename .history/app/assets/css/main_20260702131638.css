@@ -1,0 +1,112 @@
+:root{
+/* ---- Core brand colors (from brief) ---- */
+    --purple:#6D28D9;
+    --blue:#3B82F6;
+    --pink:#EC4899;
+    --dark:#0F172A;
+
+    /* ---- Extended ramps ---- */
+    --purple-300:#C4B5FD;
+    --purple-500:#8B5CF6;
+    --purple-700:#6D28D9;
+    --purple-900:#4C1D95;
+
+    --blue-300:#93C5FD;
+    --blue-500:#3B82F6;
+    --blue-700:#1D4ED8;
+    --blue-900:#1E3A8A;
+
+    --pink-300:#F9A8D4;
+    --pink-500:#EC4899;
+    --pink-700:#BE185D;
+    --pink-900:#831843;
+
+    --slate-50:#F8FAFC;
+    --slate-200:#E2E8F0;
+    --slate-400:#94A3B8;
+    --slate-600:#475569;
+    --slate-700:#334155;
+    --slate-800:#1E293B;
+    --slate-900:#0F172A;
+
+    --success:#22C55E;
+    --warning:#F59E0B;
+    --error:#EF4444;
+
+    --grad-signature: linear-gradient(135deg, var(--purple) 0%, var(--blue) 52%, var(--pink) 100%);
+
+    --display-font: 'Unbounded', sans-serif;
+    --body-font: 'Plus Jakarta Sans', sans-serif;
+    --mono-font: 'JetBrains Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    background:var(--slate-900); 
+    color:var(--slate-50); 
+    font-family:var(--body-font); 
+    -webkit-font-smoothing:antialiased;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
+.link{
+    text-decorationL:none;
+    color: var(--slate-50);
+}
+
+.dsp-flex-jstf-center-plc-center{
+    display: flex;
+    place-items: center;
+    justify-content: center;
+}
+.dsp-flex-jstf-center-plc-spcbtw{
+    display: flex;
+    place-items: center;
+    justify-content: space-between;
+}
+.dsp-flex-flxd-column{
+    display: flex;
+    flex-direction: column;
+}
+
+/* AUTH FORM INPUT FIELD */
+.form-email-and-password, .profile-new-user-form-input{ 
+    width: 100%;
+    background:var(--slate-800); 
+    border:0.1vh solid var(--slate-700); 
+    border-radius:14px; 
+    padding:1.6vh;
+    font-size:2vh;
+    color:var(--slate-400); 
+    margin-bottom:2vh;
+}
+.btn-main-auth{
+    border:0;
+    width: 100%;
+    background:var(--purple); 
+    color:var(--slate-50); 
+    text-align:center; 
+    font-weight:700; 
+    font-size:1.8vh; 
+    border-radius:14px; 
+    padding:1.6vh 0; 
+    margin-bottom:2vh;
+    transition: all 0.2s ease-in-out;
+}
+.btn-main-auth:hover{
+    cursor: pointer;
+    transform: scale(0.98);
+}
+.button.btn-main-auth:disabled{
+    background:var(--slate-400);
+    cursor: not-allowed;
+}

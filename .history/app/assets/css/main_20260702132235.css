@@ -112,79 +112,83 @@ html, body {
 }
 
 /* =========================================================
-    Clout Collabs Shared Authenticated UI Additions
-    NOTE:
-    ========================================================= */
+   Clout Collabs Shared Authenticated UI Additions
+   NOTE:
+   Do not rename existing global variables/classes above.
+   These cc-* tokens/classes are additive only.
+   ========================================================= */
 
 :root {
-    --cc-bg: #0f172a;
-    --cc-bg-raised: #0d1525;
-    --cc-card: #1e293b;
-    --cc-card-hover: #243350;
-    --cc-border: rgba(255, 255, 255, 0.07);
-    --cc-border-hi: rgba(255, 255, 255, 0.13);
+  --cc-bg: #0f172a;
+  --cc-bg-raised: #0d1525;
+  --cc-card: #1e293b;
+  --cc-card-hover: #243350;
+  --cc-border: rgba(255, 255, 255, 0.07);
+  --cc-border-hi: rgba(255, 255, 255, 0.13);
 
-    --cc-purple: #6d28d9;
-    --cc-purple-md: #7c3aed;
-    --cc-purple-lt: #a78bfa;
+  --cc-purple: #6d28d9;
+  --cc-purple-md: #7c3aed;
+  --cc-purple-lt: #a78bfa;
 
-    --cc-blue: #3b82f6;
-    --cc-blue-lt: #93c5fd;
+  --cc-blue: #3b82f6;
+  --cc-blue-lt: #93c5fd;
 
-    --cc-pink: #ec4899;
-    --cc-pink-lt: #f9a8d4;
+  --cc-pink: #ec4899;
+  --cc-pink-lt: #f9a8d4;
 
-    --cc-green: #10b981;
-    --cc-green-lt: #6ee7b7;
+  --cc-green: #10b981;
+  --cc-green-lt: #6ee7b7;
 
-    --cc-amber: #f59e0b;
-    --cc-amber-lt: #fcd34d;
+  --cc-amber: #f59e0b;
+  --cc-amber-lt: #fcd34d;
 
-    --cc-cyan: #06b6d4;
-    --cc-cyan-lt: #67e8f9;
+  --cc-cyan: #06b6d4;
+  --cc-cyan-lt: #67e8f9;
 
-    --cc-violet: #8b5cf6;
-    --cc-violet-lt: #c4b5fd;
+  --cc-violet: #8b5cf6;
+  --cc-violet-lt: #c4b5fd;
 
-    --cc-orange: #f97316;
-    --cc-orange-lt: #fdba74;
+  --cc-orange: #f97316;
+  --cc-orange-lt: #fdba74;
 
-    --cc-teal: #14b8a6;
-    --cc-teal-lt: #5eead4;
+  --cc-teal: #14b8a6;
+  --cc-teal-lt: #5eead4;
 
-    --cc-text: #f8fafc;
-    --cc-muted: #94a3b8;
-    --cc-soft: #64748b;
-    --cc-dim: #475569;
+  --cc-text: #f8fafc;
+  --cc-muted: #94a3b8;
+  --cc-soft: #64748b;
+  --cc-dim: #475569;
 
-    --cc-radius-card: 16px;
-    --cc-radius-chip: 999px;
-    --cc-radius-input: 12px;
-    --cc-radius-button: 12px;
+  --cc-radius-card: 16px;
+  --cc-radius-chip: 999px;
+  --cc-radius-input: 12px;
+  --cc-radius-button: 12px;
 
-    --cc-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --cc-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .cc-auth-page {
-    min-height: calc(100vh - 60px);
-    background: var(--cc-bg);
-    color: var(--cc-text);
-    font-family: var(--cc-font);
-    padding-bottom: 90px;
+  min-height: calc(100vh - 60px);
+  background: var(--cc-bg);
+  color: var(--cc-text);
+  font-family: var(--cc-font);
+  padding-bottom: 90px;
 }
 
 .cc-page-shell {
     width: 100%;
+    max-width: 920px;
     margin: 0 auto;
 }
 
 .cc-page-shell-wide {
     width: 100%;
+    max-width: 1120px;
     margin: 0 auto;
 }
 
 .cc-page-head {
-    padding: 22px 20px 0;
+    adding: 22px 20px 0;
 }
 
 .cc-page-title {
@@ -196,6 +200,7 @@ html, body {
 }
 
 .cc-page-sub {
+    max-width: 540px;
     color: var(--cc-muted);
     font-size: 14px;
     line-height: 1.55;

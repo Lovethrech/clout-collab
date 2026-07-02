@@ -87,7 +87,7 @@ const getUserInitials = () => {
                 <span class="nav-tab-lbl">Discover</span>
             </button>
 
-            <button class="nav-tab" type="button" @click="router.push('/posts')">
+            <button class="nav-tab" type="button" @click="router.push('/post')">
                 <div class="nav-tab-ico">📝</div>
                 <span class="nav-tab-lbl">Posts</span>
             </button>

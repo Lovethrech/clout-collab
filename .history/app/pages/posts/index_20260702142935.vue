@@ -339,374 +339,374 @@ onMounted(() => {
 </script>
 
 <template>
-    <main class="posts-page" :class="{ 'show-create': showCreate }">
-        <section v-if="!showCreate" class="pane feed-pane">
-        <div class="feed-head">
-            <h1 class="feed-title">Collab Requests</h1>
-            <p class="feed-sub">Browse open collaboration opportunities</p>
+  <main class="posts-page" :class="{ 'show-create': showCreate }">
+    <section v-if="!showCreate" class="pane feed-pane">
+      <div class="feed-head">
+        <h1 class="feed-title">Collab Requests</h1>
+        <p class="feed-sub">Browse open collaboration opportunities</p>
+      </div>
+
+      <div class="filter-row">
+        <button
+          v-for="filter in filters"
+          :key="filter"
+          type="button"
+          class="fchip"
+          :class="{ on: activeFilter === filter }"
+          @click="activeFilter = filter"
+        >
+          <span v-if="filter === 'Open'">🟢</span>
+          <span v-else-if="filter === 'Paid'">💰</span>
+          <span v-else-if="filter === 'Unpaid'">🤝</span>
+          <span v-else-if="filter === 'Local'">📍</span>
+          <span v-else-if="filter === 'International'">✈️</span>
+          {{ filter }}
+        </button>
+      </div>
+
+      <div class="results-bar">
+        <p class="results-count">
+          <strong>{{ filteredPosts.length }}</strong>
+          open collabs
+        </p>
+
+        <button class="sort-btn" type="button" @click="cycleSort">
+          {{ activeSort }} ↓
+        </button>
+      </div>
+
+      <div class="post-list">
+        <div v-if="loading" class="feed-empty">
+          <div class="feed-empty-ico">⏳</div>
+          <div class="feed-empty-title">Loading collabs...</div>
+          <p class="feed-empty-body">Fetching open collaboration opportunities.</p>
         </div>
 
-        <div class="filter-row">
-            <button
-            v-for="filter in filters"
-            :key="filter"
-            type="button"
-            class="fchip"
-            :class="{ on: activeFilter === filter }"
-            @click="activeFilter = filter"
+        <div v-else-if="errorMessage" class="feed-empty">
+          <div class="feed-empty-ico">⚠️</div>
+          <div class="feed-empty-title">Something went wrong</div>
+          <p class="feed-empty-body">{{ errorMessage }}</p>
+        </div>
+
+        <div v-else-if="!filteredPosts.length" class="feed-empty">
+          <div class="feed-empty-ico">📭</div>
+          <div class="feed-empty-title">No collabs match this filter</div>
+          <p class="feed-empty-body">Try a different filter or check back later.</p>
+        </div>
+
+        <article
+          v-for="post in filteredPosts"
+          v-else
+          :key="post.id"
+          class="post-card"
+          :class="skillClassMap[post.skill_needed] || 'skill-blue'"
+        >
+          <div class="card-header-row">
+            <span class="skill-badge">
+              {{ post.skill_needed }}
+            </span>
+
+            <span
+              class="status-pill"
+              :class="post.status === 'Open' ? 'open' : 'closed'"
             >
-            <span v-if="filter === 'Open'">🟢</span>
-            <span v-else-if="filter === 'Paid'">💰</span>
-            <span v-else-if="filter === 'Unpaid'">🤝</span>
-            <span v-else-if="filter === 'Local'">📍</span>
-            <span v-else-if="filter === 'International'">✈️</span>
-            {{ filter }}
+              <span class="status-dot"></span>
+              {{ post.status }}
+            </span>
+          </div>
+
+          <h2 class="post-title">
+            {{ post.title }}
+          </h2>
+
+          <p class="post-desc">
+            {{ post.description }}
+          </p>
+
+          <div class="poster-row">
+            <button
+              class="poster-ava"
+              type="button"
+              @click="goToProfile(post.profile_id)"
+            >
+              <img
+                v-if="post.profiles?.profile_image"
+                :src="post.profiles.profile_image"
+                :alt="getPosterName(post)"
+              />
+
+              <span v-else>
+                {{ getPosterInitials(post) }}
+              </span>
             </button>
+
+            <button
+              class="poster-name"
+              type="button"
+              @click="goToProfile(post.profile_id)"
+            >
+              {{ getPosterName(post) }}
+            </button>
+
+            <span class="poster-sep">·</span>
+
+            <span class="post-time">
+              {{ formatTime(post.created_at) }}
+            </span>
+
+            <span class="post-applicants">
+              {{ post.applicant_count || 0 }} applied
+            </span>
+          </div>
+
+          <div class="meta-row">
+            <span class="meta-chip">
+              {{ getLocationLabel(post) }}
+            </span>
+
+            <span class="meta-chip">
+              {{ post.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
+            </span>
+          </div>
+
+          <button class="apply-btn" type="button">
+            Apply Now <span class="apply-arr">→</span>
+          </button>
+        </article>
+      </div>
+
+      <button
+        class="floating-create-btn"
+        type="button"
+        @click="openCreate"
+      >
+        +
+      </button>
+    </section>
+
+    <section v-else class="pane create-pane">
+      <div class="create-top">
+        <button class="back-btn" type="button" @click="closeCreate">
+          ←
+        </button>
+
+        <h1>New Collab Post</h1>
+      </div>
+
+      <div class="create-scroll">
+        <div class="fgroup">
+          <label class="flabel">
+            What are you looking for? <em>*</em>
+          </label>
+
+          <input
+            v-model="form.title"
+            class="finput"
+            type="text"
+            placeholder="e.g. Need a videographer for a fashion shoot"
+            maxlength="80"
+            autocomplete="off"
+          />
         </div>
 
-        <div class="results-bar">
-            <p class="results-count">
-            <strong>{{ filteredPosts.length }}</strong>
-            open collabs
+        <div class="fgroup">
+          <label class="flabel">
+            Describe the collaboration <em>*</em>
+          </label>
+
+          <div class="textarea-wrap">
+            <textarea
+              v-model="form.description"
+              class="finput"
+              rows="4"
+              placeholder="What are you working on? What do you need from your collaborator? Share any useful details…"
+              maxlength="280"
+            />
+
+            <span
+              class="char-pill"
+              :class="{
+                warn: descriptionCount >= 220,
+                over: descriptionCount >= 260
+              }"
+            >
+              {{ descriptionCount }} / 280
+            </span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="fgroup">
+          <label class="flabel">
+            Skill needed <em>*</em>
+          </label>
+
+          <div class="skill-grid">
+            <button
+              v-for="skill in skills"
+              :key="skill.value"
+              type="button"
+              class="sk-opt"
+              :class="[
+                skillClassMap[skill.value] || 'skill-blue',
+                { sel: form.skill_needed === skill.value }
+              ]"
+              @click="form.skill_needed = skill.value"
+            >
+              {{ skill.label }}
+            </button>
+          </div>
+        </div>
+
+        <div class="fgroup">
+          <label class="flabel">Location preference</label>
+
+          <div class="seg">
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on': form.location_type === 'Local' }"
+              @click="form.location_type = 'Local'"
+            >
+              📍 Local
+            </button>
+
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on seg-blue': form.location_type === 'International' }"
+              @click="form.location_type = 'International'"
+            >
+              ✈️ International
+            </button>
+
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on': form.location_type === 'Both' }"
+              @click="form.location_type = 'Both'"
+            >
+              🌍 Both
+            </button>
+          </div>
+        </div>
+
+        <div v-if="form.location_type !== 'International'" class="fgroup">
+          <label class="flabel">
+            City
+          </label>
+
+          <input
+            v-model="form.city"
+            class="finput"
+            type="text"
+            placeholder="e.g. Lagos"
+          />
+        </div>
+
+        <div class="fgroup">
+          <label class="flabel">Compensation</label>
+
+          <div class="seg">
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on': form.compensation_type === 'Paid' }"
+              @click="form.compensation_type = 'Paid'"
+            >
+              💰 Paid
+            </button>
+
+            <button
+              type="button"
+              class="seg-btn"
+              :class="{ 'seg-on seg-muted': form.compensation_type === 'Unpaid' }"
+              @click="form.compensation_type = 'Unpaid'"
+            >
+              🤝 Unpaid
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="preview-wrap">
+          <div class="preview-header">
+            <span class="preview-label">Post preview</span>
+            <span class="live-badge">● Live</span>
+          </div>
+
+          <article
+            class="post-card preview-card"
+            :class="selectedSkillClass"
+          >
+            <div class="card-header-row">
+              <span class="skill-badge">
+                {{ getPreviewPost.skill_needed }}
+              </span>
+
+              <span class="status-pill open">
+                <span class="status-dot"></span>
+                Open
+              </span>
+            </div>
+
+            <h2 class="post-title">
+              {{ getPreviewPost.title }}
+            </h2>
+
+            <p class="post-desc">
+              {{ getPreviewPost.description }}
             </p>
 
-            <button class="sort-btn" type="button" @click="cycleSort">
-            {{ activeSort }} ↓
+            <div class="poster-row">
+              <div class="poster-ava">
+                YO
+              </div>
+
+              <span class="poster-name static-name">You</span>
+
+              <span class="poster-sep">·</span>
+
+              <span class="post-time">Just now</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-chip">
+                {{ getLocationLabel(getPreviewPost) }}
+              </span>
+
+              <span class="meta-chip">
+                {{ form.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
+              </span>
+            </div>
+
+            <button class="apply-btn preview-apply" type="button">
+              Apply Now →
             </button>
+          </article>
         </div>
 
-        <div class="post-list">
-            <div v-if="loading" class="feed-empty">
-            <div class="feed-empty-ico">⏳</div>
-            <div class="feed-empty-title">Loading collabs...</div>
-            <p class="feed-empty-body">Fetching open collaboration opportunities.</p>
-            </div>
+        <p v-if="errorMessage" class="form-error">
+          {{ errorMessage }}
+        </p>
 
-            <div v-else-if="errorMessage" class="feed-empty">
-            <div class="feed-empty-ico">⚠️</div>
-            <div class="feed-empty-title">Something went wrong</div>
-            <p class="feed-empty-body">{{ errorMessage }}</p>
-            </div>
-
-            <div v-else-if="!filteredPosts.length" class="feed-empty">
-            <div class="feed-empty-ico">📭</div>
-            <div class="feed-empty-title">No collabs match this filter</div>
-            <p class="feed-empty-body">Try a different filter or check back later.</p>
-            </div>
-
-            <article
-            v-for="post in filteredPosts"
-            v-else
-            :key="post.id"
-            class="post-card"
-            :class="skillClassMap[post.skill_needed] || 'skill-blue'"
-            >
-                <div class="card-header-row">
-                    <span class="skill-badge">
-                    {{ post.skill_needed }}
-                    </span>
-
-                    <span
-                    class="status-pill"
-                    :class="post.status === 'Open' ? 'open' : 'closed'"
-                    >
-                    <span class="status-dot"></span>
-                    {{ post.status }}
-                    </span>
-                </div>
-
-                <h2 class="post-title">
-                    {{ post.title }}
-                </h2>
-
-                <p class="post-desc">
-                    {{ post.description }}
-                </p>
-
-                <div class="poster-row">
-                    <button
-                    class="poster-ava"
-                    type="button"
-                    @click="goToProfile(post.profile_id)"
-                    >
-                    <img
-                        v-if="post.profiles?.profile_image"
-                        :src="post.profiles.profile_image"
-                        :alt="getPosterName(post)"
-                    />
-
-                    <span v-else>
-                        {{ getPosterInitials(post) }}
-                    </span>
-                    </button>
-
-                    <button
-                    class="poster-name"
-                    type="button"
-                    @click="goToProfile(post.profile_id)"
-                    >
-                    {{ getPosterName(post) }}
-                    </button>
-
-                    <span class="poster-sep">·</span>
-
-                    <span class="post-time">
-                    {{ formatTime(post.created_at) }}
-                    </span>
-
-                    <span class="post-applicants">
-                    {{ post.applicant_count || 0 }} applied
-                    </span>
-                </div>
-
-                <div class="meta-row">
-                    <span class="meta-chip">
-                    {{ getLocationLabel(post) }}
-                    </span>
-
-                    <span class="meta-chip">
-                    {{ post.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
-                    </span>
-                </div>
-
-                <button class="apply-btn" type="button">
-                    Apply Now <span class="apply-arr">→</span>
-                </button>
-            </article>
-        </div>
+        <p v-if="successMessage" class="form-success">
+          {{ successMessage }}
+        </p>
 
         <button
-            class="floating-create-btn"
-            type="button"
-            @click="openCreate"
+          class="post-btn"
+          type="button"
+          :disabled="!isFormValid || saving"
+          @click="createPost"
         >
-            +
+          {{ saving ? 'Posting...' : 'Post Collab ✦' }}
         </button>
-        </section>
-
-        <section v-else class="pane create-pane">
-        <div class="create-top">
-            <button class="back-btn" type="button" @click="closeCreate">
-            ←
-            </button>
-
-            <h1>New Collab Post</h1>
-        </div>
-
-        <div class="create-scroll">
-            <div class="fgroup">
-            <label class="flabel">
-                What are you looking for? <em>*</em>
-            </label>
-
-            <input
-                v-model="form.title"
-                class="finput"
-                type="text"
-                placeholder="e.g. Need a videographer for a fashion shoot"
-                maxlength="80"
-                autocomplete="off"
-            />
-            </div>
-
-            <div class="fgroup">
-            <label class="flabel">
-                Describe the collaboration <em>*</em>
-            </label>
-
-            <div class="textarea-wrap">
-                <textarea
-                v-model="form.description"
-                class="finput"
-                rows="4"
-                placeholder="What are you working on? What do you need from your collaborator? Share any useful details…"
-                maxlength="280"
-                />
-
-                <span
-                class="char-pill"
-                :class="{
-                    warn: descriptionCount >= 220,
-                    over: descriptionCount >= 260
-                }"
-                >
-                {{ descriptionCount }} / 280
-                </span>
-            </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="fgroup">
-            <label class="flabel">
-                Skill needed <em>*</em>
-            </label>
-
-            <div class="skill-grid">
-                <button
-                v-for="skill in skills"
-                :key="skill.value"
-                type="button"
-                class="sk-opt"
-                :class="[
-                    skillClassMap[skill.value] || 'skill-blue',
-                    { sel: form.skill_needed === skill.value }
-                ]"
-                @click="form.skill_needed = skill.value"
-                >
-                {{ skill.label }}
-                </button>
-            </div>
-            </div>
-
-            <div class="fgroup">
-            <label class="flabel">Location preference</label>
-
-            <div class="seg">
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on': form.location_type === 'Local' }"
-                @click="form.location_type = 'Local'"
-                >
-                📍 Local
-                </button>
-
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on seg-blue': form.location_type === 'International' }"
-                @click="form.location_type = 'International'"
-                >
-                ✈️ International
-                </button>
-
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on': form.location_type === 'Both' }"
-                @click="form.location_type = 'Both'"
-                >
-                🌍 Both
-                </button>
-            </div>
-            </div>
-
-            <div v-if="form.location_type !== 'International'" class="fgroup">
-            <label class="flabel">
-                City
-            </label>
-
-            <input
-                v-model="form.city"
-                class="finput"
-                type="text"
-                placeholder="e.g. Lagos"
-            />
-            </div>
-
-            <div class="fgroup">
-            <label class="flabel">Compensation</label>
-
-            <div class="seg">
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on': form.compensation_type === 'Paid' }"
-                @click="form.compensation_type = 'Paid'"
-                >
-                💰 Paid
-                </button>
-
-                <button
-                type="button"
-                class="seg-btn"
-                :class="{ 'seg-on seg-muted': form.compensation_type === 'Unpaid' }"
-                @click="form.compensation_type = 'Unpaid'"
-                >
-                🤝 Unpaid
-                </button>
-            </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="preview-wrap">
-            <div class="preview-header">
-                <span class="preview-label">Post preview</span>
-                <span class="live-badge">● Live</span>
-            </div>
-
-            <article
-                class="post-card preview-card"
-                :class="selectedSkillClass"
-            >
-                <div class="card-header-row">
-                <span class="skill-badge">
-                    {{ getPreviewPost.skill_needed }}
-                </span>
-
-                <span class="status-pill open">
-                    <span class="status-dot"></span>
-                    Open
-                </span>
-                </div>
-
-                <h2 class="post-title">
-                {{ getPreviewPost.title }}
-                </h2>
-
-                <p class="post-desc">
-                {{ getPreviewPost.description }}
-                </p>
-
-                <div class="poster-row">
-                <div class="poster-ava">
-                    YO
-                </div>
-
-                <span class="poster-name static-name">You</span>
-
-                <span class="poster-sep">·</span>
-
-                <span class="post-time">Just now</span>
-                </div>
-
-                <div class="meta-row">
-                <span class="meta-chip">
-                    {{ getLocationLabel(getPreviewPost) }}
-                </span>
-
-                <span class="meta-chip">
-                    {{ form.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
-                </span>
-                </div>
-
-                <button class="apply-btn preview-apply" type="button">
-                Apply Now →
-                </button>
-            </article>
-            </div>
-
-            <p v-if="errorMessage" class="form-error">
-            {{ errorMessage }}
-            </p>
-
-            <p v-if="successMessage" class="form-success">
-            {{ successMessage }}
-            </p>
-
-            <button
-            class="post-btn"
-            type="button"
-            :disabled="!isFormValid || saving"
-            @click="createPost"
-            >
-            {{ saving ? 'Posting...' : 'Post Collab ✦' }}
-            </button>
-        </div>
-        </section>
-    </main>
+      </div>
+    </section>
+  </main>
 </template>
 
 <style scoped>

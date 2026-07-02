@@ -401,77 +401,77 @@ onMounted(() => {
             class="post-card"
             :class="skillClassMap[post.skill_needed] || 'skill-blue'"
             >
-                <div class="card-header-row">
-                    <span class="skill-badge">
-                    {{ post.skill_needed }}
-                    </span>
+            <div class="card-header-row">
+                <span class="skill-badge">
+                {{ post.skill_needed }}
+                </span>
 
-                    <span
-                    class="status-pill"
-                    :class="post.status === 'Open' ? 'open' : 'closed'"
-                    >
-                    <span class="status-dot"></span>
-                    {{ post.status }}
-                    </span>
-                </div>
+                <span
+                class="status-pill"
+                :class="post.status === 'Open' ? 'open' : 'closed'"
+                >
+                <span class="status-dot"></span>
+                {{ post.status }}
+                </span>
+            </div>
 
-                <h2 class="post-title">
-                    {{ post.title }}
-                </h2>
+            <h2 class="post-title">
+                {{ post.title }}
+            </h2>
 
-                <p class="post-desc">
-                    {{ post.description }}
-                </p>
+            <p class="post-desc">
+                {{ post.description }}
+            </p>
 
-                <div class="poster-row">
-                    <button
-                    class="poster-ava"
-                    type="button"
-                    @click="goToProfile(post.profile_id)"
-                    >
-                    <img
-                        v-if="post.profiles?.profile_image"
-                        :src="post.profiles.profile_image"
-                        :alt="getPosterName(post)"
-                    />
+            <div class="poster-row">
+                <button
+                class="poster-ava"
+                type="button"
+                @click="goToProfile(post.profile_id)"
+                >
+                <img
+                    v-if="post.profiles?.profile_image"
+                    :src="post.profiles.profile_image"
+                    :alt="getPosterName(post)"
+                />
 
-                    <span v-else>
-                        {{ getPosterInitials(post) }}
-                    </span>
-                    </button>
-
-                    <button
-                    class="poster-name"
-                    type="button"
-                    @click="goToProfile(post.profile_id)"
-                    >
-                    {{ getPosterName(post) }}
-                    </button>
-
-                    <span class="poster-sep">·</span>
-
-                    <span class="post-time">
-                    {{ formatTime(post.created_at) }}
-                    </span>
-
-                    <span class="post-applicants">
-                    {{ post.applicant_count || 0 }} applied
-                    </span>
-                </div>
-
-                <div class="meta-row">
-                    <span class="meta-chip">
-                    {{ getLocationLabel(post) }}
-                    </span>
-
-                    <span class="meta-chip">
-                    {{ post.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
-                    </span>
-                </div>
-
-                <button class="apply-btn" type="button">
-                    Apply Now <span class="apply-arr">→</span>
+                <span v-else>
+                    {{ getPosterInitials(post) }}
+                </span>
                 </button>
+
+                <button
+                class="poster-name"
+                type="button"
+                @click="goToProfile(post.profile_id)"
+                >
+                {{ getPosterName(post) }}
+                </button>
+
+                <span class="poster-sep">·</span>
+
+                <span class="post-time">
+                {{ formatTime(post.created_at) }}
+                </span>
+
+                <span class="post-applicants">
+                {{ post.applicant_count || 0 }} applied
+                </span>
+            </div>
+
+            <div class="meta-row">
+                <span class="meta-chip">
+                {{ getLocationLabel(post) }}
+                </span>
+
+                <span class="meta-chip">
+                {{ post.compensation_type === 'Paid' ? '💰 Paid' : '🤝 Unpaid' }}
+                </span>
+            </div>
+
+            <button class="apply-btn" type="button">
+                Apply Now <span class="apply-arr">→</span>
+            </button>
             </article>
         </div>
 
