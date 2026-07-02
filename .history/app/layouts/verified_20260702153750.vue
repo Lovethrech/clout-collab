@@ -229,7 +229,7 @@ const getUserInitials = () => {
 
 .bottom-nav {
     position: fixed;
-    bottom: 0;
+    bottom: ;
     left: 0;
     right: 0;
     background: rgba(13, 21, 37, 0.96);
@@ -239,7 +239,7 @@ const getUserInitials = () => {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0 8px 2vh;
+    padding: 0 8px 4px;
     z-index: 180;
 }
 

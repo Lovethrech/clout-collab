@@ -267,7 +267,6 @@ onMounted(() => {
     right: 16px;
     display: flex;
     justify-content: space-between;
-    margin: 0 4vw;
 }
 
 .cover-nav button {
@@ -277,7 +276,6 @@ onMounted(() => {
     border-radius: 50%;
     background: rgba(15, 23, 42, 0.45);
     color: #fff;
-    font-size: 2vh;
     font-weight: 800;
     cursor: pointer;
 }
@@ -320,7 +318,6 @@ onMounted(() => {
     color: #fff;
     background: linear-gradient(135deg, #6d28d9 0%, #3b82f6 52%, #ec4899 100%);
     padding: 5px 10px;
-    margin-right: 6vw;
     border-radius: 20px;
 }
 
@@ -521,7 +518,7 @@ onMounted(() => {
 .profile-cta {
     position: sticky;
     bottom: 0;
-    padding: 14px 6vw 18px;
+    padding: 14px 4vw 18px;
     background: #0b1322;
     border-top: 1px solid #1e293b;
 }
@@ -530,9 +527,8 @@ onMounted(() => {
     width: 100%;
     border: 0;
     border-radius: 14px;
-    padding: 14px;
+    padding: 140px;
     color: #fff;
-    font-size:2vh;
     font-weight: 800;
     background: linear-gradient(135deg, #6d28d9 0%, #3b82f6 52%, #ec4899 100%);
     cursor: pointer;

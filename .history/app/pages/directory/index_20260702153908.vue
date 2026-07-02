@@ -440,7 +440,7 @@ onMounted(() => {
     color: var(--tx-1);
     font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
-    padding-bottom: 10vh;
+    padding-bottom: 20vh;
 }
 
 .page-head {

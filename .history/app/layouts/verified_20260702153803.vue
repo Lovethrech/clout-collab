@@ -239,7 +239,7 @@ const getUserInitials = () => {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0 8px 2vh;
+    padding: 0 8px ;
     z-index: 180;
 }
 

@@ -258,6 +258,7 @@ onMounted(() => {
     height: 20vh;
     background: linear-gradient(135deg, #6d28d9 0%, #3b82f6 52%, #ec4899 100%);
     position: relative;
+    margin: 0 6vw;
 }
 
 .cover-nav {
@@ -267,7 +268,6 @@ onMounted(() => {
     right: 16px;
     display: flex;
     justify-content: space-between;
-    margin: 0 4vw;
 }
 
 .cover-nav button {
@@ -277,7 +277,6 @@ onMounted(() => {
     border-radius: 50%;
     background: rgba(15, 23, 42, 0.45);
     color: #fff;
-    font-size: 2vh;
     font-weight: 800;
     cursor: pointer;
 }
@@ -320,7 +319,6 @@ onMounted(() => {
     color: #fff;
     background: linear-gradient(135deg, #6d28d9 0%, #3b82f6 52%, #ec4899 100%);
     padding: 5px 10px;
-    margin-right: 6vw;
     border-radius: 20px;
 }
 
