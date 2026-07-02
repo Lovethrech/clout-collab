@@ -359,38 +359,44 @@ onMounted(() => {
 
         <div class="results-bar">
             <p class="results-count">
-              <strong>{{ filteredPosts.length }}</strong>
-              open collabs
+            <strong>{{ filteredPosts.length }}</strong>
+            open collabs
             </p>
 
             <button class="sort-btn" type="button" @click="cycleSort">
-              {{ activeSort }} ↓
+            {{ activeSort }} ↓
             </button>
         </div>
 
         <div class="post-list">
             <div v-if="loading" class="feed-empty">
-              <div class="feed-empty-ico">⏳</div>
-              <div class="feed-empty-title">Loading collabs...</div>
-              <p class="feed-empty-body">Fetching open collaboration opportunities.</p>
+            <div class="feed-empty-ico">⏳</div>
+            <div class="feed-empty-title">Loading collabs...</div>
+            <p class="feed-empty-body">Fetching open collaboration opportunities.</p>
             </div>
 
             <div v-else-if="errorMessage" class="feed-empty">
-              <div class="feed-empty-ico">⚠️</div>
-              <div class="feed-empty-title">Something went wrong</div>
-              <p class="feed-empty-body">{{ errorMessage }}</p>
+            <div class="feed-empty-ico">⚠️</div>
+            <div class="feed-empty-title">Something went wrong</div>
+            <p class="feed-empty-body">{{ errorMessage }}</p>
             </div>
 
             <div v-else-if="!filteredPosts.length" class="feed-empty">
-              <div class="feed-empty-ico">📭</div>
-              <div class="feed-empty-title">No collabs match this filter</div>
-              <p class="feed-empty-body">Try a different filter or check back later.</p>
+            <div class="feed-empty-ico">📭</div>
+            <div class="feed-empty-title">No collabs match this filter</div>
+            <p class="feed-empty-body">Try a different filter or check back later.</p>
             </div>
 
-            <article v-for="post in filteredPosts" v-else :key="post.id" class="post-card" :class="skillClassMap[post.skill_needed] || 'skill-blue'">
+            <article
+            v-for="post in filteredPosts"
+            v-else
+            :key="post.id"
+            class="post-card"
+            :class="skillClassMap[post.skill_needed] || 'skill-blue'"
+            >
                 <div class="card-header-row">
                     <span class="skill-badge">
-                      {{ post.skill_needed }}
+                    {{ post.skill_needed }}
                     </span>
 
                     <span

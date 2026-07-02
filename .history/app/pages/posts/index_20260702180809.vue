@@ -390,7 +390,7 @@ onMounted(() => {
             <article v-for="post in filteredPosts" v-else :key="post.id" class="post-card" :class="skillClassMap[post.skill_needed] || 'skill-blue'">
                 <div class="card-header-row">
                     <span class="skill-badge">
-                      {{ post.skill_needed }}
+                    {{ post.skill_needed }}
                     </span>
 
                     <span
