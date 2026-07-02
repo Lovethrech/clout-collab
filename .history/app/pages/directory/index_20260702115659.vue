@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-    layout: 'verified'
+  layout: 'verifiedUser'
 })
 const router = useRouter()
 const supabase = useSupabaseClient()
@@ -241,6 +241,26 @@ onMounted(() => {
 
 <template>
   <main class="directory-page">
+    <nav class="nav">
+      <span class="nav-logo" @click="router.push('/directory')">
+        Clout Collabs
+      </span>
+
+      <div class="nav-actions">
+        <button class="nav-btn" type="button" title="Notifications">
+          🔔
+          <span class="notif-dot"></span>
+        </button>
+
+        <button class="nav-btn" type="button" title="Messages">
+          💬
+        </button>
+
+        <button class="nav-avatar" type="button" @click="goToMyProfile">
+          {{ user?.email ? user.email.slice(0, 2).toUpperCase() : 'YO' }}
+        </button>
+      </div>
+    </nav>
 
     <section class="page-head">
       <h1 class="page-title">Discover Creators</h1>

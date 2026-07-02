@@ -17,7 +17,7 @@ const {logoMarkWidth, logoMarkHeight, logoSvgWidth, logoSvgHeight, logoWordSize}
     display:flex; 
     align-items:center; 
     gap:10px; 
-    margin: auto 0;
+    margin
 }
 .lockup .mark{ 
     border-radius:9px;

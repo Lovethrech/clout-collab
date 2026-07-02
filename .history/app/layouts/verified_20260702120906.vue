@@ -1,6 +1,11 @@
 <script setup>
 const router = useRouter()
 const user = useSupabaseUser()
+const logoMarkWidth=ref("4vh");
+const logoMarkHeight=ref("4vh");
+const logoSvgWidth=ref("8vh");
+const logoSvgHeight=ref("8vh");
+const logoWordSize=ref("2vh");
 
 const goToDirectory = () => {
     router.push('/directory')
@@ -29,68 +34,73 @@ const getUserInitials = () => {
 <template>
     <div class="verified-layout">
         <nav class="verified-top-nav">
-        <span class="nav-logo" @click="goToDirectory">
-            Clout Collabs
-        </span>
+            <AppLogo 
+                :logoMarkWidth="logoMarkWidth"
+                :logoMarkHeight="logoMarkHeight"
+                :logoSvgWidth="logoSvgWidth"
+                :logoSvgHeight="logoSvgHeight"
+                :logoWordSize="logoWordSize"
+                @click="goToDirectory" 
+            />
 
-        <div class="nav-actions">
-            <button class="nav-btn" type="button" title="Notifications">
-            🔔
-            <span class="notif-dot"></span>
-            </button>
+            <div class="nav-actions">
+                <button class="nav-btn" type="button" title="Notifications">
+                    🔔
+                    <span class="notif-dot"></span>
+                </button>
 
-            <button class="nav-btn" type="button" title="Messages">
-            💬
-            </button>
+                <button class="nav-btn" type="button" title="Messages">
+                    💬
+                </button>
 
-            <button class="nav-btn" type="button" title="News">
-            📰
-            </button>
+                <button class="nav-btn" type="button" title="News">
+                    📰
+                </button>
 
-            <button class="nav-avatar" type="button" @click="goToProfile">
-            {{ getUserInitials() }}
-            </button>
-        </div>
+                <button class="nav-avatar" type="button" @click="goToProfile">
+                    {{ getUserInitials() }}
+                </button>
+            </div>
         </nav>
 
         <main class="verified-main">
-        <slot />
+            <slot />
         </main>
 
         <button
-        class="fab"
-        type="button"
-        title="Create or update profile"
-        @click="goToProfileNew"
+            class="fab"
+            type="button"
+            title="Create or update profile"
+            @click="goToProfileNew"
         >
-        +
+            +
         </button>
 
         <nav class="bottom-nav">
-        <button class="nav-tab" type="button" @click="router.push('/')">
-            <div class="nav-tab-ico">🏠</div>
-            <span class="nav-tab-lbl">Home</span>
-        </button>
+            <button class="nav-tab" type="button" @click="router.push('/')">
+                <div class="nav-tab-ico">🏠</div>
+                <span class="nav-tab-lbl">Home</span>
+            </button>
 
-        <button class="nav-tab" type="button" @click="router.push('/directory')">
-            <div class="nav-tab-ico">🔍</div>
-            <span class="nav-tab-lbl">Discover</span>
-        </button>
+            <button class="nav-tab" type="button" @click="router.push('/directory')">
+                <div class="nav-tab-ico">🔍</div>
+                <span class="nav-tab-lbl">Discover</span>
+            </button>
 
-        <button class="nav-tab" type="button">
-            <div class="nav-tab-ico">📝</div>
-            <span class="nav-tab-lbl">Posts</span>
-        </button>
+            <button class="nav-tab" type="button">
+                <div class="nav-tab-ico">📝</div>
+                <span class="nav-tab-lbl">Posts</span>
+            </button>
 
-        <button class="nav-tab" type="button">
-            <div class="nav-tab-ico">💬</div>
-            <span class="nav-tab-lbl">Messages</span>
-        </button>
+            <button class="nav-tab" type="button">
+                <div class="nav-tab-ico">💬</div>
+                <span class="nav-tab-lbl">Messages</span>
+            </button>
 
-        <button class="nav-tab" type="button" @click="goToProfile">
-            <div class="nav-tab-ico">👤</div>
-            <span class="nav-tab-lbl">Profile</span>
-        </button>
+            <button class="nav-tab" type="button" @click="goToProfile">
+                <div class="nav-tab-ico">👤</div>
+                <span class="nav-tab-lbl">Profile</span>
+            </button>
         </nav>
     </div>
 </template>
@@ -116,7 +126,7 @@ const getUserInitials = () => {
     background: var(--bg);
     color: var(--tx-1);
     font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    padding-bottom: 80px;
+    padding: 2vh  6vw;
 }
 
 .verified-top-nav {
@@ -132,17 +142,6 @@ const getUserInitials = () => {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-}
-
-.nav-logo {
-    font-size: 17px;
-    font-weight: 800;
-    letter-spacing: -0.4px;
-    background: linear-gradient(135deg, var(--purple-lt) 0%, var(--blue-lt) 100%);
-    background-clip: text;
-    color: transparent;
-    white-space: nowrap;
-    cursor: pointer;
 }
 
 .nav-actions {

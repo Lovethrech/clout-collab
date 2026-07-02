@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-    layout: 'verified'
+    layout: 'verifiedUser'
 })
 const router = useRouter()
 const supabase = useSupabaseClient()
