@@ -1,7 +1,5 @@
 <script setup>
-definePageMeta({
-    layout: false 
-})
+definePa
 const router = useRouter()
 const supabase = useSupabaseClient()
 const nuxtUser = useSupabaseUser()

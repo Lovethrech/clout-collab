@@ -1,7 +1,4 @@
 <script setup>
-definePageMeta({
-    layout: false 
-})
 const route = useRoute()
 const supabase = useSupabaseClient()
 
