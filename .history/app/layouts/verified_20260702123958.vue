@@ -229,7 +229,7 @@ const getUserInitials = () => {
 
 .bottom-nav {
     position: fixed;
-    bottom: 2vh;
+    bottom: 0;
     left: 0;
     right: 0;
     background: rgba(13, 21, 37, 0.96);
@@ -263,12 +263,12 @@ const getUserInitials = () => {
 }
 
 .nav-tab-ico {
-    font-size: 2.6vh;
+    font-size: 20px;
     color: var(--tx-3);
 }
 
 .nav-tab-lbl {
-    font-size: 1.6vh;
+    font-size: 100px;
     font-weight: 500;
     color: var(--tx-3);
 }

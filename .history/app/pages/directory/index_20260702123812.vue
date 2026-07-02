@@ -560,15 +560,15 @@ onMounted(() => {
 }
 
 .chip-row {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: none;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
 }
 
 .chip-row::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .chip {

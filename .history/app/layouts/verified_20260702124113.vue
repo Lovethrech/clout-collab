@@ -268,7 +268,7 @@ const getUserInitials = () => {
 }
 
 .nav-tab-lbl {
-    font-size: 1.6vh;
+    font-size: 2vh;
     font-weight: 500;
     color: var(--tx-3);
 }

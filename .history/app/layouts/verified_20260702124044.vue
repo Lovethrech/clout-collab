@@ -263,12 +263,12 @@ const getUserInitials = () => {
 }
 
 .nav-tab-ico {
-    font-size: 2.6vh;
+    font-size: 3vh;
     color: var(--tx-3);
 }
 
 .nav-tab-lbl {
-    font-size: 1.6vh;
+    font-size: 2vh;
     font-weight: 500;
     color: var(--tx-3);
 }

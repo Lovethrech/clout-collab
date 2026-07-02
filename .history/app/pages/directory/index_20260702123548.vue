@@ -479,96 +479,175 @@ onMounted(() => {
     padding-bottom: 80px;
 }
 
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nav-logo {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  background: linear-gradient(135deg, var(--purple-lt) 0%, var(--blue-lt) 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--tx-2);
+  font-size: 15px;
+  transition: background 0.18s, border-color 0.18s;
+  position: relative;
+}
+
+.nav-btn:hover {
+  background: var(--card-hover);
+  border-color: var(--border-hi);
+}
+
+.notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 2px solid var(--bg);
+}
+
+.nav-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+}
+
 .page-head {
-    padding: 22px 20px 0;
+  padding: 22px 20px 0;
 }
 
 .page-title {
-    font-size: 3.6vh;
-    font-weight: 800;
-    letter-spacing: -0.6px;
-    line-height: 1.15;
-    color: var(--tx-1);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
+  color: var(--tx-1);
 }
 
 .page-sub {
-    font-size: 2vh;
-    color: var(--tx-2);
-    margin-top: 4px;
+  font-size: 14px;
+  color: var(--tx-2);
+  margin-top: 4px;
 }
 
 .search-wrap {
-    padding: 16px 20px 0;
+  padding: 16px 20px 0;
 }
 
 .search-inner {
-    position: relative;
+  position: relative;
 }
 
 .search-ico {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--tx-3);
-    font-size: 15px;
-    pointer-events: none;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tx-3);
+  font-size: 15px;
+  pointer-events: none;
 }
 
 .search-inp {
-    width: 100%;
-    height: 46px;
-    padding: 0 42px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--tx-1);
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  height: 46px;
+  padding: 0 42px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--tx-1);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-inp::placeholder {
-    color: var(--tx-3);
+  color: var(--tx-3);
 }
 
 .search-inp:focus {
-    border-color: var(--purple);
-    box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.18);
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.18);
 }
 
 .filter-ico-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--cat-soft);
-    border: none;
-    color: var(--purple-lt);
-    cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--cat-soft);
+  border: none;
+  color: var(--purple-lt);
+  cursor: pointer;
 }
 
 .filters {
-    padding: 14px 20px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  padding: 14px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .chip-row {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: none;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
 }
 
 .chip-row::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .chip {

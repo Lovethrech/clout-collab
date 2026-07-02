@@ -539,36 +539,36 @@ onMounted(() => {
 }
 
 .filter-ico-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--cat-soft);
-    border: none;
-    color: var(--purple-lt);
-    cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--cat-soft);
+  border: none;
+  color: var(--purple-lt);
+  cursor: pointer;
 }
 
 .filters {
-    padding: 14px 20px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  padding: 14px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .chip-row {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: none;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
 }
 
 .chip-row::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .chip {

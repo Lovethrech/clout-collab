@@ -568,7 +568,7 @@ onMounted(() => {
 }
 
 .chip-row::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .chip {

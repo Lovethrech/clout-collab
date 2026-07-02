@@ -218,357 +218,436 @@ const clearFilters = () => {
 }
 
 const goToProfile = (profileId) => {
-    router.push(`/profile/${profileId}`)
+  router.push(`/profile/${profileId}`)
 }
 
 const goToMyProfile = () => {
-    if (user.value?.id) {
-        router.push(`/profile/${user.value.id}`)
-        return
-    }
+  if (user.value?.id) {
+    router.push(`/profile/${user.value.id}`)
+    return
+  }
 
-    router.push('/login')
+  router.push('/login')
 }
 
 const goToNewProfile = () => {
-    router.push('/profile/new')
+  router.push('/profile/new')
 }
 
 onMounted(() => {
-    getProfiles()
+  getProfiles()
 })
 </script>
 
 <template>
-    <main class="directory-page">
+  <main class="directory-page">
 
-        <section class="page-head">
-        <h1 class="page-title">Discover Creators</h1>
-        <p class="page-sub">Find talent to collaborate with & hire</p>
-        </section>
+    <section class="page-head">
+      <h1 class="page-title">Discover Creators</h1>
+      <p class="page-sub">Find talent to collaborate with & hire</p>
+    </section>
 
-        <section class="search-wrap">
-        <div class="search-inner">
-            <span class="search-ico">🔍</span>
+    <section class="search-wrap">
+      <div class="search-inner">
+        <span class="search-ico">🔍</span>
 
-            <input
-            v-model="searchQuery"
-            class="search-inp"
-            type="search"
-            placeholder="Search by name, niche, or skill…"
-            autocomplete="off"
-            />
+        <input
+          v-model="searchQuery"
+          class="search-inp"
+          type="search"
+          placeholder="Search by name, niche, or skill…"
+          autocomplete="off"
+        />
 
-            <button class="filter-ico-btn" type="button" title="Advanced filters">
-            ⚙️
-            </button>
+        <button class="filter-ico-btn" type="button" title="Advanced filters">
+          ⚙️
+        </button>
+      </div>
+    </section>
+
+    <section class="filters">
+      <div class="chip-row">
+        <button
+          v-for="role in roleFilters"
+          :key="role.value"
+          type="button"
+          class="chip"
+          :class="{ 'active-role': activeRole === role.value }"
+          @click="activeRole = role.value"
+        >
+          <span v-if="role.value !== 'All'" class="chip-dot"></span>
+          {{ role.label }}
+        </button>
+      </div>
+
+      <div class="chip-row">
+        <button
+          v-for="location in locationFilters"
+          :key="location.value"
+          type="button"
+          class="chip"
+          :class="{ 'active-loc': activeLocation === location.value }"
+          @click="activeLocation = location.value"
+        >
+          {{ location.label }}
+        </button>
+      </div>
+    </section>
+
+    <section class="results-bar">
+      <p class="results-count">
+        <strong>{{ filteredProfiles.length }}</strong>
+        {{ filteredProfiles.length === 1 ? 'creator' : 'creators' }} found
+      </p>
+
+      <button class="sort-btn" type="button" @click="changeSort">
+        {{ activeSort }} ↓
+      </button>
+    </section>
+
+    <section class="grid">
+      <div v-if="loading" class="empty-state">
+        <div class="empty-ico">⏳</div>
+        <div class="empty-title">Loading directory...</div>
+        <p class="empty-body">Fetching creators, musicians, brands, and creative pros.</p>
+      </div>
+
+      <div v-else-if="errorMessage" class="empty-state">
+        <div class="empty-ico">⚠️</div>
+        <div class="empty-title">Could not load directory</div>
+        <p class="empty-body">{{ errorMessage }}</p>
+      </div>
+
+      <div v-else-if="!filteredProfiles.length" class="empty-state">
+        <div class="empty-ico">🔍</div>
+        <div class="empty-title">No creators found</div>
+        <p class="empty-body">Try adjusting your filters or search terms.</p>
+
+        <button class="empty-clear" type="button" @click="clearFilters">
+          Clear filters
+        </button>
+      </div>
+
+      <article
+        v-for="profile in filteredProfiles"
+        v-else
+        :key="profile.id"
+        class="card"
+        :class="[getRoleClass(profile.role), { 'is-featured': profile.profile_completed }]"
+      >
+        <div v-if="profile.profile_completed" class="feat-badge">
+          ⭐ Featured
         </div>
-        </section>
 
-        <section class="filters">
-        <div class="chip-row">
-            <button
-            v-for="role in roleFilters"
-            :key="role.value"
-            type="button"
-            class="chip"
-            :class="{ 'active-role': activeRole === role.value }"
-            @click="activeRole = role.value"
-            >
-            <span v-if="role.value !== 'All'" class="chip-dot"></span>
-            {{ role.label }}
-            </button>
+        <div class="card-head">
+          <div class="avatar-wrap">
+            <div class="avatar">
+              <img
+                v-if="profile.profile_image"
+                :src="profile.profile_image"
+                :alt="profile.name"
+              />
+
+              <span v-else>
+                {{ getInitials(profile.name) }}
+              </span>
+
+              <div class="avatar-ring"></div>
+            </div>
+
+            <div class="online-dot"></div>
+          </div>
+
+          <div class="name-block">
+            <div class="creator-name">
+              {{ profile.name || 'Unnamed Profile' }}
+            </div>
+
+            <div class="creator-handle">
+              {{ getProfileHandle(profile) }}
+            </div>
+          </div>
         </div>
 
-        <div class="chip-row">
-            <button
-            v-for="location in locationFilters"
-            :key="location.value"
-            type="button"
-            class="chip"
-            :class="{ 'active-loc': activeLocation === location.value }"
-            @click="activeLocation = location.value"
-            >
-            {{ location.label }}
-            </button>
-        </div>
-        </section>
+        <div class="card-meta">
+          <span class="role-badge">
+            {{ formatRole(profile.role) }}
+          </span>
 
-        <section class="results-bar">
-        <p class="results-count">
-            <strong>{{ filteredProfiles.length }}</strong>
-            {{ filteredProfiles.length === 1 ? 'creator' : 'creators' }} found
+          <span class="location-pill">
+            <span class="loc-dot"></span>
+            {{ getLocationLabel(profile) }}
+          </span>
+        </div>
+
+        <p class="card-bio">
+          {{ profile.bio || 'This profile is ready for new collaborations.' }}
         </p>
 
-        <button class="sort-btn" type="button" @click="changeSort">
-            {{ activeSort }} ↓
-        </button>
-        </section>
-
-        <section class="grid">
-        <div v-if="loading" class="empty-state">
-            <div class="empty-ico">⏳</div>
-            <div class="empty-title">Loading directory...</div>
-            <p class="empty-body">Fetching creators, musicians, brands, and creative pros.</p>
+        <div class="tags">
+          <span
+            v-for="item in [...(profile.niche || []), ...(profile.skills || [])].slice(0, 4)"
+            :key="item"
+            class="tag"
+          >
+            {{ item }}
+          </span>
         </div>
-
-        <div v-else-if="errorMessage" class="empty-state">
-            <div class="empty-ico">⚠️</div>
-            <div class="empty-title">Could not load directory</div>
-            <p class="empty-body">{{ errorMessage }}</p>
-        </div>
-
-        <div v-else-if="!filteredProfiles.length" class="empty-state">
-            <div class="empty-ico">🔍</div>
-            <div class="empty-title">No creators found</div>
-            <p class="empty-body">Try adjusting your filters or search terms.</p>
-
-            <button class="empty-clear" type="button" @click="clearFilters">
-            Clear filters
-            </button>
-        </div>
-
-        <article
-            v-for="profile in filteredProfiles"
-            v-else
-            :key="profile.id"
-            class="card"
-            :class="[getRoleClass(profile.role), { 'is-featured': profile.profile_completed }]"
-        >
-            <div v-if="profile.profile_completed" class="feat-badge">
-            ⭐ Featured
-            </div>
-
-            <div class="card-head">
-            <div class="avatar-wrap">
-                <div class="avatar">
-                <img
-                    v-if="profile.profile_image"
-                    :src="profile.profile_image"
-                    :alt="profile.name"
-                />
-
-                <span v-else>
-                    {{ getInitials(profile.name) }}
-                </span>
-
-                <div class="avatar-ring"></div>
-                </div>
-
-                <div class="online-dot"></div>
-            </div>
-
-            <div class="name-block">
-                <div class="creator-name">
-                {{ profile.name || 'Unnamed Profile' }}
-                </div>
-
-                <div class="creator-handle">
-                {{ getProfileHandle(profile) }}
-                </div>
-            </div>
-            </div>
-
-            <div class="card-meta">
-            <span class="role-badge">
-                {{ formatRole(profile.role) }}
-            </span>
-
-            <span class="location-pill">
-                <span class="loc-dot"></span>
-                {{ getLocationLabel(profile) }}
-            </span>
-            </div>
-
-            <p class="card-bio">
-            {{ profile.bio || 'This profile is ready for new collaborations.' }}
-            </p>
-
-            <div class="tags">
-            <span
-                v-for="item in [...(profile.niche || []), ...(profile.skills || [])].slice(0, 4)"
-                :key="item"
-                class="tag"
-            >
-                {{ item }}
-            </span>
-            </div>
-
-            <button
-            class="card-cta"
-            type="button"
-            @click="goToProfile(profile.id)"
-            >
-            View Profile <span class="cta-arrow">→</span>
-            </button>
-        </article>
-        </section>
 
         <button
-        class="fab"
-        type="button"
-        title="Create or update profile"
-        @click="goToNewProfile"
+          class="card-cta"
+          type="button"
+          @click="goToProfile(profile.id)"
         >
-        +
+          View Profile <span class="cta-arrow">→</span>
         </button>
+      </article>
+    </section>
 
-        <nav class="bottom-nav">
-        <button class="nav-tab" type="button" @click="router.push('/')">
-            <div class="nav-tab-ico">🏠</div>
-            <span class="nav-tab-lbl">Home</span>
-        </button>
+    <button
+      class="fab"
+      type="button"
+      title="Create or update profile"
+      @click="goToNewProfile"
+    >
+      +
+    </button>
 
-        <button class="nav-tab active" type="button" @click="router.push('/directory')">
-            <div class="nav-tab-ico">🔍</div>
-            <span class="nav-tab-lbl">Discover</span>
-        </button>
+    <nav class="bottom-nav">
+      <button class="nav-tab" type="button" @click="router.push('/')">
+        <div class="nav-tab-ico">🏠</div>
+        <span class="nav-tab-lbl">Home</span>
+      </button>
 
-        <button class="nav-tab" type="button">
-            <div class="nav-tab-ico">📝</div>
-            <span class="nav-tab-lbl">Posts</span>
-        </button>
+      <button class="nav-tab active" type="button" @click="router.push('/directory')">
+        <div class="nav-tab-ico">🔍</div>
+        <span class="nav-tab-lbl">Discover</span>
+      </button>
 
-        <button class="nav-tab" type="button">
-            <div class="nav-tab-ico">💬</div>
-            <span class="nav-tab-lbl">Messages</span>
-        </button>
+      <button class="nav-tab" type="button">
+        <div class="nav-tab-ico">📝</div>
+        <span class="nav-tab-lbl">Posts</span>
+      </button>
 
-        <button class="nav-tab" type="button" @click="goToMyProfile">
-            <div class="nav-tab-ico">👤</div>
-            <span class="nav-tab-lbl">Profile</span>
-        </button>
-        </nav>
-    </main>
+      <button class="nav-tab" type="button">
+        <div class="nav-tab-ico">💬</div>
+        <span class="nav-tab-lbl">Messages</span>
+      </button>
+
+      <button class="nav-tab" type="button" @click="goToMyProfile">
+        <div class="nav-tab-ico">👤</div>
+        <span class="nav-tab-lbl">Profile</span>
+      </button>
+    </nav>
+  </main>
 </template>
 
 <style scoped>
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .directory-page {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --card-hover: #243350;
-    --layer: #0d1525;
-    --border: rgba(255, 255, 255, 0.07);
-    --border-hi: rgba(255, 255, 255, 0.12);
-    --purple: #6d28d9;
-    --purple-md: #7c3aed;
-    --purple-lt: #a78bfa;
-    --blue: #3b82f6;
-    --blue-lt: #93c5fd;
-    --pink: #ec4899;
-    --pink-lt: #f9a8d4;
-    --green: #10b981;
-    --green-lt: #6ee7b7;
-    --tx-1: #f8fafc;
-    --tx-2: #94a3b8;
-    --tx-3: #64748b;
-    --cat: var(--purple);
-    --cat-lt: var(--purple-lt);
-    --cat-soft: rgba(109, 40, 217, 0.12);
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--tx-1);
-    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    overflow-x: hidden;
-    padding-bottom: 80px;
+  --bg: #0f172a;
+  --card: #1e293b;
+  --card-hover: #243350;
+  --layer: #0d1525;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hi: rgba(255, 255, 255, 0.12);
+  --purple: #6d28d9;
+  --purple-md: #7c3aed;
+  --purple-lt: #a78bfa;
+  --blue: #3b82f6;
+  --blue-lt: #93c5fd;
+  --pink: #ec4899;
+  --pink-lt: #f9a8d4;
+  --green: #10b981;
+  --green-lt: #6ee7b7;
+  --tx-1: #f8fafc;
+  --tx-2: #94a3b8;
+  --tx-3: #64748b;
+  --cat: var(--purple);
+  --cat-lt: var(--purple-lt);
+  --cat-soft: rgba(109, 40, 217, 0.12);
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--tx-1);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nav-logo {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  background: linear-gradient(135deg, var(--purple-lt) 0%, var(--blue-lt) 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--tx-2);
+  font-size: 15px;
+  transition: background 0.18s, border-color 0.18s;
+  position: relative;
+}
+
+.nav-btn:hover {
+  background: var(--card-hover);
+  border-color: var(--border-hi);
+}
+
+.notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 2px solid var(--bg);
+}
+
+.nav-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
 }
 
 .page-head {
-    padding: 22px 20px 0;
+  padding: 22px 20px 0;
 }
 
 .page-title {
-    font-size: 3.6vh;
-    font-weight: 800;
-    letter-spacing: -0.6px;
-    line-height: 1.15;
-    color: var(--tx-1);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
+  color: var(--tx-1);
 }
 
 .page-sub {
-    font-size: 2vh;
-    color: var(--tx-2);
-    margin-top: 4px;
+  font-size: 14px;
+  color: var(--tx-2);
+  margin-top: 4px;
 }
 
 .search-wrap {
-    padding: 16px 20px 0;
+  padding: 16px 20px 0;
 }
 
 .search-inner {
-    position: relative;
+  position: relative;
 }
 
 .search-ico {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--tx-3);
-    font-size: 15px;
-    pointer-events: none;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tx-3);
+  font-size: 15px;
+  pointer-events: none;
 }
 
 .search-inp {
-    width: 100%;
-    height: 46px;
-    padding: 0 42px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--tx-1);
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  height: 46px;
+  padding: 0 42px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--tx-1);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-inp::placeholder {
-    color: var(--tx-3);
+  color: var(--tx-3);
 }
 
 .search-inp:focus {
-    border-color: var(--purple);
-    box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.18);
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.18);
 }
 
 .filter-ico-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--cat-soft);
-    border: none;
-    color: var(--purple-lt);
-    cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--cat-soft);
+  border: none;
+  color: var(--purple-lt);
+  cursor: pointer;
 }
 
 .filters {
-    padding: 14px 20px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  padding: 14px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .chip-row {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: none;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
 }
 
 .chip-row::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .chip {

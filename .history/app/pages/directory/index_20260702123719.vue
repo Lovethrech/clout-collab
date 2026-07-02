@@ -492,83 +492,83 @@ onMounted(() => {
 }
 
 .page-sub {
-    font-size: 2vh;
+    font-size: 14px;
     color: var(--tx-2);
     margin-top: 4px;
 }
 
 .search-wrap {
-    padding: 16px 20px 0;
+  padding: 16px 20px 0;
 }
 
 .search-inner {
-    position: relative;
+  position: relative;
 }
 
 .search-ico {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--tx-3);
-    font-size: 15px;
-    pointer-events: none;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tx-3);
+  font-size: 15px;
+  pointer-events: none;
 }
 
 .search-inp {
-    width: 100%;
-    height: 46px;
-    padding: 0 42px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--tx-1);
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  height: 46px;
+  padding: 0 42px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--tx-1);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-inp::placeholder {
-    color: var(--tx-3);
+  color: var(--tx-3);
 }
 
 .search-inp:focus {
-    border-color: var(--purple);
-    box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.18);
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.18);
 }
 
 .filter-ico-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--cat-soft);
-    border: none;
-    color: var(--purple-lt);
-    cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--cat-soft);
+  border: none;
+  color: var(--purple-lt);
+  cursor: pointer;
 }
 
 .filters {
-    padding: 14px 20px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  padding: 14px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .chip-row {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: none;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
 }
 
 .chip-row::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .chip {
