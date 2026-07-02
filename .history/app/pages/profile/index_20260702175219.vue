@@ -283,15 +283,13 @@ onMounted(() => {
 
 <style scoped>
 .my-profile-page {
-  min-height: 100vh;
-  background:
-      radial-gradient(circle at top left, rgba(109, 40, 217, 0.16), transparent 34%),
-      radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 32%),
-      var(--cc-bg);
-  color: var(--cc-text);
-  padding: 24px 14px 10px;
-  display: flex;
-  justify-content: center;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, rgba(109, 40, 217, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 32%),
+        var(--cc-bg);
+    color: var(--cc-text);
+    padding: 24px 14px 110px;
 }
 
 
@@ -315,10 +313,41 @@ onMounted(() => {
   font-weight: 800;
 }
 
+.empty-portfolio {
+  color: var(--cc-muted);
+  background: #1e293b;
+  border: 1px dashed #334155;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 13px;
+}
+
+.profile-cta {
+  position: sticky;
+  bottom: 0;
+  padding: 14px 20px 18px;
+  background: #0b1322;
+  border-top: 1px solid #1e293b;
+}
+
+.profile-cta button {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px;
+  color: #fff;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--cc-purple) 0%, var(--cc-blue) 52%, var(--cc-pink) 100%);
+  cursor: pointer;
+}
 
 .profile-state {
   color: var(--cc-muted);
   padding-top: 80px;
+}
+
+.error {
+  color: #ef4444;
 }
 
 @media (max-width: 480px) {
@@ -326,6 +355,13 @@ onMounted(() => {
         padding-left: 0;
         padding-right: 0;
         padding-top: 0;
+    }
+
+    .profile-shell {
+        min-height: calc(100vh - 60px);
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
     }
 }
 </style>

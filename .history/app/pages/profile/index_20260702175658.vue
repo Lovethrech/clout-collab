@@ -290,8 +290,6 @@ onMounted(() => {
       var(--cc-bg);
   color: var(--cc-text);
   padding: 24px 14px 10px;
-  display: flex;
-  justify-content: center;
 }
 
 

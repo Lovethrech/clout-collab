@@ -338,6 +338,7 @@ html, body {
 .cover-nav button {
     width: 52px;
     height: 52px;
+    padding:2vh;
     border: 0;
     border-radius: 50%;
     background: rgba(15, 23, 42, 0.45);

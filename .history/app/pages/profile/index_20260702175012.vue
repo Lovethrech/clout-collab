@@ -283,15 +283,40 @@ onMounted(() => {
 
 <style scoped>
 .my-profile-page {
-  min-height: 100vh;
-  background:
-      radial-gradient(circle at top left, rgba(109, 40, 217, 0.16), transparent 34%),
-      radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 32%),
-      var(--cc-bg);
-  color: var(--cc-text);
-  padding: 24px 14px 10px;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, rgba(109, 40, 217, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 32%),
+        var(--cc-bg);
+    color: var(--cc-text);
+    padding: 24px 14px 110px;
+}
+
+
+
+
+.skills-row .tag-chip {
+  color: var(--cc-blue-lt);
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.social-row {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.social-row a {
+  color: var(--cc-text);
+  text-decoration: none;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 
@@ -316,9 +341,99 @@ onMounted(() => {
 }
 
 
+
+
+.portfolio-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.portfolio-card {
+  background: #1e293b;
+  border: 1px solid #2a3b55;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.portfolio-thumb {
+  height: 180px;
+  background: linear-gradient(135deg, var(--cc-purple), var(--cc-blue));
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-thumb img,
+.portfolio-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portfolio-category {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  background: rgba(15, 23, 42, 0.65);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.portfolio-body {
+  padding: 14px;
+}
+
+.portfolio-body h3 {
+  font-size: 14px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.portfolio-meta {
+  display: flex;
+  gap: 12px;
+  color: var(--cc-muted);
+  font-size: 12px;
+}
+
+.empty-portfolio {
+  color: var(--cc-muted);
+  background: #1e293b;
+  border: 1px dashed #334155;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 13px;
+}
+
+.profile-cta {
+  position: sticky;
+  bottom: 0;
+  padding: 14px 20px 18px;
+  background: #0b1322;
+  border-top: 1px solid #1e293b;
+}
+
+.profile-cta button {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px;
+  color: #fff;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--cc-purple) 0%, var(--cc-blue) 52%, var(--cc-pink) 100%);
+  cursor: pointer;
+}
+
 .profile-state {
   color: var(--cc-muted);
   padding-top: 80px;
+}
+
+.error {
+  color: #ef4444;
 }
 
 @media (max-width: 480px) {
@@ -326,6 +441,13 @@ onMounted(() => {
         padding-left: 0;
         padding-right: 0;
         padding-top: 0;
+    }
+
+    .profile-shell {
+        min-height: calc(100vh - 60px);
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
     }
 }
 </style>

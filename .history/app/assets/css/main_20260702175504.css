@@ -333,6 +333,7 @@ html, body {
     display: flex;
     justify-content: space-between;
     margin: 0 4vw;
+    padding:2vh;
 }
 
 .cover-nav button {

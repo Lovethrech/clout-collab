@@ -283,15 +283,13 @@ onMounted(() => {
 
 <style scoped>
 .my-profile-page {
-  min-height: 100vh;
-  background:
-      radial-gradient(circle at top left, rgba(109, 40, 217, 0.16), transparent 34%),
-      radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 32%),
-      var(--cc-bg);
-  color: var(--cc-text);
-  padding: 24px 14px 10px;
-  display: flex;
-  justify-content: center;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, rgba(109, 40, 217, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 32%),
+        var(--cc-bg);
+    color: var(--cc-text);
+    padding: 24px 14px 110px;
 }
 
 
@@ -326,6 +324,13 @@ onMounted(() => {
         padding-left: 0;
         padding-right: 0;
         padding-top: 0;
+    }
+
+    .profile-shell {
+        min-height: calc(100vh - 60px);
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
     }
 }
 </style>

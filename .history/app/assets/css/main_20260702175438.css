@@ -321,6 +321,7 @@ html, body {
 
 .cover {
     height: 20vh;
+    PAD
     background: linear-gradient(135deg, #6d28d9 0%, #3b82f6 52%, #ec4899 100%);
     position: relative;
 }
