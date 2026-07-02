@@ -295,114 +295,123 @@ onMounted(() => {
         </section>
 
         <section class="results-bar">
-            <p class="results-count">
-                <strong>{{ filteredProfiles.length }}</strong>
-                {{ filteredProfiles.length === 1 ? 'creator' : 'creators' }} found
+        <p class="results-count">
+            <strong>{{ filteredProfiles.length }}</strong>
+            {{ filteredProfiles.length === 1 ? 'creator' : 'creators' }} found
+        </p>
+
+        <button class="sort-btn" type="button" @click="changeSort">
+            {{ activeSort }} ↓
+        </button>
+        </section>
+
+        <section class="grid">
+        <div v-if="loading" class="empty-state">
+            <div class="empty-ico">⏳</div>
+            <div class="empty-title">Loading directory...</div>
+            <p class="empty-body">Fetching creators, musicians, brands, and creative pros.</p>
+        </div>
+
+        <div v-else-if="errorMessage" class="empty-state">
+            <div class="empty-ico">⚠️</div>
+            <div class="empty-title">Could not load directory</div>
+            <p class="empty-body">{{ errorMessage }}</p>
+        </div>
+
+        <div v-else-if="!filteredProfiles.length" class="empty-state">
+            <div class="empty-ico">🔍</div>
+            <div class="empty-title">No creators found</div>
+            <p class="empty-body">Try adjusting your filters or search terms.</p>
+
+            <button class="empty-clear" type="button" @click="clearFilters">
+            Clear filters
+            </button>
+        </div>
+
+        <article
+            v-for="profile in filteredProfiles"
+            v-else
+            :key="profile.id"
+            class="card"
+            :class="[getRoleClass(profile.role), { 'is-featured': profile.profile_completed }]"
+        >
+            <div v-if="profile.profile_completed" class="feat-badge">
+            ⭐ Featured
+            </div>
+
+            <div class="card-head">
+            <div class="avatar-wrap">
+                <div class="avatar">
+                <img
+                    v-if="profile.profile_image"
+                    :src="profile.profile_image"
+                    :alt="profile.name"
+                />
+
+                <span v-else>
+                    {{ getInitials(profile.name) }}
+                </span>
+
+                <div class="avatar-ring"></div>
+                </div>
+
+                <div class="online-dot"></div>
+            </div>
+
+            <div class="name-block">
+                <div class="creator-name">
+                {{ profile.name || 'Unnamed Profile' }}
+                </div>
+
+                <div class="creator-handle">
+                {{ getProfileHandle(profile) }}
+                </div>
+            </div>
+            </div>
+
+            <div class="card-meta">
+            <span class="role-badge">
+                {{ formatRole(profile.role) }}
+            </span>
+
+            <span class="location-pill">
+                <span class="loc-dot"></span>
+                {{ getLocationLabel(profile) }}
+            </span>
+            </div>
+
+            <p class="card-bio">
+            {{ profile.bio || 'This profile is ready for new collaborations.' }}
             </p>
 
-            <button class="sort-btn" type="button" @click="changeSort">
-                {{ activeSort }} ↓
-            </button>
-            </section>
-
-            <section class="grid">
-            <div v-if="loading" class="empty-state">
-                <div class="empty-ico">⏳</div>
-                <div class="empty-title">Loading directory...</div>
-                <p class="empty-body">Fetching creators, musicians, brands, and creative pros.</p>
-            </div>
-
-            <div v-else-if="errorMessage" class="empty-state">
-                <div class="empty-ico">⚠️</div>
-                <div class="empty-title">Could not load directory</div>
-                <p class="empty-body">{{ errorMessage }}</p>
-            </div>
-
-            <div v-else-if="!filteredProfiles.length" class="empty-state">
-                <div class="empty-ico">🔍</div>
-                <div class="empty-title">No creators found</div>
-                <p class="empty-body">Try adjusting your filters or search terms.</p>
-
-                <button class="empty-clear" type="button" @click="clearFilters">
-                Clear filters
-                </button>
-            </div>
-
-            <article
-                v-for="profile in filteredProfiles"
-                v-else
-                :key="profile.id"
-                class="card"
-                :class="[getRoleClass(profile.role), { 'is-featured': profile.profile_completed }]"
+            <div class="tags">
+            <span
+                v-for="item in [...(profile.niche || []), ...(profile.skills || [])].slice(0, 4)"
+                :key="item"
+                class="tag"
             >
-                <div v-if="profile.profile_completed" class="feat-badge">
-                ⭐ Featured
-                </div>
+                {{ item }}
+            </span>
+            </div>
 
-                <div class="card-head">
-                <div class="avatar-wrap">
-                    <div class="avatar">
-                    <img
-                        v-if="profile.profile_image"
-                        :src="profile.profile_image"
-                        :alt="profile.name"
-                    />
-
-                    <span v-else>
-                        {{ getInitials(profile.name) }}
-                    </span>
-
-                    <div class="avatar-ring"></div>
-                    </div>
-
-                    <div class="online-dot"></div>
-                </div>
-
-                <div class="name-block">
-                    <div class="creator-name">
-                    {{ profile.name || 'Unnamed Profile' }}
-                    </div>
-
-                    <div class="creator-handle">
-                    {{ getProfileHandle(profile) }}
-                    </div>
-                </div>
-                </div>
-
-                <div class="card-meta">
-                <span class="role-badge">
-                    {{ formatRole(profile.role) }}
-                </span>
-
-                <span class="location-pill">
-                    <span class="loc-dot"></span>
-                    {{ getLocationLabel(profile) }}
-                </span>
-                </div>
-
-                <p class="card-bio">
-                {{ profile.bio || 'This profile is ready for new collaborations.' }}
-                </p>
-
-                <div class="tags">
-                <span
-                    v-for="item in [...(profile.niche || []), ...(profile.skills || [])].slice(0, 4)"
-                    :key="item"
-                    class="tag"
-                >
-                    {{ item }}
-                </span>
-                </div>
-
-                <button
-                class="card-cta"
-                type="button"
-                @click="goToProfile(profile.id)"
-                >
-                View Profile <span class="cta-arrow">→</span>
-                </button>
-            </article>
+            <button
+            class="card-cta"
+            type="button"
+            @click="goToProfile(profile.id)"
+            >
+            View Profile <span class="cta-arrow">→</span>
+            </button>
+        </article>
         </section>
+
+        <button
+        class="fab"
+        type="button"
+        title="Create or update profile"
+        @click="goToNewProfile"
+        >
+        +
+        </button>
     </main>
 </template>
 
@@ -901,6 +910,67 @@ onMounted(() => {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+}
+
+.fab {
+    position: fixed;
+    bottom: 86px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple-md), var(--pink));
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 300;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 22px rgba(109, 40, 217, 0.55);
+    transition: transform 0.22s, box-shadow 0.22s;
+    z-index: 150;
+}
+
+.fab:hover {
+    transform: scale(1.06) rotate(45deg);
+    box-shadow: 0 6px 28px rgba(109, 40, 217, 0.7);
+}
+
+.nav-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    cursor: pointer;
+    padding: 6px 0;
+    border-radius: 10px;
+    transition: background 0.18s;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+}
+
+.nav-tab:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-tab-ico {
+    font-size: 20px;
+    color: var(--tx-3);
+}
+
+.nav-tab-lbl {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--tx-3);
+}
+
+.nav-tab.active .nav-tab-ico,
+.nav-tab.active .nav-tab-lbl {
+    color: var(--purple-lt);
 }
 
 @media (max-width: 600px) {

@@ -295,38 +295,38 @@ onMounted(() => {
         </section>
 
         <section class="results-bar">
-            <p class="results-count">
-                <strong>{{ filteredProfiles.length }}</strong>
-                {{ filteredProfiles.length === 1 ? 'creator' : 'creators' }} found
-            </p>
+        <p class="results-count">
+            <strong>{{ filteredProfiles.length }}</strong>
+            {{ filteredProfiles.length === 1 ? 'creator' : 'creators' }} found
+        </p>
 
-            <button class="sort-btn" type="button" @click="changeSort">
-                {{ activeSort }} ↓
+        <button class="sort-btn" type="button" @click="changeSort">
+            {{ activeSort }} ↓
+        </button>
+        </section>
+
+        <section class="grid">
+        <div v-if="loading" class="empty-state">
+            <div class="empty-ico">⏳</div>
+            <div class="empty-title">Loading directory...</div>
+            <p class="empty-body">Fetching creators, musicians, brands, and creative pros.</p>
+        </div>
+
+        <div v-else-if="errorMessage" class="empty-state">
+            <div class="empty-ico">⚠️</div>
+            <div class="empty-title">Could not load directory</div>
+            <p class="empty-body">{{ errorMessage }}</p>
+        </div>
+
+        <div v-else-if="!filteredProfiles.length" class="empty-state">
+            <div class="empty-ico">🔍</div>
+            <div class="empty-title">No creators found</div>
+            <p class="empty-body">Try adjusting your filters or search terms.</p>
+
+            <button class="empty-clear" type="button" @click="clearFilters">
+            Clear filters
             </button>
-            </section>
-
-            <section class="grid">
-            <div v-if="loading" class="empty-state">
-                <div class="empty-ico">⏳</div>
-                <div class="empty-title">Loading directory...</div>
-                <p class="empty-body">Fetching creators, musicians, brands, and creative pros.</p>
-            </div>
-
-            <div v-else-if="errorMessage" class="empty-state">
-                <div class="empty-ico">⚠️</div>
-                <div class="empty-title">Could not load directory</div>
-                <p class="empty-body">{{ errorMessage }}</p>
-            </div>
-
-            <div v-else-if="!filteredProfiles.length" class="empty-state">
-                <div class="empty-ico">🔍</div>
-                <div class="empty-title">No creators found</div>
-                <p class="empty-body">Try adjusting your filters or search terms.</p>
-
-                <button class="empty-clear" type="button" @click="clearFilters">
-                Clear filters
-                </button>
-            </div>
+        </div>
 
             <article
                 v-for="profile in filteredProfiles"
