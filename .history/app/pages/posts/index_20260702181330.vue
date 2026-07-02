@@ -748,6 +748,7 @@ onMounted(() => {
 }
 
 .feed-head {
+  
     padding: 22px 20px 0;
 }
 
@@ -1423,6 +1424,9 @@ onMounted(() => {
     margin: 0 auto;
   }
 
+  .feed-head,
+  .filter-row,
+  .results-bar,
   .create-scroll {
     max-width: 760px;
     margin-left: auto;

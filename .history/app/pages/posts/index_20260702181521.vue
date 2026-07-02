@@ -1423,6 +1423,8 @@ onMounted(() => {
     margin: 0 auto;
   }
 
+  .filter-row,
+  .results-bar,
   .create-scroll {
     max-width: 760px;
     margin-left: auto;

@@ -1419,10 +1419,12 @@ onMounted(() => {
 
 @media (min-width: 900px) {
   .post-list {
-    max-width: 760px;
     margin: 0 auto;
   }
 
+  .feed-head,
+  .filter-row,
+  .results-bar,
   .create-scroll {
     max-width: 760px;
     margin-left: auto;

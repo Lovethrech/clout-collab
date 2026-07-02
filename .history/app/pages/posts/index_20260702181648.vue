@@ -1424,7 +1424,7 @@ onMounted(() => {
   }
 
   .create-scroll {
-    max-width: 760px;
+    max-width: 60px;
     margin-left: auto;
     margin-right: auto;
   }

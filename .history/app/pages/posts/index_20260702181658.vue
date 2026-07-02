@@ -1423,10 +1423,6 @@ onMounted(() => {
     margin: 0 auto;
   }
 
-  .create-scroll {
-    max-width: 760px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+ 
 }
 </style>
