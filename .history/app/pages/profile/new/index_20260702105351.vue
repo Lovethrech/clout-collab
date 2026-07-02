@@ -1,7 +1,10 @@
 <script setup>
+definePageMeta(
+    layout: 'false'
+)
 const router = useRouter()
 const supabase = useSupabaseClient()
-const nuxtUser = useSupabaseUser()
+const user = useSupabaseUser()
 
 const loading = ref(false)
 const loadingProfile = ref(true)
@@ -37,20 +40,6 @@ const portfolioProjects = ref([
     }
 ])
 
-const getCurrentUser = async () => {
-    const { data, error } = await supabase.auth.getUser()
-
-    if (error) {
-        throw error
-    }
-
-    if (!data.user) {
-        throw new Error('You must be logged in to create a profile.')
-    }
-
-    return data.user
-}
-
 const safeFileName = (fileName) => {
     return fileName
         .toLowerCase()
@@ -58,26 +47,18 @@ const safeFileName = (fileName) => {
         .replace(/[^a-z0-9.-]/g, '')
 }
 
-const uploadFileToBucket = async (bucketName, file, currentUserId) => {
-    if (!file) return ''
-
-    if (!currentUserId) {
-        throw new Error('Missing user ID. Please log in again before uploading files.')
-    }
+const uploadFileToBucket = async (bucketName, file) => {
+  if (!user.value || !file) return ''
 
     const fileExt = file.name.split('.').pop()
     const cleanName = safeFileName(file.name)
-    const fallbackName = `upload.${fileExt}`
-    const finalName = cleanName || fallbackName
-
-    const filePath = `${currentUserId}/${Date.now()}-${finalName}`
+    const filePath = `${user.value.id}/${Date.now()}-${cleanName || `upload.${fileExt}`}`
 
     const { error: uploadError } = await supabase.storage
         .from(bucketName)
         .upload(filePath, file, {
         cacheControl: '3600',
-        upsert: true,
-        contentType: file.type
+        upsert: true
         })
 
     if (uploadError) {
@@ -101,197 +82,197 @@ const handleProfileImageChange = (event) => {
 }
 
 const handlePortfolioFileChange = (event, index) => {
-  const file = event.target.files[0]
+    const file = event.target.files[0]
 
-  if (!file) return
+    if (!file) return
 
-  portfolioProjects.value[index].file = file
-  portfolioProjects.value[index].preview = URL.createObjectURL(file)
-  portfolioProjects.value[index].is_video = file.type.startsWith('video/')
+    portfolioProjects.value[index].file = file
+    portfolioProjects.value[index].preview = URL.createObjectURL(file)
+    portfolioProjects.value[index].is_video = file.type.startsWith('video/')
 }
 
 const addPortfolioProject = () => {
-    portfolioProjects.value.push({
-        title: '',
-        category: '',
-        file: null,
-        preview: '',
-        is_video: false
-    })
+  portfolioProjects.value.push({
+    title: '',
+    category: '',
+    file: null,
+    preview: '',
+    is_video: false
+  })
 }
 
 const removePortfolioProject = (index) => {
-    if (portfolioProjects.value.length === 1) {
-        portfolioProjects.value[0] = {
-        title: '',
-        category: '',
-        file: null,
-        preview: '',
-        is_video: false
-        }
-
-        return
+  if (portfolioProjects.value.length === 1) {
+    portfolioProjects.value[0] = {
+      title: '',
+      category: '',
+      file: null,
+      preview: '',
+      is_video: false
     }
 
-    portfolioProjects.value.splice(index, 1)
+    return
+  }
+
+  portfolioProjects.value.splice(index, 1)
 }
 
 const loadExistingProfile = async () => {
-    loadingProfile.value = true
-    errorMessage.value = ''
+  if (!user.value) {
+    router.push('/login')
+    return
+  }
 
-    try {
-        const currentUser = await getCurrentUser()
+  loadingProfile.value = true
+  errorMessage.value = ''
 
-        const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', currentUser.id)
-        .single()
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.value.id)
+      .single()
 
-        if (error && error.code !== 'PGRST116') {
-        throw error
-        }
-
-        if (data) {
-        form.name = data.name || ''
-        form.role = data.role || 'creator'
-        form.bio = data.bio || ''
-        form.location = data.location || ''
-        form.city = data.city || ''
-        form.country = data.country || ''
-        form.nicheInput = data.niche ? data.niche.join(', ') : ''
-        form.skillsInput = data.skills ? data.skills.join(', ') : ''
-        form.instagram = data.social_links?.instagram || ''
-        form.tiktok = data.social_links?.tiktok || ''
-        form.youtube = data.social_links?.youtube || ''
-        form.website = data.social_links?.website || ''
-        form.profile_image = data.profile_image || ''
-        profileImagePreview.value = data.profile_image || ''
-        }
-    } catch (error) {
-        errorMessage.value = error.message || 'Could not load profile.'
-
-        if (error.message === 'You must be logged in to create a profile.') {
-        router.push('/login')
-        }
-    } finally {
-        loadingProfile.value = false
+    if (error && error.code !== 'PGRST116') {
+      throw error
     }
+
+    if (data) {
+      form.name = data.name || ''
+      form.role = data.role || 'creator'
+      form.bio = data.bio || ''
+      form.location = data.location || ''
+      form.city = data.city || ''
+      form.country = data.country || ''
+      form.nicheInput = data.niche ? data.niche.join(', ') : ''
+      form.skillsInput = data.skills ? data.skills.join(', ') : ''
+      form.instagram = data.social_links?.instagram || ''
+      form.tiktok = data.social_links?.tiktok || ''
+      form.youtube = data.social_links?.youtube || ''
+      form.website = data.social_links?.website || ''
+      form.profile_image = data.profile_image || ''
+      profileImagePreview.value = data.profile_image || ''
+    }
+  } catch (error) {
+    errorMessage.value = error.message || 'Could not load profile.'
+  } finally {
+    loadingProfile.value = false
+  }
 }
 
 const saveProfile = async () => {
-    loading.value = true
-    errorMessage.value = ''
-    successMessage.value = ''
+  if (!user.value) {
+    router.push('/login')
+    return
+  }
 
-    try {
-        const currentUser = await getCurrentUser()
-        const currentUserId = currentUser.id
+  loading.value = true
+  errorMessage.value = ''
+  successMessage.value = ''
 
-        let profileImageUrl = form.profile_image
+  try {
+    let profileImageUrl = form.profile_image
 
-        if (profileImageFile.value) {
-        profileImageUrl = await uploadFileToBucket(
-            'profile-images',
-            profileImageFile.value,
-            currentUserId
-        )
-        }
-
-        const nicheArray = form.nicheInput
-        .split(',')
-        .map((item) => item.trim())
-        .filter((item) => item)
-
-        const skillsArray = form.skillsInput
-        .split(',')
-        .map((skill) => skill.trim())
-        .filter((skill) => skill)
-
-        const profilePayload = {
-        id: currentUserId,
-        name: form.name,
-        email: currentUser.email,
-        role: form.role,
-        bio: form.bio,
-        location: form.location,
-        city: form.city,
-        country: form.country,
-        niche: nicheArray,
-        skills: skillsArray,
-        social_links: {
-            instagram: form.instagram,
-            tiktok: form.tiktok,
-            youtube: form.youtube,
-            website: form.website
-        },
-        profile_image: profileImageUrl,
-        profile_completed: true,
-        is_visible: true,
-        updated_at: new Date().toISOString()
-        }
-
-        const { data: savedProfile, error: profileError } = await supabase
-        .from('profiles')
-        .upsert(profilePayload)
-        .select()
-        .single()
-
-        if (profileError) {
-        throw profileError
-        }
-
-        const completedPortfolioProjects = portfolioProjects.value.filter((project) => {
-        return project.title && project.file
-        })
-
-        if (completedPortfolioProjects.length) {
-        const uploadedPortfolioRows = []
-
-        for (const project of completedPortfolioProjects) {
-            const mediaUrl = await uploadFileToBucket(
-            'portfolio-media',
-            project.file,
-            currentUserId
-            )
-
-            uploadedPortfolioRows.push({
-            profile_id: currentUserId,
-            title: project.title,
-            category: project.category,
-            media_url: mediaUrl,
-            thumbnail_url: project.is_video ? null : mediaUrl,
-            is_video: project.is_video
-            })
-        }
-
-        const { error: portfolioError } = await supabase
-            .from('portfolio_items')
-            .insert(uploadedPortfolioRows)
-
-        if (portfolioError) {
-            throw portfolioError
-        }
-        }
-
-        successMessage.value = 'Profile saved successfully.'
-        router.push(`/profile/${savedProfile.id}`)
-    } catch (error) {
-        errorMessage.value = error.message || 'Could not save profile.'
-    } finally {
-        loading.value = false
+    if (profileImageFile.value) {
+      profileImageUrl = await uploadFileToBucket('profile-images', profileImageFile.value)
     }
+
+    const nicheArray = form.nicheInput
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item)
+
+    const skillsArray = form.skillsInput
+      .split(',')
+      .map((skill) => skill.trim())
+      .filter((skill) => skill)
+
+    const profilePayload = {
+      id: user.value.id,
+      name: form.name,
+      email: user.value.email,
+      role: form.role,
+      bio: form.bio,
+      location: form.location,
+      city: form.city,
+      country: form.country,
+      niche: nicheArray,
+      skills: skillsArray,
+      social_links: {
+        instagram: form.instagram,
+        tiktok: form.tiktok,
+        youtube: form.youtube,
+        website: form.website
+      },
+      profile_image: profileImageUrl,
+      profile_completed: true,
+      is_visible: true,
+      updated_at: new Date().toISOString()
+    }
+
+    const { data: savedProfile, error: profileError } = await supabase
+      .from('profiles')
+      .upsert(profilePayload)
+      .select()
+      .single()
+
+    if (profileError) {
+      throw profileError
+    }
+
+    const completedPortfolioProjects = portfolioProjects.value.filter((project) => {
+      return project.title && project.file
+    })
+
+    if (completedPortfolioProjects.length) {
+      const uploadedPortfolioRows = []
+
+      for (const project of completedPortfolioProjects) {
+        const mediaUrl = await uploadFileToBucket('portfolio-media', project.file)
+
+        uploadedPortfolioRows.push({
+          profile_id: user.value.id,
+          title: project.title,
+          category: project.category,
+          media_url: mediaUrl,
+          thumbnail_url: project.is_video ? null : mediaUrl,
+          is_video: project.is_video
+        })
+      }
+
+      const { error: portfolioError } = await supabase
+        .from('portfolio_items')
+        .insert(uploadedPortfolioRows)
+
+      if (portfolioError) {
+        throw portfolioError
+      }
+    }
+
+    successMessage.value = 'Profile saved successfully.'
+    router.push(`/profile/${savedProfile.id}`)
+  } catch (error) {
+    errorMessage.value = error.message || 'Could not save profile.'
+  } finally {
+    loading.value = false
+  }
 }
 
 onMounted(() => {
-    loadExistingProfile()
+  loadExistingProfile()
 })
 </script>
 
 <template>
   <main class="profile-new-page">
         <section class="profile-card">
+
+        <h1>Build your profile</h1>
+
+        <p class="subtitle">
+            Add your profile details, upload a profile image, and add portfolio projects
+            that brands or collaborators can review.
+        </p>
 
         <div v-if="loadingProfile" class="loading-box">
             Loading profile...
@@ -496,10 +477,23 @@ onMounted(() => {
 
 .profile-card {
     width: 100%;
+    max-width: 680px;
     background: #1e293b;
     border: 1px solid #334155;
     border-radius: 24px;
     padding: 28px;
+}
+
+h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 24px;
+    line-height: 1.5;
 }
 
 .loading-box {
@@ -523,7 +517,7 @@ onMounted(() => {
 
 .section-title-row h2 {
     font-family: 'Unbounded', sans-serif;
-    font-size: 2.6vh;
+    font-size: 16px;
     margin-bottom: 4px;
 }
 
@@ -550,7 +544,7 @@ label {
     display: grid;
     gap: 8px;
     font-weight: 600;
-    font-size: 1.6vh;
+    font-size: 13px;
 }
 
 input,

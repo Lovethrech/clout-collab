@@ -1,7 +1,10 @@
 <script setup>
+definePageMeta({
+    layout: false
+})
 const router = useRouter()
 const supabase = useSupabaseClient()
-const nuxtUser = useSupabaseUser()
+const user = useSupabaseUser()
 
 const loading = ref(false)
 const loadingProfile = ref(true)
@@ -37,20 +40,6 @@ const portfolioProjects = ref([
     }
 ])
 
-const getCurrentUser = async () => {
-    const { data, error } = await supabase.auth.getUser()
-
-    if (error) {
-        throw error
-    }
-
-    if (!data.user) {
-        throw new Error('You must be logged in to create a profile.')
-    }
-
-    return data.user
-}
-
 const safeFileName = (fileName) => {
     return fileName
         .toLowerCase()
@@ -58,26 +47,18 @@ const safeFileName = (fileName) => {
         .replace(/[^a-z0-9.-]/g, '')
 }
 
-const uploadFileToBucket = async (bucketName, file, currentUserId) => {
-    if (!file) return ''
-
-    if (!currentUserId) {
-        throw new Error('Missing user ID. Please log in again before uploading files.')
-    }
+const uploadFileToBucket = async (bucketName, file) => {
+  if (!user.value || !file) return ''
 
     const fileExt = file.name.split('.').pop()
     const cleanName = safeFileName(file.name)
-    const fallbackName = `upload.${fileExt}`
-    const finalName = cleanName || fallbackName
-
-    const filePath = `${currentUserId}/${Date.now()}-${finalName}`
+    const filePath = `${user.value.id}/${Date.now()}-${cleanName || `upload.${fileExt}`}`
 
     const { error: uploadError } = await supabase.storage
         .from(bucketName)
         .upload(filePath, file, {
         cacheControl: '3600',
-        upsert: true,
-        contentType: file.type
+        upsert: true
         })
 
     if (uploadError) {
@@ -101,13 +82,13 @@ const handleProfileImageChange = (event) => {
 }
 
 const handlePortfolioFileChange = (event, index) => {
-  const file = event.target.files[0]
+    const file = event.target.files[0]
 
-  if (!file) return
+    if (!file) return
 
-  portfolioProjects.value[index].file = file
-  portfolioProjects.value[index].preview = URL.createObjectURL(file)
-  portfolioProjects.value[index].is_video = file.type.startsWith('video/')
+    portfolioProjects.value[index].file = file
+    portfolioProjects.value[index].preview = URL.createObjectURL(file)
+    portfolioProjects.value[index].is_video = file.type.startsWith('video/')
 }
 
 const addPortfolioProject = () => {
@@ -137,16 +118,19 @@ const removePortfolioProject = (index) => {
 }
 
 const loadExistingProfile = async () => {
+    if (!user.value) {
+        router.push('/login')
+        return
+    }
+
     loadingProfile.value = true
     errorMessage.value = ''
 
     try {
-        const currentUser = await getCurrentUser()
-
         const { data, error } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', currentUser.id)
+        .eq('id', user.value.id)
         .single()
 
         if (error && error.code !== 'PGRST116') {
@@ -171,32 +155,26 @@ const loadExistingProfile = async () => {
         }
     } catch (error) {
         errorMessage.value = error.message || 'Could not load profile.'
-
-        if (error.message === 'You must be logged in to create a profile.') {
-        router.push('/login')
-        }
     } finally {
         loadingProfile.value = false
     }
 }
 
 const saveProfile = async () => {
+    if (!user.value) {
+        router.push('/login')
+        return
+    }
+
     loading.value = true
     errorMessage.value = ''
     successMessage.value = ''
 
     try {
-        const currentUser = await getCurrentUser()
-        const currentUserId = currentUser.id
-
         let profileImageUrl = form.profile_image
 
         if (profileImageFile.value) {
-        profileImageUrl = await uploadFileToBucket(
-            'profile-images',
-            profileImageFile.value,
-            currentUserId
-        )
+        profileImageUrl = await uploadFileToBucket('profile-images', profileImageFile.value)
         }
 
         const nicheArray = form.nicheInput
@@ -210,9 +188,9 @@ const saveProfile = async () => {
         .filter((skill) => skill)
 
         const profilePayload = {
-        id: currentUserId,
+        id: user.value.id,
         name: form.name,
-        email: currentUser.email,
+        email: user.value.email,
         role: form.role,
         bio: form.bio,
         location: form.location,
@@ -250,14 +228,10 @@ const saveProfile = async () => {
         const uploadedPortfolioRows = []
 
         for (const project of completedPortfolioProjects) {
-            const mediaUrl = await uploadFileToBucket(
-            'portfolio-media',
-            project.file,
-            currentUserId
-            )
+            const mediaUrl = await uploadFileToBucket('portfolio-media', project.file)
 
             uploadedPortfolioRows.push({
-            profile_id: currentUserId,
+            profile_id: user.value.id,
             title: project.title,
             category: project.category,
             media_url: mediaUrl,
@@ -292,6 +266,13 @@ onMounted(() => {
 <template>
   <main class="profile-new-page">
         <section class="profile-card">
+
+        <h1>Build your profile</h1>
+
+        <p class="subtitle">
+            Add your profile details, upload a profile image, and add portfolio projects
+            that brands or collaborators can review.
+        </p>
 
         <div v-if="loadingProfile" class="loading-box">
             Loading profile...
@@ -502,6 +483,18 @@ onMounted(() => {
     padding: 28px;
 }
 
+h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 3vh;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
 .loading-box {
     color: #94a3b8;
     background: #0f172a;
@@ -523,7 +516,7 @@ onMounted(() => {
 
 .section-title-row h2 {
     font-family: 'Unbounded', sans-serif;
-    font-size: 2.6vh;
+    font-size: 16px;
     margin-bottom: 4px;
 }
 
@@ -550,7 +543,7 @@ label {
     display: grid;
     gap: 8px;
     font-weight: 600;
-    font-size: 1.6vh;
+    font-size: 13px;
 }
 
 input,
