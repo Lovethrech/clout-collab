@@ -1,6 +1,7 @@
+
+
 <script setup>
 const router = useRouter()
-const route = useRoute()
 const user = useSupabaseUser()
 const logoMarkWidth=ref("2vh");
 const logoMarkHeight=ref("2vh");
@@ -8,18 +9,17 @@ const logoSvgWidth=ref("4vh");
 const logoSvgHeight=ref("4vh");
 const logoWordSize=ref("1.6vh");
 
-const showLayoutFab = computed(() => {
-    return route.path !== '/posts'
-})
-
 const goToDirectory = () => {
     router.push('/directory')
 }
 
 const goToProfile = () => {
-    router.push('/profile')
+    if (user.value?.id) {
+        router.push(`/profile/${user.value.id}`)
+        return
+    }
 
-
+    router.push('/login')
 }
 
 const goToProfileNew = () => {
@@ -70,7 +70,6 @@ const getUserInitials = () => {
         </main>
 
         <button
-            v-if="showLayoutFab"
             class="fab"
             type="button"
             title="Create or update profile"

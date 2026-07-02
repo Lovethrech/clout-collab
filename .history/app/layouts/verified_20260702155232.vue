@@ -18,8 +18,6 @@ const goToDirectory = () => {
 
 const goToProfile = () => {
     router.push('/profile')
-
-
 }
 
 const goToProfileNew = () => {
@@ -75,7 +73,7 @@ const getUserInitials = () => {
             type="button"
             title="Create or update profile"
             @click="goToProfileNew"
-        >
+            >
             +
         </button>
 

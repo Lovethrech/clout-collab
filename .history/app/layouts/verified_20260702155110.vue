@@ -9,17 +9,41 @@ const logoSvgHeight=ref("4vh");
 const logoWordSize=ref("1.6vh");
 
 const showLayoutFab = computed(() => {
-    return route.path !== '/posts'
+  return route.path !== '/posts'
 })
+
+const goToDirectory = () => {
+  router.push('/directory')
+}
+
+const goToProfile = () => {
+  router.push('/profile')
+}
+
+const goToProfileNew = () => {
+  router.push('/profile/new')
+}
+
+const getUserInitials = () => {
+  if (!user.value?.email) return 'YO'
+
+  return user.value.email.slice(0, 2).toUpperCase()
+}
+</script>
+
+
 
 const goToDirectory = () => {
     router.push('/directory')
 }
 
 const goToProfile = () => {
-    router.push('/profile')
+    if (user.value?.id) {
+        router.push(`/profile/${user.value.id}`)
+        return
+    }
 
-
+    router.push('/login')
 }
 
 const goToProfileNew = () => {
@@ -70,7 +94,6 @@ const getUserInitials = () => {
         </main>
 
         <button
-            v-if="showLayoutFab"
             class="fab"
             type="button"
             title="Create or update profile"

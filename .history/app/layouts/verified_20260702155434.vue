@@ -17,9 +17,12 @@ const goToDirectory = () => {
 }
 
 const goToProfile = () => {
+  if (user.value?.id) {
     router.push('/profile')
+    return
+  }
 
-
+  router.push('/login')
 }
 
 const goToProfileNew = () => {

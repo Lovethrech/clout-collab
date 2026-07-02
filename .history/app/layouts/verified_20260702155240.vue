@@ -18,8 +18,6 @@ const goToDirectory = () => {
 
 const goToProfile = () => {
     router.push('/profile')
-
-
 }
 
 const goToProfileNew = () => {

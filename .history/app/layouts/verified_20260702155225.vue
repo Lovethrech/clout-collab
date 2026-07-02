@@ -18,8 +18,6 @@ const goToDirectory = () => {
 
 const goToProfile = () => {
     router.push('/profile')
-
-
 }
 
 const goToProfileNew = () => {
@@ -70,14 +68,7 @@ const getUserInitials = () => {
         </main>
 
         <button
-            v-if="showLayoutFab"
-            class="fab"
-            type="button"
-            title="Create or update profile"
-            @click="goToProfileNew"
-        >
-            +
-        </button>
+  v-if="sh`
 
         <nav class="bottom-nav">
             <button class="nav-tab" type="button" @click="router.push('/')">

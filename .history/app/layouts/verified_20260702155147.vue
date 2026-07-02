@@ -9,21 +9,19 @@ const logoSvgHeight=ref("4vh");
 const logoWordSize=ref("1.6vh");
 
 const showLayoutFab = computed(() => {
-    return route.path !== '/posts'
+  return route.path !== '/posts'
 })
 
 const goToDirectory = () => {
-    router.push('/directory')
+  router.push('/directory')
 }
 
 const goToProfile = () => {
-    router.push('/profile')
-
-
+  router.push('/profile')
 }
 
 const goToProfileNew = () => {
-    router.push('/profile/new')
+  router.push('/profile/new')
 }
 
 const getUserInitials = () => {
@@ -70,7 +68,6 @@ const getUserInitials = () => {
         </main>
 
         <button
-            v-if="showLayoutFab"
             class="fab"
             type="button"
             title="Create or update profile"
